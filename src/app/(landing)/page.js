@@ -2,6 +2,7 @@ import Hero from "@/components/landing_page/Hero";
 import HowItWorks from "@/components/landing_page/HowItWorks";
 import Features from "@/components/landing_page/Features";
 import UserRoles from "@/components/landing_page/UserRoles";
+import TrustSection from "@/components/landing_page/TrustSection";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <HowItWorks />
       <Features />
       <UserRoles />
+      <TrustSection />
     </main>
   );
 }
