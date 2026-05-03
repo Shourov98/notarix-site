@@ -1,10 +1,22 @@
+import ComplianceStandards from "@/components/trust_page/ComplianceStandards";
+import PrivacyFirst from "@/components/trust_page/PrivacyFirst";
+import PlatformProtection from "@/components/trust_page/PlatformProtection";
+import TrustCTA from "@/components/trust_page/TrustCTA";
+
 export default function TrustCenterPage() {
   return (
-    <main className="py-24 px-8 max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6">Trust Center</h1>
-      <p className="text-lg text-zinc-600">
-        Welcome to the Notarix Trust Center. Here you can find information about our security practices, compliance standards, and system availability.
-      </p>
+    <main>
+      <div className="bg-[#f8f9ff] py-20 px-6 md:px-12 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold text-zinc-900 mb-4">Trust Center</h1>
+        <p className="text-lg text-zinc-600 max-w-2xl mx-auto">
+          Our commitment to security, compliance, and transparency.
+        </p>
+      </div>
+      
+      <ComplianceStandards />
+      <PrivacyFirst />
+      <PlatformProtection />
+      <TrustCTA />
     </main>
   );
 }
