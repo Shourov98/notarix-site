@@ -13,6 +13,19 @@ import Link from "next/link";
 
 const orders = [
   {
+    id: "#RON-260427",
+    signerName: "Jonathan Miller",
+    serviceType: "Remote Notarization",
+    location: "Remote Online",
+    date: "Oct 28, 2024",
+    status: "Ready",
+    statusColor: "bg-emerald-50 text-emerald-600",
+    notary: {
+      name: "Robert Vance",
+      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert"
+    }
+  },
+  {
     id: "#26NC4999",
     signerName: "Sarah Harrison",
     serviceType: "Real Estate Closing",
