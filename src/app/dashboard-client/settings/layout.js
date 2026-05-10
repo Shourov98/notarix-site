@@ -22,16 +22,17 @@ export default function SettingsLayout({ children }) {
   const pathname = usePathname();
 
   return (
-    <div className="space-y-8">
-      {/* Page Header */}
-      <div>
-        <h1 className="text-2xl font-bold text-zinc-900 mb-1">Settings</h1>
-        <p className="text-zinc-500 font-medium text-sm">Manage account preferences</p>
-      </div>
+    <div className="flex flex-col lg:flex-row gap-12 items-start relative">
+      {/* Sticky Sidebar Container */}
+      <div className="w-full lg:w-64 space-y-8 lg:sticky lg:top-0 shrink-0">
+        {/* Page Header Moved into Sticky Column */}
+        <div>
+          <h1 className="text-2xl font-bold text-zinc-900 mb-1">Settings</h1>
+          <p className="text-zinc-500 font-medium text-sm leading-relaxed">Manage account preferences</p>
+        </div>
 
-      <div className="flex flex-col lg:flex-row gap-12 items-start">
         {/* Sub Navigation */}
-        <nav className="w-full lg:w-64 space-y-1 shrink-0">
+        <nav className="space-y-1">
           {settingsNav.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -53,11 +54,11 @@ export default function SettingsLayout({ children }) {
             );
           })}
         </nav>
+      </div>
 
-        {/* Content Area */}
-        <div className="flex-1 w-full bg-white border border-zinc-100 rounded-[32px] shadow-sm overflow-hidden min-h-[600px]">
-          {children}
-        </div>
+      {/* Content Area */}
+      <div className="flex-1 w-full bg-white border border-zinc-100 rounded-[32px] shadow-sm overflow-hidden min-h-[600px]">
+        {children}
       </div>
     </div>
   );
