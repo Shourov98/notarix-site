@@ -1,21 +1,31 @@
 import { Calendar, Eye, Filter, Hourglass, MoreVertical, Search, SquareChartGantt, Timer, WalletCards } from "lucide-react";
 import Link from "next/link";
 
-const stats = [
+const defaultStats = [
   { label: "Total", value: "124", sub: "Assigned orders", icon: SquareChartGantt },
   { label: "Pending", value: "12", sub: "Awaiting acceptance", icon: Hourglass },
   { label: "In Progress", value: "43", sub: "Currently active", icon: Timer },
   { label: "Completed", value: "69", sub: "Successfully signed", icon: WalletCards },
 ];
 
-const rows = [
+const defaultRows = [
   { id: "RON-9402", orderType: "RON", title: "Sarah Mitchell", borrower: "Sarah Mitchell", location: "Austin, TX-12546", date: "Apr 24 2026", fee: "$150.00", status: "In Progress", tone: "bg-orange-50 text-orange-600", action: "Start Session" },
   { id: "IP-8210", orderType: "In-Person", title: "James Rodriguez", borrower: "James Rodriguez", location: "Miami, FL-12546", date: "Apr 24 2026", fee: "$225.00", status: "Pending", tone: "bg-amber-50 text-amber-600", action: "Accept" },
   { id: "RON-7104", orderType: "RON", title: "Elena Vance", borrower: "Elena Vance", location: "Seattle, WA12546", date: "Apr 24 2026", fee: "$150.00", status: "Completed", tone: "bg-emerald-50 text-emerald-600", action: "View" },
   { id: "IP-5502", orderType: "In-Person", title: "Kevin Baker", borrower: "Kevin Baker", location: "Chicago, IL-12546", date: "Apr 24 2026", fee: "$195.00", status: "Accepted", tone: "bg-blue-50 text-blue-600", action: "View" },
 ];
 
-export default function AssignmentsOrdersPage() {
+export default function AssignmentsOrdersPage({
+  stats = defaultStats,
+  rows = defaultRows,
+}) {
+  const iconByLabel = {
+    Total: SquareChartGantt,
+    Pending: Hourglass,
+    "In Progress": Timer,
+    Completed: WalletCards,
+  };
+
   return (
     <div className="space-y-8">
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
@@ -47,7 +57,10 @@ export default function AssignmentsOrdersPage() {
         {stats.map((stat) => (
           <div key={stat.label} className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
             <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#2c49df] flex items-center justify-center">
-              <stat.icon className="w-5 h-5" />
+              {(() => {
+                const Icon = stat.icon || iconByLabel[stat.label] || SquareChartGantt;
+                return <Icon className="w-5 h-5" />;
+              })()}
             </div>
             <p className="mt-5 text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{stat.label}</p>
             <p className="mt-3 text-3xl font-bold text-zinc-900">{stat.value}</p>

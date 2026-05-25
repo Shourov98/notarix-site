@@ -1,10 +1,22 @@
+"use client";
+
+import { useEffect } from "react";
 import StatsOverview from "@/components/dashboard-client/StatsOverview";
 import ActiveOrderCard from "@/components/dashboard-client/ActiveOrderCard";
 import RecentOrders from "@/components/dashboard-client/RecentOrders";
 import OrderDistribution from "@/components/dashboard-client/OrderDistribution";
 import ActivityFeed from "@/components/dashboard-client/ActivityFeed";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchClientOverview, selectSitePortal } from "@/store/sitePortalSlice";
 
 export default function DashboardClientPage() {
+  const dispatch = useAppDispatch();
+  const { clientOverview } = useAppSelector(selectSitePortal);
+
+  useEffect(() => {
+    dispatch(fetchClientOverview());
+  }, [dispatch]);
+
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
@@ -14,13 +26,13 @@ export default function DashboardClientPage() {
       </div>
 
       {/* Stats Cards */}
-      <StatsOverview />
+      <StatsOverview stats={clientOverview?.stats} />
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
         {/* Left Column: Main Content */}
         <div className="xl:col-span-2 space-y-8">
           <ActiveOrderCard />
-          <RecentOrders />
+          <RecentOrders orders={clientOverview?.recentOrders} />
         </div>
 
         {/* Right Column: Sidebar Stats */}
