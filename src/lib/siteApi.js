@@ -25,6 +25,11 @@ const requestJson = async (path, options = {}) => {
   return payload?.data || payload;
 };
 
+const roleDashboardMap = {
+  Client: "/dashboard-client",
+  Notary: "/dashboard-notary",
+};
+
 export const getClientOverview = async () => requestJson("/site/client/overview");
 export const getNotaryOverview = async () => requestJson("/site/notary/overview");
 export const getSiteDocument = async (id) => requestJson(`/site/documents/${id}`);
@@ -47,3 +52,15 @@ export const submitAccessRequest = async (body) =>
     method: "POST",
     body: JSON.stringify(body),
   });
+
+export const loginPortalUser = async (body) => {
+  const data = await requestJson("/site/auth/login", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+
+  return {
+    ...data,
+    dashboardPath: roleDashboardMap[data?.role] || "/",
+  };
+};
