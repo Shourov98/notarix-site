@@ -7,14 +7,19 @@ import RecentOrders from "@/components/dashboard-client/RecentOrders";
 import OrderDistribution from "@/components/dashboard-client/OrderDistribution";
 import ActivityFeed from "@/components/dashboard-client/ActivityFeed";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchClientOverview, selectSitePortal } from "@/store/sitePortalSlice";
+import {
+  fetchClientOrders,
+  fetchClientOverview,
+  selectSitePortal,
+} from "@/store/sitePortalSlice";
 
 export default function DashboardClientPage() {
   const dispatch = useAppDispatch();
-  const { clientOverview } = useAppSelector(selectSitePortal);
+  const { clientOverview, clientRecentOrders } = useAppSelector(selectSitePortal);
 
   useEffect(() => {
     dispatch(fetchClientOverview());
+    dispatch(fetchClientOrders());
   }, [dispatch]);
 
   return (
@@ -32,7 +37,7 @@ export default function DashboardClientPage() {
         {/* Left Column: Main Content */}
         <div className="xl:col-span-2 space-y-8">
           <ActiveOrderCard />
-          <RecentOrders orders={clientOverview?.recentOrders} />
+          <RecentOrders orders={clientRecentOrders?.length ? clientRecentOrders : clientOverview?.recentOrders} />
         </div>
 
         {/* Right Column: Sidebar Stats */}

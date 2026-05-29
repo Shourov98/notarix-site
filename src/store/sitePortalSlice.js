@@ -1,6 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
+  createClientOrder as createClientOrderApi,
   getClientBankInfo,
+  getClientOrder,
+  getClientOrders,
   getClientOverview,
   getNotaryBankInfo,
   getNotaryOverview,
@@ -27,6 +30,39 @@ export const fetchNotaryOverview = createAsyncThunk(
       return await getNotaryOverview();
     } catch (error) {
       return rejectWithValue(error.message || "Unable to load notary overview.");
+    }
+  }
+);
+
+export const fetchClientOrders = createAsyncThunk(
+  "sitePortal/fetchClientOrders",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getClientOrders();
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load client orders.");
+    }
+  }
+);
+
+export const createClientOrder = createAsyncThunk(
+  "sitePortal/createClientOrder",
+  async (payload, { rejectWithValue }) => {
+    try {
+      return await createClientOrderApi(payload);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to create order.");
+    }
+  }
+);
+
+export const fetchClientOrder = createAsyncThunk(
+  "sitePortal/fetchClientOrder",
+  async (orderId, { rejectWithValue }) => {
+    try {
+      return await getClientOrder(orderId);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load order details.");
     }
   }
 );
@@ -95,6 +131,15 @@ const sitePortalSlice = createSlice({
     notaryBankInfo: null,
     clientStatus: "idle",
     notaryStatus: "idle",
+    clientOrders: [],
+    clientRecentOrders: [],
+    clientOrdersStatus: "idle",
+    clientOrdersError: null,
+    activeClientOrder: null,
+    activeClientOrderStatus: "idle",
+    activeClientOrderError: null,
+    createOrderStatus: "idle",
+    createOrderError: null,
     clientBankInfoStatus: "idle",
     notaryBankInfoStatus: "idle",
     accessRequestStatus: "idle",
@@ -122,6 +167,46 @@ const sitePortalSlice = createSlice({
       })
       .addCase(fetchNotaryOverview.rejected, (state) => {
         state.notaryStatus = "error";
+      })
+      .addCase(fetchClientOrders.pending, (state) => {
+        state.clientOrdersStatus = "loading";
+        state.clientOrdersError = null;
+      })
+      .addCase(fetchClientOrders.fulfilled, (state, action) => {
+        state.clientOrders = action.payload?.orders || [];
+        state.clientRecentOrders = action.payload?.recentOrders || [];
+        state.clientOrdersStatus = "ready";
+        state.clientOrdersError = null;
+      })
+      .addCase(fetchClientOrders.rejected, (state, action) => {
+        state.clientOrdersStatus = "error";
+        state.clientOrdersError = action.payload || "Unable to load client orders.";
+      })
+      .addCase(fetchClientOrder.pending, (state) => {
+        state.activeClientOrderStatus = "loading";
+        state.activeClientOrderError = null;
+      })
+      .addCase(fetchClientOrder.fulfilled, (state, action) => {
+        state.activeClientOrder = action.payload || null;
+        state.activeClientOrderStatus = "ready";
+        state.activeClientOrderError = null;
+      })
+      .addCase(fetchClientOrder.rejected, (state, action) => {
+        state.activeClientOrder = null;
+        state.activeClientOrderStatus = "error";
+        state.activeClientOrderError = action.payload || "Unable to load order details.";
+      })
+      .addCase(createClientOrder.pending, (state) => {
+        state.createOrderStatus = "loading";
+        state.createOrderError = null;
+      })
+      .addCase(createClientOrder.fulfilled, (state) => {
+        state.createOrderStatus = "ready";
+        state.createOrderError = null;
+      })
+      .addCase(createClientOrder.rejected, (state, action) => {
+        state.createOrderStatus = "error";
+        state.createOrderError = action.payload || "Unable to create order.";
       })
       .addCase(fetchClientBankInfo.pending, (state) => {
         state.clientBankInfoStatus = "loading";

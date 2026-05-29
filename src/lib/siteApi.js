@@ -1,3 +1,5 @@
+import { readPortalSession } from "@/lib/portalSession";
+
 const buildBaseUrl = () => {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5191";
   const prefix = process.env.NEXT_PUBLIC_API_PREFIX || "/api/v1";
@@ -5,12 +7,22 @@ const buildBaseUrl = () => {
 };
 
 const requestJson = async (path, options = {}) => {
+  const { authMode = "none", ...fetchOptions } = options;
+  const headers = {
+    "Content-Type": "application/json",
+    ...(fetchOptions.headers || {}),
+  };
+
+  if (authMode === "portal" && typeof window !== "undefined") {
+    const session = readPortalSession();
+    if (session?.accessToken) {
+      headers.Authorization = `Bearer ${session.accessToken}`;
+    }
+  }
+
   const response = await fetch(`${buildBaseUrl()}${path}`, {
-    ...options,
-    headers: {
-      "Content-Type": "application/json",
-      ...(options.headers || {}),
-    },
+    ...fetchOptions,
+    headers,
     cache: "no-store",
   });
 
@@ -46,6 +58,52 @@ export const saveNotaryBankInfo = async (body, method = "POST") =>
     method,
     body: JSON.stringify(body),
   });
+
+export const createClientOrder = async (body) =>
+  requestJson("/site/orders", {
+    method: "POST",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+
+export const getClientOrders = async () =>
+  requestJson("/site/client/orders", {
+    authMode: "portal",
+  });
+
+export const getClientOrder = async (orderId) =>
+  requestJson(`/site/client/orders/${String(orderId).replace(/^#/, "")}`, {
+    authMode: "portal",
+  });
+
+export const uploadClientOrderDocuments = async (orderId, files) => {
+  const formData = new FormData();
+  files.forEach((file) => {
+    formData.append("documents", file);
+  });
+
+  const session = typeof window !== "undefined" ? readPortalSession() : null;
+  const headers = session?.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
+
+  const response = await fetch(`${buildBaseUrl()}/site/orders/${orderId}/documents`, {
+    method: "POST",
+    headers,
+    body: formData,
+    cache: "no-store",
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message || payload?.message || "Upload failed."
+    );
+  }
+
+  return payload?.data || payload;
+};
 
 export const submitAccessRequest = async (body) =>
   requestJson("/requests", {
