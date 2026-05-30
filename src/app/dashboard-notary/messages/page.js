@@ -1,5 +1,5 @@
-import MessagesPage from "@/components/dashboard-notary/messages/MessagesPage";
+import PortalMessagesPage from "@/components/portal/PortalMessagesPage";
 
 export default function NotaryMessagesPage() {
-  return <MessagesPage />;
+  return <PortalMessagesPage roleLabel="Notary" />;
 }

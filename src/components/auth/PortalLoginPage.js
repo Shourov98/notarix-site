@@ -40,7 +40,11 @@ export default function PortalLoginPage() {
       const session = await loginPortalUser(payload);
       savePortalSession(session);
       toast.success(`${role === "client" ? "Client" : "Notary"} login successful.`);
-      router.push(session.dashboardPath);
+      router.push(
+        session.passwordResetRequired
+          ? `/first-login-reset?role=${role}`
+          : session.dashboardPath
+      );
     } catch (error) {
       toast.error(error.message || "Unable to sign in right now.");
     } finally {
