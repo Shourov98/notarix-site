@@ -1,36 +1,124 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Notarix Site
+
+Frontend application for the `notarix-site` project, built with Next.js App Router.
 
 ## Getting Started
 
-First, run the development server:
+Run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000` in the browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```text
+notarix-site/
+├── package.json
+├── pnpm-lock.yaml
+├── pnpm-workspace.yaml
+├── jsconfig.json
+├── next.config.mjs
+├── eslint.config.mjs
+├── postcss.config.mjs
+├── public/
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── vercel.svg
+│   ├── window.svg
+│   └── landing_page/
+│       └── hero_image.png
+├── src/
+│   ├── app/
+│   │   ├── favicon.ico
+│   │   ├── globals.css
+│   │   ├── layout.js
+│   │   ├── (landing)/
+│   │   │   ├── layout.js
+│   │   │   ├── page.js
+│   │   │   ├── contact/
+│   │   │   │   └── page.js
+│   │   │   ├── legal-validity/
+│   │   │   │   └── page.js
+│   │   │   ├── security/
+│   │   │   │   └── page.js
+│   │   │   ├── terms-of-use/
+│   │   │   │   └── page.js
+│   │   │   └── trust/
+│   │   │       └── page.js
+│   │   ├── dashboard-client/
+│   │   │   ├── layout.js
+│   │   │   ├── page.js
+│   │   │   ├── documents/
+│   │   │   │   └── page.js
+│   │   │   ├── messages/
+│   │   │   │   └── page.js
+│   │   │   ├── orders/
+│   │   │   │   ├── page.js
+│   │   │   │   ├── new/
+│   │   │   │   │   └── page.js
+│   │   │   │   └── [id]/
+│   │   │   │       ├── page.js
+│   │   │   │       ├── NCOrderView.js
+│   │   │   │       └── RONOrderView.js
+│   │   │   ├── payments/
+│   │   │   │   └── page.js
+│   │   │   └── settings/
+│   │   │       ├── layout.js
+│   │   │       ├── page.js
+│   │   │       ├── notifications/
+│   │   │       │   └── page.js
+│   │   │       ├── payments/
+│   │   │       │   └── page.js
+│   │   │       ├── profile-details/
+│   │   │       │   └── page.js
+│   │   │       └── security/
+│   │   │           └── page.js
+│   │   ├── document/
+│   │   │   └── [id]/
+│   │   │       └── page.js
+│   │   └── session/
+│   │       └── [id]/
+│   │           └── page.js
+│   └── components/
+│       ├── contact_page/
+│       │   └── RequestAccessForm.js
+│       ├── dashboard-client/
+│       │   ├── ActiveOrderCard.js
+│       │   ├── ActivityFeed.js
+│       │   ├── DocumentsTable.js
+│       │   ├── Navbar.js
+│       │   ├── OrderDistribution.js
+│       │   ├── OrdersTable.js
+│       │   ├── PaymentsStats.js
+│       │   ├── PaymentsTable.js
+│       │   ├── RecentOrders.js
+│       │   ├── Sidebar.js
+│       │   └── StatsOverview.js
+│       ├── landing_page/
+│       │   ├── CTASection.js
+│       │   ├── Features.js
+│       │   ├── Footer.js
+│       │   ├── Hero.js
+│       │   ├── HowItWorks.js
+│       │   ├── Navbar.js
+│       │   ├── TrustSection.js
+│       │   └── UserRoles.js
+│       ├── terms_page/
+│       │   └── TermsSidebar.js
+│       └── trust_page/
+│           ├── ComplianceStandards.js
+│           ├── PlatformProtection.js
+│           ├── PrivacyFirst.js
+│           └── TrustCTA.js
+└── README.md
+```
 
-## Learn More
+## Notes
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `src/app/(landing)` contains public marketing and informational pages.
+- `src/app/dashboard-client` contains the client dashboard experience.
+- `src/components` contains reusable UI sections grouped by page area.

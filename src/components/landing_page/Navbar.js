@@ -54,9 +54,9 @@ export default function Navbar() {
           >
             Log In
           </Link>
-          <button className="bg-[#1a4fdb] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg font-semibold hover:bg-[#1541b8] transition-colors text-sm md:text-base">
+          <Link href="/request-access?contactType=client" className="bg-[#1a4fdb] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg font-semibold hover:bg-[#1541b8] transition-colors text-sm md:text-base">
             Get Started
-          </button>
+          </Link>
           
           {/* Mobile Menu Icon */}
           <button 
@@ -93,6 +93,13 @@ export default function Navbar() {
               className="text-zinc-600 font-medium text-base py-2"
             >
               Log In
+            </Link>
+            <Link
+              href="/request-access?contactType=client"
+              onClick={() => setIsOpen(false)}
+              className="rounded-lg bg-[#1a4fdb] px-4 py-3 text-center text-base font-semibold text-white"
+            >
+              Get Started
             </Link>
           </div>
         </div>

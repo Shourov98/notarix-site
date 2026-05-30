@@ -1,4 +1,4 @@
-const orders = [
+const defaultOrders = [
   { id: "#26NC4999", type: "Remote Notarization", status: "In Progress", name: "John Smith", date: "Apr 24, 26" },
   { id: "#26NC4999", type: "Document Signing", status: "Completed", name: "Sarah Connor", date: "Apr 25, 26" },
   { id: "#26NC4999", type: "Affidavit Verification", status: "Pending", name: "Not Assigned", date: "Apr 26, 26" },
@@ -13,7 +13,7 @@ const getStatusStyles = (status) => {
   }
 };
 
-export default function RecentOrders() {
+export default function RecentOrders({ orders = defaultOrders }) {
   return (
     <div className="bg-white border border-zinc-100 rounded-[2rem] p-8 shadow-sm">
       <div className="flex justify-between items-center mb-8">
@@ -28,7 +28,7 @@ export default function RecentOrders() {
               <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order ID</th>
               <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Type</th>
               <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status</th>
-              <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Borrower's Name</th>
+              <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Borrower Name</th>
               <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date</th>
               <th className="pb-4 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Action</th>
             </tr>

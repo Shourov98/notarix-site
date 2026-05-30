@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const documents = [
+const defaultDocuments = [
   {
     name: "Loan_Agreement_V4.pdf",
     orderId: "#ORD-88219",
@@ -77,7 +77,19 @@ const documents = [
   }
 ];
 
-export default function DocumentsTable() {
+export default function DocumentsTable({ documents = defaultDocuments }) {
+  const resolveIcon = (icon) => {
+    if (typeof icon !== "string") {
+      return icon || FileText;
+    }
+
+    if (icon === "image") {
+      return ImageIcon;
+    }
+
+    return FileText;
+  };
+
   return (
     <div className="bg-white border border-zinc-100 rounded-[32px] shadow-sm overflow-hidden">
       {/* Filters & Tabs Header */}
@@ -141,9 +153,12 @@ export default function DocumentsTable() {
             {documents.map((doc, i) => (
               <tr key={i} className="hover:bg-zinc-50/50 transition-colors group">
                 <td className="px-6 py-5">
-                  <Link href="/document/123" className="flex items-center gap-3">
+                  <Link href={`/document/${doc.id || "123"}`} className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${doc.iconBg}`}>
-                      <doc.icon className={`w-5 h-5 ${doc.iconColor}`} />
+                      {(() => {
+                        const Icon = resolveIcon(doc.icon);
+                        return <Icon className={`w-5 h-5 ${doc.iconColor}`} />;
+                      })()}
                     </div>
                     <span className="text-sm font-bold text-zinc-900 group-hover:text-[#1a4fdb] transition-colors cursor-pointer">{doc.name}</span>
                   </Link>
@@ -167,7 +182,7 @@ export default function DocumentsTable() {
                 </td>
                 <td className="px-6 py-5">
                   <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
-                    <Link href="/document/123">
+                    <Link href={`/document/${doc.id || "123"}`}>
                       <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
                         <Eye className="w-4 h-4" />
                       </button>

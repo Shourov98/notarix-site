@@ -1,108 +1,78 @@
 "use client";
 
-import { useState } from "react";
-import { 
-  LayoutDashboard, 
-  FileText, 
-  ClipboardCheck,
-  Files, 
-  MessageSquare, 
-  Settings, 
-  HelpCircle, 
+import {
+  Bell,
+  BriefcaseBusiness,
+  CircleHelp,
+  CreditCard,
+  FileText,
+  LayoutDashboard,
   LogOut,
-  ChevronLeft,
-  ChevronRight,
-  Wallet
+  MessageSquare,
+  Settings,
+  ClipboardList,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const menuItems = [
+const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard-notary" },
-  { icon: FileText, label: "Assignments Orders", href: "/dashboard-notary/orders" },
-  { icon: ClipboardCheck, label: "Assignments Requests", href: "/dashboard-notary/requests" },
-  { icon: Files, label: "Documents", href: "/dashboard-notary/documents" },
+  { icon: BriefcaseBusiness, label: "Assignments Orders", href: "/dashboard-notary/assignments-orders" },
+  { icon: ClipboardList, label: "Assignments Requests", href: "/dashboard-notary/assignments-requests" },
+  { icon: FileText, label: "Documents", href: "/dashboard-notary/documents" },
   { icon: MessageSquare, label: "Messages", href: "/dashboard-notary/messages" },
-  { icon: Wallet, label: "Earnings / Payments", href: "/dashboard-notary/earnings" },
+  { icon: CreditCard, label: "Earnings / Payments", href: "/dashboard-notary/payments" },
   { icon: Settings, label: "Settings", href: "/dashboard-notary/settings" },
 ];
 
-export default function NotarySidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside 
-      className={`bg-white border-r border-zinc-200 transition-all duration-300 flex flex-col sticky top-0 h-screen shrink-0 z-50 ${
-        isCollapsed ? "w-20" : "w-64"
-      }`}
-    >
-      {/* Logo Area */}
-      <div className="p-6 flex items-center gap-3 h-20 border-b border-zinc-50 bg-white">
-        <div className="w-8 h-8 bg-[#1a4fdb] rounded flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-bold text-xl italic">N</span>
+    <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col sticky top-0 h-screen shrink-0 z-50">
+      <div className="px-5 py-5 h-20 border-b border-zinc-100 flex items-center gap-3">
+        <div className="w-10 h-10 rounded-xl bg-[#173fbe] flex items-center justify-center shadow-lg shadow-blue-100">
+          <span className="text-white font-black text-lg">N</span>
         </div>
-        {!isCollapsed && (
-          <span className="text-xl font-bold text-zinc-900 tracking-tight">Notarix™</span>
-        )}
+        <div>
+          <p className="text-xl leading-none font-bold tracking-tight text-zinc-900">Notarix</p>
+          <p className="text-[10px] tracking-[0.35em] uppercase text-zinc-400 font-bold mt-1">Portal</p>
+        </div>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 px-3 py-6 space-y-2 overflow-y-auto">
-        {menuItems.map((item) => {
-          const isActive = pathname === item.href;
+      <nav className="flex-1 px-4 py-6 space-y-2">
+        {navItems.map((item) => {
+          const isActive =
+            pathname === item.href ||
+            (item.href !== "/dashboard-notary" && pathname.startsWith(item.href));
+
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-colors group ${
-                isActive 
-                  ? "bg-[#1a4fdb] text-white" 
-                  : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
+              className={`flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all ${
+                isActive
+                  ? "bg-[#2c49df] text-white shadow-lg shadow-blue-100"
+                  : "text-zinc-800 hover:bg-zinc-50"
               }`}
             >
-              <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-white" : "group-hover:text-[#1a4fdb]"}`} />
-              {!isCollapsed && <span className="font-medium text-sm">{item.label}</span>}
-              {isCollapsed && (
-                 <div className="absolute left-full ml-2 px-2 py-1 bg-zinc-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">
-                    {item.label}
-                 </div>
-              )}
+              <item.icon className={`w-5 h-5 ${isActive ? "text-white" : "text-zinc-700"}`} />
+              <span className="text-sm font-semibold">{item.label}</span>
             </Link>
           );
         })}
       </nav>
 
-      {/* Bottom Actions */}
-      <div className="p-3 border-t border-zinc-100 space-y-1 bg-white">
-        <button className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 transition-colors group relative">
-          <HelpCircle className="w-5 h-5 flex-shrink-0 group-hover:text-[#1a4fdb]" />
-          {!isCollapsed && <span className="font-medium text-sm">Help Center</span>}
-          {isCollapsed && (
-             <div className="absolute left-full ml-2 px-2 py-1 bg-zinc-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">
-                Help Center
-             </div>
-          )}
+      <div className="px-4 py-5 space-y-2 border-t border-zinc-100 bg-white">
+        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-600 hover:bg-zinc-50 transition-colors">
+          <CircleHelp className="w-5 h-5" />
+          <span className="text-sm font-medium">Help Center</span>
         </button>
-        <button className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors group relative">
-          <LogOut className="w-5 h-5 flex-shrink-0" />
-          {!isCollapsed && <span className="font-medium text-sm">Sign Out</span>}
-          {isCollapsed && (
-             <div className="absolute left-full ml-2 px-2 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">
-                Sign Out
-             </div>
-          )}
+        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition-colors">
+          <LogOut className="w-5 h-5" />
+          <span className="text-sm font-medium">Sign Out</span>
         </button>
       </div>
-
-      {/* Collapse Toggle */}
-      <button 
-        onClick={() => setIsCollapsed(!isCollapsed)}
-        className="fixed top-24 transform bg-white border border-zinc-200 rounded-full p-1 text-zinc-400 hover:text-zinc-900 hover:shadow-md transition-all z-20 shadow-sm"
-        style={{ left: isCollapsed ? '72px' : '248px' }}
-      >
-        {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
-      </button>
     </aside>
   );
 }

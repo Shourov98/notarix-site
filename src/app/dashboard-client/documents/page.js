@@ -1,6 +1,18 @@
+"use client";
+
+import { useEffect } from "react";
 import DocumentsTable from "@/components/dashboard-client/DocumentsTable";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchClientOverview, selectSitePortal } from "@/store/sitePortalSlice";
 
 export default function DocumentsPage() {
+  const dispatch = useAppDispatch();
+  const { clientOverview } = useAppSelector(selectSitePortal);
+
+  useEffect(() => {
+    dispatch(fetchClientOverview());
+  }, [dispatch]);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -10,7 +22,7 @@ export default function DocumentsPage() {
       </div>
 
       {/* Documents Table */}
-      <DocumentsTable />
+      <DocumentsTable documents={clientOverview?.documents} />
     </div>
   );
 }

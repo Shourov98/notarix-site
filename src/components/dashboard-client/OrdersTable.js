@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const orders = [
+const fallbackOrders = [
   {
     id: "#RON-260427",
     signerName: "Jonathan Miller",
@@ -89,7 +89,18 @@ const orders = [
   }
 ];
 
-export default function OrdersTable() {
+const getStatusStyles = (status) => {
+  switch (status) {
+    case "Completed": return "bg-emerald-50 text-emerald-600";
+    case "In Progress": return "bg-orange-50 text-orange-600";
+    case "Assigned": return "bg-blue-50 text-blue-600";
+    case "Pending": return "bg-amber-50 text-amber-600";
+    case "Cancelled": return "bg-rose-50 text-rose-600";
+    default: return "bg-zinc-50 text-zinc-600";
+  }
+};
+
+export default function OrdersTable({ orders = fallbackOrders }) {
   return (
     <div className="bg-white border border-zinc-100 rounded-[32px] shadow-sm overflow-hidden">
       {/* Filters & Actions Header */}
@@ -123,7 +134,7 @@ export default function OrdersTable() {
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-zinc-500 font-medium">Showing 1-10 of 1,284 orders</span>
+          <span className="text-sm text-zinc-500 font-medium">Showing {orders.length} orders</span>
           <div className="flex items-center gap-1">
             <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
               <ChevronLeft className="w-4 h-4 text-zinc-500" />
@@ -141,7 +152,7 @@ export default function OrdersTable() {
           <thead>
             <tr className="border-b border-zinc-100">
               <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order ID</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Signer's Name</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Signer&apos;s Name</th>
               <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Type</th>
               <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Location</th>
               <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date</th>
@@ -152,9 +163,9 @@ export default function OrdersTable() {
           </thead>
           <tbody className="divide-y divide-zinc-50">
             {orders.map((order, i) => (
-              <tr key={i} className="hover:bg-zinc-50/50 transition-colors group">
+              <tr key={order.id || i} className="hover:bg-zinc-50/50 transition-colors group">
                 <td className="px-6 py-5">
-                  <Link href={`/dashboard-client/orders/${order.id.replace('#', '')}`}>
+                  <Link href={`/dashboard-client/orders/${String(order.id).replace('#', '')}`}>
                     <span className="text-sm font-bold text-[#1a4fdb] hover:underline cursor-pointer">{order.id}</span>
                   </Link>
                 </td>
@@ -171,7 +182,7 @@ export default function OrdersTable() {
                   <span className="text-sm font-medium text-zinc-500">{order.date}</span>
                 </td>
                 <td className="px-6 py-5">
-                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${order.statusColor}`}>
+                  <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${order.statusColor || getStatusStyles(order.status)}`}>
                     {order.status}
                   </span>
                 </td>
@@ -212,7 +223,7 @@ export default function OrdersTable() {
       {/* Pagination Footer */}
       <div className="p-6 border-t border-zinc-100 flex items-center justify-between bg-zinc-50/30">
         <div className="flex items-center gap-2">
-          {[1, 2, 3, "...", 128].map((page, i) => (
+          {[1].map((page, i) => (
             <button 
               key={i}
               className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold transition-all ${
