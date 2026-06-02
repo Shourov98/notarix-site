@@ -1,4 +1,4 @@
-import { Facebook, Linkedin, X } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   return (
@@ -7,7 +7,14 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           {/* Logo & Description */}
           <div className="md:col-span-1">
-            <h2 className="text-xl font-bold text-zinc-900 mb-4 tracking-tight">Notarix™</h2>
+            <div className="relative mb-4 h-8 w-[150px]">
+              <Image
+                src="/text_2.svg"
+                alt="Notarix"
+                fill
+                className="object-contain object-left"
+              />
+            </div>
             <p className="text-sm leading-relaxed mb-6">
               Building the future of legal digital identity and document verification with precision and authority.
             </p>

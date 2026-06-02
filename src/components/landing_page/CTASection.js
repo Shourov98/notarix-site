@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function CTASection() {
   return (
     <section className="bg-white py-24 px-6 md:px-12 lg:px-24">
@@ -9,9 +11,12 @@ export default function CTASection() {
           <p className="text-blue-100 text-lg md:text-xl mb-12 max-w-2xl mx-auto font-medium">
             Professional remote notarization built for accuracy, security, and ease.
           </p>
-          <button className="bg-white text-[#1a4fdb] px-10 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-colors shadow-lg">
+          <Link
+            href="/request-access"
+            className="inline-flex bg-white text-[#1a4fdb] px-10 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-colors shadow-lg"
+          >
             Get Started Now
-          </button>
+          </Link>
         </div>
       </div>
     </section>

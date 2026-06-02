@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
@@ -19,11 +20,25 @@ export default function Navbar() {
     <nav className="bg-white border-b border-zinc-100 sticky top-0 z-50">
       <div className="flex items-center justify-between py-4 px-6 max-w-7xl mx-auto">
         {/* Left: Logo placeholder */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="bg-[#1a4fdb] text-white w-8 h-8 flex items-center justify-center rounded font-bold text-sm">
-            NT
+        <Link href="/" className="flex items-center gap-3">
+          <div className="relative h-11 w-11 overflow-hidden rounded-xl bg-white ring-1 ring-slate-200">
+            <Image
+              src="/logo.svg"
+              alt="Notarix logo"
+              fill
+              className="object-contain p-1.5"
+              priority
+            />
           </div>
-          <span className="text-xl font-bold text-zinc-900 tracking-tight">Notarix™</span>
+          <div className="relative h-7 w-[132px]">
+            <Image
+              src="/text_2.svg"
+              alt="Notarix"
+              fill
+              className="object-contain object-left"
+              priority
+            />
+          </div>
         </Link>
 
         {/* Center: Navigation Links (Desktop) */}
@@ -54,9 +69,12 @@ export default function Navbar() {
           >
             Log In
           </Link>
-          <button className="bg-[#1a4fdb] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg font-semibold hover:bg-[#1541b8] transition-colors text-sm md:text-base">
+          <Link
+            href="/request-access"
+            className="bg-[#1a4fdb] text-white px-4 md:px-6 py-2 md:py-2.5 rounded-lg font-semibold hover:bg-[#1541b8] transition-colors text-sm md:text-base"
+          >
             Get Started
-          </button>
+          </Link>
           
           {/* Mobile Menu Icon */}
           <button 
@@ -93,6 +111,13 @@ export default function Navbar() {
               className="text-zinc-600 font-medium text-base py-2"
             >
               Log In
+            </Link>
+            <Link
+              href="/request-access"
+              onClick={() => setIsOpen(false)}
+              className="rounded-lg bg-[#1a4fdb] px-4 py-3 text-center font-semibold text-white"
+            >
+              Get Started
             </Link>
           </div>
         </div>

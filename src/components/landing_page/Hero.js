@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -14,12 +15,18 @@ export default function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <button className="bg-[#4169e1] hover:bg-[#3152c7] text-white px-8 py-3.5 rounded-lg font-semibold text-base transition-colors shadow-lg shadow-blue-100">
+            <Link
+              href="/request-access"
+              className="bg-[#4169e1] hover:bg-[#3152c7] text-white px-8 py-3.5 rounded-lg font-semibold text-base transition-colors shadow-lg shadow-blue-100 text-center"
+            >
               Get Started as Client
-            </button>
-            <button className="bg-white border border-zinc-300 hover:bg-zinc-50 text-zinc-900 px-8 py-3.5 rounded-lg font-semibold text-base transition-colors">
+            </Link>
+            <Link
+              href="/request-access"
+              className="bg-white border border-zinc-300 hover:bg-zinc-50 text-zinc-900 px-8 py-3.5 rounded-lg font-semibold text-base transition-colors text-center"
+            >
               Join as Notary
-            </button>
+            </Link>
           </div>
 
           <div className="flex items-center gap-6 text-zinc-400">
