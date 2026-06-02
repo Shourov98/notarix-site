@@ -1,5 +1,5 @@
-import ProfileDetailsPage from "@/components/dashboard-notary/settings/ProfileDetailsPage";
+import { PortalProfileDetailsSettings } from "@/components/portal/PortalSettingsViews";
 
 export default function NotaryProfileDetailsPage() {
-  return <ProfileDetailsPage />;
+  return <PortalProfileDetailsSettings role="notary" />;
 }

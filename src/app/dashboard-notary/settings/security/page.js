@@ -1,5 +1,5 @@
-import SecurityPage from "@/components/dashboard-notary/settings/SecurityPage";
+import { PortalSecuritySettings } from "@/components/portal/PortalSettingsViews";
 
 export default function NotarySecurityPage() {
-  return <SecurityPage />;
+  return <PortalSecuritySettings role="notary" />;
 }

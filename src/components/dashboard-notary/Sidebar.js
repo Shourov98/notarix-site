@@ -30,14 +30,17 @@ export default function Sidebar() {
 
   return (
     <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col sticky top-0 h-screen shrink-0 z-50">
-      <div className="px-5 py-5 h-20 border-b border-zinc-100 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-[#173fbe] flex items-center justify-center shadow-lg shadow-blue-100">
-          <span className="text-white font-black text-lg">N</span>
-        </div>
-        <div>
-          <p className="text-xl leading-none font-bold tracking-tight text-zinc-900">Notarix</p>
-          <p className="text-[10px] tracking-[0.35em] uppercase text-zinc-400 font-bold mt-1">Portal</p>
-        </div>
+      <div className="flex h-20 items-center gap-3 border-b border-zinc-100 px-5 py-5">
+        <img
+          src="/logo.svg"
+          alt="Notarix"
+          className="h-11 w-11 flex-shrink-0 object-contain"
+        />
+        <img
+          src="/text_2.svg"
+          alt="Notarix Signing Services"
+          className="h-8 w-auto object-contain"
+        />
       </div>
 
       <nav className="flex-1 px-4 py-6 space-y-2">

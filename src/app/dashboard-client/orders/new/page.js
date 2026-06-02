@@ -18,6 +18,15 @@ import {
 import Link from "next/link";
 
 export default function NewOrderPage() {
+  const inputClass =
+    "w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all";
+  const selectClass =
+    "w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none";
+  const compactSelectClass =
+    "w-full px-3 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs text-zinc-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none";
+  const textAreaClass =
+    "w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-zinc-700 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all resize-none";
+
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-24">
       <h1 className="text-2xl font-bold text-zinc-900">Create New Order</h1>
@@ -37,13 +46,13 @@ export default function NewOrderPage() {
             <input 
               type="text" 
               defaultValue="26NC4999"
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+              className={inputClass}
             />
           </div>
           <div className="space-y-2">
             <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Type *</label>
             <div className="relative">
-              <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+              <select className={selectClass}>
                 <option>Loan Signing</option>
                 <option>Power of Attorney</option>
               </select>
@@ -68,14 +77,14 @@ export default function NewOrderPage() {
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">First Name *</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                className={inputClass}
               />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Last Name *</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                className={inputClass}
               />
             </div>
           </div>
@@ -84,7 +93,7 @@ export default function NewOrderPage() {
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Phone *</label>
               <div className="flex gap-2">
                 <div className="relative w-28">
-                  <select className="w-full px-3 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                  <select className={compactSelectClass}>
                     <option>+1 (USA)</option>
                   </select>
                   <ChevronDown className="absolute right-2 top-1/2 -translate-y-1/2 w-3 h-3 text-zinc-400 pointer-events-none" />
@@ -92,7 +101,7 @@ export default function NewOrderPage() {
                 <input 
                   type="text" 
                   placeholder="(555) 000-0000"
-                  className="flex-1 px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                  className={`flex-1 ${inputClass}`}
                 />
               </div>
             </div>
@@ -101,7 +110,7 @@ export default function NewOrderPage() {
               <input 
                 type="email" 
                 placeholder="borrower@example.com"
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                className={inputClass}
               />
             </div>
           </div>
@@ -126,7 +135,7 @@ export default function NewOrderPage() {
             <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Street Address *</label>
             <input 
               type="text" 
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+              className={inputClass}
             />
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -134,13 +143,13 @@ export default function NewOrderPage() {
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">City *</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                className={inputClass}
               />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">State *</label>
               <div className="relative">
-                <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                <select className={selectClass}>
                   <option>California</option>
                   <option>Texas</option>
                   <option>Florida</option>
@@ -152,13 +161,13 @@ export default function NewOrderPage() {
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Zip *</label>
               <input 
                 type="text" 
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                className={inputClass}
               />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Time Zone</label>
               <div className="relative">
-                <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                <select className={selectClass}>
                   <option>EST</option>
                   <option>CST</option>
                   <option>PST</option>
@@ -174,7 +183,7 @@ export default function NewOrderPage() {
                 <input 
                   type="text" 
                   placeholder="mm/dd/yyyy"
-                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                  className={inputClass}
                 />
                 <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
@@ -185,7 +194,7 @@ export default function NewOrderPage() {
                 <input 
                   type="text" 
                   placeholder="--:-- --"
-                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                  className={inputClass}
                 />
                 <Clock className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
@@ -210,13 +219,13 @@ export default function NewOrderPage() {
               <input 
                 type="text" 
                 placeholder="$ 0.00"
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all font-medium"
+                className={`${inputClass} font-medium`}
               />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Payment Status</label>
               <div className="relative">
-                <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                <select className={selectClass}>
                   <option>Pending</option>
                   <option>Paid</option>
                 </select>
@@ -226,7 +235,7 @@ export default function NewOrderPage() {
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Payment Method</label>
               <div className="relative">
-                <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                <select className={selectClass}>
                   <option>Card</option>
                   <option>Transfer</option>
                 </select>
@@ -241,7 +250,7 @@ export default function NewOrderPage() {
                 <input 
                   type="text" 
                   placeholder="mm/dd/yyyy"
-                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                  className={inputClass}
                 />
                 <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
@@ -252,7 +261,7 @@ export default function NewOrderPage() {
                 <input 
                   type="text" 
                   placeholder="mm/dd/yyyy"
-                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                  className={inputClass}
                 />
                 <Calendar className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
               </div>
@@ -262,7 +271,7 @@ export default function NewOrderPage() {
             <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Payment Notes</label>
             <textarea 
               rows={3}
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all resize-none"
+              className={textAreaClass}
             ></textarea>
           </div>
         </div>
@@ -283,7 +292,7 @@ export default function NewOrderPage() {
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Paper Size</label>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                  <select className={selectClass}>
                     <option>Letter</option>
                     <option>Legal</option>
                   </select>
@@ -293,7 +302,7 @@ export default function NewOrderPage() {
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Preferred Ink</label>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all appearance-none">
+                  <select className={selectClass}>
                     <option>Black</option>
                     <option>Blue</option>
                   </select>
@@ -306,7 +315,7 @@ export default function NewOrderPage() {
                 <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Est. Pages</label>
                 <input 
                   type="text" 
-                  className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+                  className={inputClass}
                 />
               </div>
               <div className="flex-1 bg-zinc-50 border border-zinc-100 rounded-xl px-4 py-3 flex items-center justify-between">
@@ -332,7 +341,7 @@ export default function NewOrderPage() {
             <textarea 
               rows={6}
               placeholder="Provide any specific requests, entry codes, or borrower requirements here..."
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all resize-none placeholder:text-zinc-400"
+              className={textAreaClass}
             ></textarea>
           </div>
         </div>
@@ -361,35 +370,8 @@ export default function NewOrderPage() {
             </button>
           </div>
 
-          <div className="space-y-3">
-            <div className="flex items-center justify-between p-4 bg-white border border-zinc-100 rounded-2xl shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-rose-50 rounded-lg flex items-center justify-center">
-                  <FileText className="w-4 h-4 text-rose-500" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-zinc-700">Loan_Package_v1.pdf</p>
-                  <p className="text-[10px] font-medium text-zinc-400">14.2 MB</p>
-                </div>
-              </div>
-              <button className="p-2 text-zinc-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all">
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="flex items-center justify-between p-4 bg-white border border-zinc-100 rounded-2xl shadow-sm">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-rose-50 rounded-lg flex items-center justify-center">
-                  <FileText className="w-4 h-4 text-rose-500" />
-                </div>
-                <div>
-                  <p className="text-sm font-bold text-zinc-700">Identification_Card_Front.pdf</p>
-                  <p className="text-[10px] font-medium text-zinc-400">2.1 MB</p>
-                </div>
-              </div>
-              <button className="p-2 text-zinc-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all">
-                <Trash2 className="w-4 h-4" />
-              </button>
-            </div>
+          <div className="rounded-2xl border border-dashed border-zinc-200 bg-zinc-50/50 px-5 py-4 text-sm text-zinc-500">
+            No files selected yet.
           </div>
         </div>
       </div>

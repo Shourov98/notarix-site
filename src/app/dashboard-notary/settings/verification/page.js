@@ -1,5 +1,5 @@
-import VerificationPage from "@/components/dashboard-notary/settings/VerificationPage";
+import { PortalVerificationSettings } from "@/components/portal/PortalSettingsViews";
 
 export default function NotaryVerificationPage() {
-  return <VerificationPage />;
+  return <PortalVerificationSettings />;
 }

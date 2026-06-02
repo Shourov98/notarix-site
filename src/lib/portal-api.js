@@ -3,6 +3,7 @@
 const DEFAULT_API_BASE_URL = "http://localhost:5191";
 const DEFAULT_API_PREFIX = "/api/v1";
 const PORTAL_SESSION_KEY = "notarix_portal_session";
+const portalGetCache = new Map();
 
 export const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL?.trim() || DEFAULT_API_BASE_URL;
@@ -27,10 +28,11 @@ export const extractApiErrorMessage = (payload) => {
 };
 
 export const requestJson = async (path, options = {}) => {
+  const hasFormDataBody = options.body instanceof FormData;
   const response = await fetch(buildApiUrl(path), {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      ...(hasFormDataBody ? {} : { "Content-Type": "application/json" }),
       ...(options.headers || {}),
     },
   });
@@ -58,5 +60,60 @@ export const getPortalSession = () => {
     return JSON.parse(raw);
   } catch {
     return null;
+  }
+};
+
+export const getPortalAccessToken = () => getPortalSession()?.accessToken || "";
+
+export const requestPortalJson = async (path, options = {}) => {
+  const accessToken = getPortalAccessToken();
+
+  return requestJson(path, {
+    ...options,
+    headers: {
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      ...(options.headers || {}),
+    },
+  });
+};
+
+export const requestPortalJsonOnce = async (path) => {
+  const cacheKey = `${getPortalAccessToken()}::${path}`;
+  const cached = portalGetCache.get(cacheKey);
+
+  if (cached?.data) {
+    return cached.data;
+  }
+
+  if (cached?.promise) {
+    return cached.promise;
+  }
+
+  const promise = requestPortalJson(path)
+    .then((data) => {
+      portalGetCache.set(cacheKey, { data });
+      return data;
+    })
+    .catch((error) => {
+      portalGetCache.delete(cacheKey);
+      throw error;
+    });
+
+  portalGetCache.set(cacheKey, { promise });
+  return promise;
+};
+
+export const invalidatePortalCache = (path) => {
+  const token = getPortalAccessToken();
+  if (!token) {
+    portalGetCache.clear();
+    return;
+  }
+
+  for (const key of portalGetCache.keys()) {
+    if (!key.startsWith(`${token}::`)) continue;
+    if (!path || key === `${token}::${path}`) {
+      portalGetCache.delete(key);
+    }
   }
 };

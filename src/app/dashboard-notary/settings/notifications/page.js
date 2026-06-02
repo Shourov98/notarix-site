@@ -1,5 +1,5 @@
-import NotificationsPage from "@/components/dashboard-notary/settings/NotificationsPage";
+import { PortalNotificationsSettings } from "@/components/portal/PortalSettingsViews";
 
 export default function NotaryNotificationsPage() {
-  return <NotificationsPage />;
+  return <PortalNotificationsSettings role="notary" />;
 }

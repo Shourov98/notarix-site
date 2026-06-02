@@ -36,12 +36,18 @@ export default function Sidebar() {
       }`}
     >
       {/* Logo Area */}
-      <div className="p-6 flex items-center gap-3 h-20 border-b border-zinc-50 bg-white">
-        <div className="w-8 h-8 bg-[#1a4fdb] rounded flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-bold text-xl italic">N</span>
-        </div>
+      <div className="flex h-20 items-center gap-3 border-b border-zinc-50 bg-white px-5">
+        <img
+          src="/logo.svg"
+          alt="Notarix"
+          className="h-11 w-11 flex-shrink-0 object-contain"
+        />
         {!isCollapsed && (
-          <span className="text-xl font-bold text-zinc-900 tracking-tight">Notarix™</span>
+          <img
+            src="/text_2.svg"
+            alt="Notarix Signing Services"
+            className="h-8 w-auto object-contain"
+          />
         )}
       </div>
 

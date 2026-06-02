@@ -1,5 +1,5 @@
-import PaymentsSettingsPage from "@/components/dashboard-notary/settings/PaymentsSettingsPage";
+import { PortalPaymentsSettings } from "@/components/portal/PortalSettingsViews";
 
 export default function NotaryPaymentsSettingsPage() {
-  return <PaymentsSettingsPage />;
+  return <PortalPaymentsSettings role="notary" />;
 }
