@@ -50,6 +50,12 @@ export const savePortalSession = (session) => {
   window.localStorage.setItem(PORTAL_SESSION_KEY, JSON.stringify(session));
 };
 
+export const clearPortalSession = () => {
+  if (typeof window === "undefined") return;
+  window.localStorage.removeItem(PORTAL_SESSION_KEY);
+  portalGetCache.clear();
+};
+
 export const getPortalSession = () => {
   if (typeof window === "undefined") return null;
 
@@ -114,6 +120,28 @@ export const invalidatePortalCache = (path) => {
     if (!key.startsWith(`${token}::`)) continue;
     if (!path || key === `${token}::${path}`) {
       portalGetCache.delete(key);
+    }
+  }
+};
+
+export const logoutPortalSession = async () => {
+  const session = getPortalSession();
+
+  try {
+    if (session?.refreshToken) {
+      await requestPortalJson("/site/auth/logout", {
+        method: "POST",
+        body: JSON.stringify({
+          refreshToken: session.refreshToken,
+        }),
+      });
+    }
+  } catch {
+    // Clear local state even if the backend logout request fails.
+  } finally {
+    clearPortalSession();
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("notarix:profile-updated"));
     }
   }
 };

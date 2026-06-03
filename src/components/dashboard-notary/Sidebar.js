@@ -13,7 +13,8 @@ import {
   ClipboardList,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { logoutPortalSession } from "@/lib/portal-api";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard-notary" },
@@ -27,6 +28,13 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await logoutPortalSession();
+    router.replace("/login");
+    router.refresh();
+  };
 
   return (
     <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col sticky top-0 h-screen shrink-0 z-50">
@@ -71,7 +79,11 @@ export default function Sidebar() {
           <CircleHelp className="w-5 h-5" />
           <span className="text-sm font-medium">Help Center</span>
         </button>
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition-colors">
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition-colors"
+        >
           <LogOut className="w-5 h-5" />
           <span className="text-sm font-medium">Sign Out</span>
         </button>

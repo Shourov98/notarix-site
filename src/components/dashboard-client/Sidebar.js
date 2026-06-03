@@ -14,7 +14,8 @@ import {
   ChevronRight
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { logoutPortalSession } from "@/lib/portal-api";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard-client" },
@@ -28,6 +29,13 @@ const menuItems = [
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await logoutPortalSession();
+    router.replace("/login");
+    router.refresh();
+  };
 
   return (
     <aside 
@@ -88,7 +96,11 @@ export default function Sidebar() {
              </div>
           )}
         </button>
-        <button className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors group relative">
+        <button
+          type="button"
+          onClick={handleSignOut}
+          className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors group relative"
+        >
           <LogOut className="w-5 h-5 flex-shrink-0" />
           {!isCollapsed && <span className="font-medium text-sm">Sign Out</span>}
           {isCollapsed && (
