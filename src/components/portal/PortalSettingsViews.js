@@ -341,15 +341,13 @@ export function PortalProfileSettings({ role }) {
 
   const refreshProfile = async () => {
     invalidatePortalCache(`/site/${rolePath[role]}/overview`);
-      const payload = await requestPortalJson(`/site/${rolePath[role]}/overview`);
-      const nextProfile = payload?.profile || null;
-      setLiveProfile(nextProfile);
-      if (isNotary) {
-        setIsEditing(false);
-      }
-      if (typeof window !== "undefined") {
-        window.dispatchEvent(new Event("notarix:profile-updated"));
-      }
+    const payload = await requestPortalJson(`/site/${rolePath[role]}/overview`);
+    const nextProfile = payload?.profile || null;
+    setLiveProfile(nextProfile);
+    setIsEditing(false);
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("notarix:profile-updated"));
+    }
     return nextProfile;
   };
 
@@ -564,8 +562,49 @@ export function PortalProfileSettings({ role }) {
           </div>
         ) : (
         <div className="overflow-hidden rounded-[28px] border border-zinc-100 bg-white shadow-sm">
-          <div className="border-b border-zinc-100 px-8 py-5">
+          <div className="flex flex-col gap-4 border-b border-zinc-100 px-8 py-5 md:flex-row md:items-center md:justify-between">
             <h3 className="text-xl font-semibold text-zinc-900">Profile Information</h3>
+            <div className="flex items-center gap-3">
+              {isEditing ? (
+                <>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      resetFormFromProfile();
+                      setSubmitError("");
+                      setSubmitSuccess("");
+                      setIsEditing(false);
+                    }}
+                    disabled={saving}
+                    className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white px-6 py-3 text-sm font-bold text-zinc-700 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSave}
+                    disabled={saving}
+                    className="inline-flex items-center gap-2 rounded-xl bg-[#1a4fdb] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-blue-100 transition hover:bg-[#1541b8] disabled:cursor-not-allowed disabled:opacity-70"
+                  >
+                    {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                    Save Changes
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    resetFormFromProfile();
+                    setSubmitError("");
+                    setSubmitSuccess("");
+                    setIsEditing(true);
+                  }}
+                  className="inline-flex items-center justify-center rounded-xl bg-[#1a4fdb] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-blue-100 transition hover:bg-[#1541b8]"
+                >
+                  Edit Profile
+                </button>
+              )}
+            </div>
           </div>
 
           <div className="space-y-8 px-8 py-8">
@@ -593,7 +632,7 @@ export function PortalProfileSettings({ role }) {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   className="absolute bottom-0 right-0 flex h-9 w-9 items-center justify-center rounded-full border border-white bg-white text-[#1a4fdb] shadow-md transition hover:bg-zinc-50"
-                  disabled={uploading}
+                  disabled={uploading || !isEditing}
                 >
                   {uploading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
                 </button>
@@ -615,7 +654,7 @@ export function PortalProfileSettings({ role }) {
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
                   className="mt-2 text-sm font-bold text-[#1a4fdb] hover:underline"
-                  disabled={uploading}
+                  disabled={uploading || !isEditing}
                 >
                   {uploading ? "Uploading..." : "Change photo"}
                 </button>
@@ -630,8 +669,9 @@ export function PortalProfileSettings({ role }) {
                 <input
                   type="text"
                   value={form.name}
+                  readOnly={!isEditing}
                   onChange={updateField("name")}
-                  className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm text-zinc-700 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm text-zinc-700 ${isEditing ? "border-zinc-200 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10" : "border-zinc-200 bg-zinc-50"}`}
                 />
               </div>
               <div className="space-y-2">
@@ -641,8 +681,8 @@ export function PortalProfileSettings({ role }) {
                 <input
                   type="email"
                   value={form.email}
-                  onChange={updateField("email")}
-                  className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm text-zinc-700 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10"
+                  readOnly
+                  className="w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-700"
                 />
               </div>
               <div className="space-y-2">
@@ -652,8 +692,9 @@ export function PortalProfileSettings({ role }) {
                 <input
                   type="text"
                   value={form.phone}
+                  readOnly={!isEditing}
                   onChange={updateField("phone")}
-                  className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm text-zinc-700 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm text-zinc-700 ${isEditing ? "border-zinc-200 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10" : "border-zinc-200 bg-zinc-50"}`}
                 />
               </div>
               <div className="space-y-2">
@@ -663,22 +704,11 @@ export function PortalProfileSettings({ role }) {
                 <input
                   type="text"
                   value={form.company}
+                  readOnly={!isEditing}
                   onChange={updateField("company")}
-                  className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm text-zinc-700 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10"
+                  className={`w-full rounded-xl border px-4 py-3 text-sm text-zinc-700 ${isEditing ? "border-zinc-200 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10" : "border-zinc-200 bg-zinc-50"}`}
                 />
               </div>
-            </div>
-
-            <div className="flex justify-end">
-              <button
-                type="button"
-                onClick={handleSave}
-                disabled={saving}
-                className="inline-flex items-center gap-2 rounded-xl bg-[#1a4fdb] px-8 py-3 text-sm font-bold text-white shadow-lg shadow-blue-100 transition hover:bg-[#1541b8] disabled:cursor-not-allowed disabled:opacity-70"
-              >
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
-                Save Changes
-              </button>
             </div>
           </div>
         </div>
@@ -1032,64 +1062,110 @@ export function PortalProfileDetailsSettings({ role }) {
 
           <div className="grid gap-8 xl:grid-cols-[minmax(0,2fr)_360px]">
             <div className="space-y-8">
-              <div className="rounded-[28px] border border-zinc-100 bg-white p-6 shadow-sm">
-                <div className="flex items-center gap-3">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-[#1a4fdb]">
-                    <CheckCircle2 className="h-5 w-5" />
+              <div className="rounded-[28px] border border-zinc-100 bg-white shadow-sm">
+                <div className="flex items-center justify-between gap-4 border-b border-zinc-100 px-6 py-5">
+                  <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-[#1a4fdb]">
+                      <FileText className="h-5 w-5" />
+                    </div>
+                    <div>
+                      <h4 className="text-2xl font-bold text-zinc-900">Document Workspace</h4>
+                      <p className="mt-1 text-sm text-zinc-500">Tracked client documents, even when they are optional.</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-2xl font-bold text-zinc-900">What Remains</h4>
-                    <p className="mt-1 text-sm text-zinc-500">
-                      {checks.completedChecks} of {checks.totalChecks} tracked items completed.
-                    </p>
+                  <div className="rounded-full bg-zinc-50 px-4 py-2 text-sm font-semibold text-zinc-500">
+                    {documents.filter((item) => item.status !== "Missing").length} of {documents.length} tracked
                   </div>
                 </div>
 
-                <div className="mt-6 grid gap-6 md:grid-cols-2">
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-400">
-                      Profile Fields
-                    </p>
-                    <div className="mt-4 space-y-3">
-                      {checks.profile.map((item) => (
-                        <div key={item.key} className="flex items-center justify-between gap-4 rounded-2xl bg-zinc-50 px-4 py-3">
-                          <span className="text-sm font-medium text-zinc-700">{item.label}</span>
-                          <span
-                            className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${
-                              item.complete
-                                ? "bg-emerald-50 text-emerald-700"
-                                : "bg-amber-50 text-amber-700"
-                            }`}
-                          >
-                            {item.complete ? "Completed" : "Missing"}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div>
-                    <p className="text-[11px] font-bold uppercase tracking-[0.16em] text-zinc-400">
-                      Tracked Client Documents
-                    </p>
-                    <div className="mt-4 space-y-3">
-                      {checks.documents.map((item) => (
-                        <div key={item.key} className="flex items-center justify-between gap-4 rounded-2xl bg-zinc-50 px-4 py-3">
-                          <div>
-                            <p className="text-sm font-medium text-zinc-700">{item.label}</p>
-                            <p className="mt-1 text-xs text-zinc-400">Optional but tracked</p>
+                <div className="space-y-4 px-6 py-6">
+                  {documents.map((document) => (
+                    <div key={document.key} className="rounded-[24px] border border-zinc-100 bg-zinc-50/60 p-5">
+                      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+                        <div className="flex items-start gap-4">
+                          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-[#1a4fdb] shadow-sm">
+                            <FileBadge2 className="h-6 w-6" />
                           </div>
-                          <span
-                            className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${
-                              statusClasses[item.status] || statusClasses.Missing
-                            }`}
-                          >
-                            {item.status}
-                          </span>
+                          <div>
+                            <div className="flex flex-wrap items-center gap-3">
+                              <h5 className="text-lg font-bold text-zinc-900">{document.title}</h5>
+                              <span
+                                className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${
+                                  statusClasses[document.displayStatus] || statusClasses.Missing
+                                }`}
+                              >
+                                {document.displayStatus}
+                              </span>
+                              <span className="rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-500">
+                                Optional
+                              </span>
+                            </div>
+                            <p className="mt-2 text-sm leading-7 text-zinc-500">{document.description}</p>
+                            <div className="mt-3 space-y-1 text-sm text-zinc-500">
+                              <p>
+                                File:{" "}
+                                <span className="font-medium text-zinc-700">
+                                  {document.fileName || "No file uploaded yet"}
+                                </span>
+                              </p>
+                              <p>
+                                Updated:{" "}
+                                <span className="font-medium text-zinc-700">
+                                  {document.uploadedAt
+                                    ? new Date(document.uploadedAt).toLocaleString("en-US", {
+                                        month: "short",
+                                        day: "numeric",
+                                        year: "numeric",
+                                        hour: "numeric",
+                                        minute: "2-digit",
+                                      })
+                                    : "Not uploaded yet"}
+                                </span>
+                              </p>
+                            </div>
+                          </div>
                         </div>
-                      ))}
+
+                        <div className="flex flex-wrap items-center gap-3">
+                          {document.viewUrl ? (
+                            <a
+                              href={document.viewUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-bold text-zinc-700 transition hover:bg-zinc-50"
+                            >
+                              View Document
+                            </a>
+                          ) : null}
+
+                          <label className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#1a4fdb] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-100 transition hover:bg-[#1541b8]">
+                            {uploadingKey === document.key ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Uploading...
+                              </>
+                            ) : document.viewUrl ? (
+                              <>
+                                Replace
+                                <UploadCloud className="ml-2 h-4 w-4" />
+                              </>
+                            ) : (
+                              <>
+                                Upload
+                                <UploadCloud className="ml-2 h-4 w-4" />
+                              </>
+                            )}
+                            <input
+                              type="file"
+                              accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+                              className="hidden"
+                              onChange={handleDocumentUpload(document.key)}
+                            />
+                          </label>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -1275,113 +1351,6 @@ export function PortalProfileDetailsSettings({ role }) {
                             onChange={updateNestedField(key, "phone")}
                             className="w-full rounded-xl border border-zinc-200 px-4 py-3 text-sm text-zinc-700 focus:border-[#1a4fdb] focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10"
                           />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="rounded-[28px] border border-zinc-100 bg-white shadow-sm">
-                <div className="flex items-center justify-between gap-4 border-b border-zinc-100 px-6 py-5">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-[#1a4fdb]">
-                      <FileText className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <h4 className="text-2xl font-bold text-zinc-900">Document Workspace</h4>
-                      <p className="mt-1 text-sm text-zinc-500">Tracked client documents, even when they are optional.</p>
-                    </div>
-                  </div>
-                  <div className="rounded-full bg-zinc-50 px-4 py-2 text-sm font-semibold text-zinc-500">
-                    {documents.filter((item) => item.status !== "Missing").length} of {documents.length} tracked
-                  </div>
-                </div>
-
-                <div className="space-y-4 px-6 py-6">
-                  {documents.map((document) => (
-                    <div key={document.key} className="rounded-[24px] border border-zinc-100 bg-zinc-50/60 p-5">
-                      <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
-                        <div className="flex items-start gap-4">
-                          <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-[#1a4fdb] shadow-sm">
-                            <FileBadge2 className="h-6 w-6" />
-                          </div>
-                          <div>
-                            <div className="flex flex-wrap items-center gap-3">
-                              <h5 className="text-lg font-bold text-zinc-900">{document.title}</h5>
-                              <span
-                                className={`rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] ${
-                                  statusClasses[document.displayStatus] || statusClasses.Missing
-                                }`}
-                              >
-                                {document.displayStatus}
-                              </span>
-                              <span className="rounded-full bg-zinc-100 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.12em] text-zinc-500">
-                                Optional
-                              </span>
-                            </div>
-                            <p className="mt-2 text-sm leading-7 text-zinc-500">{document.description}</p>
-                            <div className="mt-3 space-y-1 text-sm text-zinc-500">
-                              <p>
-                                File:{" "}
-                                <span className="font-medium text-zinc-700">
-                                  {document.fileName || "No file uploaded yet"}
-                                </span>
-                              </p>
-                              <p>
-                                Updated:{" "}
-                                <span className="font-medium text-zinc-700">
-                                  {document.uploadedAt
-                                    ? new Date(document.uploadedAt).toLocaleString("en-US", {
-                                        month: "short",
-                                        day: "numeric",
-                                        year: "numeric",
-                                        hour: "numeric",
-                                        minute: "2-digit",
-                                      })
-                                    : "Not uploaded yet"}
-                                </span>
-                              </p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap items-center gap-3">
-                          {document.viewUrl ? (
-                            <a
-                              href={document.viewUrl}
-                              target="_blank"
-                              rel="noreferrer"
-                              className="inline-flex items-center justify-center rounded-xl border border-zinc-200 bg-white px-5 py-3 text-sm font-bold text-zinc-700 transition hover:bg-zinc-50"
-                            >
-                              View Document
-                            </a>
-                          ) : null}
-
-                          <label className="inline-flex cursor-pointer items-center justify-center rounded-xl bg-[#1a4fdb] px-5 py-3 text-sm font-bold text-white shadow-lg shadow-blue-100 transition hover:bg-[#1541b8]">
-                            {uploadingKey === document.key ? (
-                              <>
-                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                                Uploading...
-                              </>
-                            ) : document.viewUrl ? (
-                              <>
-                                Replace
-                                <UploadCloud className="ml-2 h-4 w-4" />
-                              </>
-                            ) : (
-                              <>
-                                Upload
-                                <UploadCloud className="ml-2 h-4 w-4" />
-                              </>
-                            )}
-                            <input
-                              type="file"
-                              accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
-                              className="hidden"
-                              onChange={handleDocumentUpload(document.key)}
-                            />
-                          </label>
                         </div>
                       </div>
                     </div>
