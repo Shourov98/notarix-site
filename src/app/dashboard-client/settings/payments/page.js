@@ -111,7 +111,7 @@ export default function PaymentsSettingsPage() {
                 type="text"
                 value={formState.bankName}
                 onChange={(event) => updateField("bankName", event.target.value)}
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm"
+                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700"
               />
             </div>
             <div className="space-y-2">
@@ -120,7 +120,7 @@ export default function PaymentsSettingsPage() {
                 type="text"
                 value={formState.accountHolderName}
                 onChange={(event) => updateField("accountHolderName", event.target.value)}
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm"
+                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700"
               />
             </div>
             <div className="space-y-2">
@@ -128,7 +128,7 @@ export default function PaymentsSettingsPage() {
               <select
                 value={formState.accountType}
                 onChange={(event) => updateField("accountType", event.target.value)}
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm"
+                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700"
               >
                 <option value="checking">Checking</option>
                 <option value="savings">Savings</option>
@@ -141,7 +141,7 @@ export default function PaymentsSettingsPage() {
                 type="text"
                 value={formState.routingNumber}
                 onChange={(event) => updateField("routingNumber", event.target.value.replace(/\D/g, "").slice(0, 9))}
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm"
+                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700"
               />
             </div>
             <div className="space-y-2 md:col-span-2">
@@ -150,7 +150,7 @@ export default function PaymentsSettingsPage() {
                 type="text"
                 value={formState.accountNumber}
                 onChange={(event) => updateField("accountNumber", event.target.value.replace(/\D/g, "").slice(0, 17))}
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm"
+                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700"
               />
             </div>
           </div>

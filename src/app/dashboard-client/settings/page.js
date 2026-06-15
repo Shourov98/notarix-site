@@ -39,7 +39,7 @@ export default function ProfilePage() {
             <input 
               type="text" 
               defaultValue="James R. Wilson"
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -47,7 +47,7 @@ export default function ProfilePage() {
             <input 
               type="email" 
               defaultValue="james.wilson@corporate.com"
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -55,7 +55,7 @@ export default function ProfilePage() {
             <input 
               type="text" 
               defaultValue="+1 (555) 012-3456"
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -63,7 +63,7 @@ export default function ProfilePage() {
             <input 
               type="text" 
               defaultValue="Wilson & Partners Legal"
-              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
+              className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm font-medium text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
             />
           </div>
         </div>

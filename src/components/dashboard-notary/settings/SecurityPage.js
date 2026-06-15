@@ -22,7 +22,7 @@ export default function SecurityPage() {
                 <input
                   type={visible ? "text" : "password"}
                   defaultValue={value}
-                  className="w-full outline-none"
+                  className="w-full text-gray-700 placeholder:text-gray-700 outline-none"
                 />
                 <button
                   type="button"

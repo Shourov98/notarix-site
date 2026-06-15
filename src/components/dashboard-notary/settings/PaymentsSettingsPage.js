@@ -92,18 +92,18 @@ export default function PaymentsSettingsPage() {
               value={formState.bankName}
               onChange={(event) => updateField("bankName", event.target.value)}
               placeholder="Bank Name"
-              className="w-full rounded-2xl border border-zinc-200 px-4 py-3"
+              className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-gray-700 placeholder:text-gray-700"
             />
             <input
               value={formState.accountHolderName}
               onChange={(event) => updateField("accountHolderName", event.target.value)}
               placeholder="Account Holder Name"
-              className="w-full rounded-2xl border border-zinc-200 px-4 py-3"
+              className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-gray-700 placeholder:text-gray-700"
             />
             <select
               value={formState.accountType}
               onChange={(event) => updateField("accountType", event.target.value)}
-              className="w-full rounded-2xl border border-zinc-200 px-4 py-3"
+              className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-gray-700 placeholder:text-gray-700"
             >
               <option value="checking">Checking</option>
               <option value="savings">Savings</option>
@@ -119,13 +119,13 @@ export default function PaymentsSettingsPage() {
               value={formState.routingNumber}
               onChange={(event) => updateField("routingNumber", event.target.value.replace(/\D/g, "").slice(0, 9))}
               placeholder="Routing Number"
-              className="w-full rounded-2xl border border-zinc-200 px-4 py-3"
+              className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-gray-700 placeholder:text-gray-700"
             />
             <input
               value={formState.accountNumber}
               onChange={(event) => updateField("accountNumber", event.target.value.replace(/\D/g, "").slice(0, 17))}
               placeholder="Account Number"
-              className="w-full rounded-2xl border border-zinc-200 px-4 py-3"
+              className="w-full rounded-2xl border border-zinc-200 px-4 py-3 text-gray-700 placeholder:text-gray-700"
             />
             <p className="italic text-sm font-medium text-gray-700">
               {notaryBankInfoStatus === "loading"

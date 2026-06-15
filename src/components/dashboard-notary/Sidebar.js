@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   BriefcaseBusiness,
   CircleHelp,
@@ -37,12 +38,28 @@ export default function Sidebar() {
   return (
     <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col sticky top-0 h-screen shrink-0 z-50">
       <div className="px-5 py-5 h-20 border-b border-zinc-100 flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-[#173fbe] flex items-center justify-center shadow-lg shadow-blue-100">
-          <span className="text-white font-black text-lg">N</span>
+        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#eef4ff] shadow-sm ring-1 ring-[#dbe6ff] shrink-0">
+          <Image
+            src="/logo.svg"
+            alt="Notarix"
+            width={28}
+            height={28}
+            className="h-7 w-7 object-contain"
+            priority
+          />
         </div>
-        <div>
-          <p className="text-xl leading-none font-bold tracking-tight text-zinc-900">Notarix</p>
-          <p className="text-[10px] tracking-[0.35em] uppercase text-gray-700 font-bold mt-1">Portal</p>
+        <div className="min-w-0">
+          <Image
+            src="/text_2.svg"
+            alt="Notarix"
+            width={126}
+            height={37}
+            className="h-8 w-auto object-contain"
+            priority
+          />
+          <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.32em] text-gray-700">
+            Notary Portal
+          </p>
         </div>
       </div>
 

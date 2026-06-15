@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import { 
   LayoutDashboard, 
@@ -43,12 +44,31 @@ export default function Sidebar() {
       }`}
     >
       {/* Logo Area */}
-      <div className="p-6 flex items-center gap-3 h-20 border-b border-zinc-50 bg-white">
-        <div className="w-8 h-8 bg-[#1a4fdb] rounded flex items-center justify-center flex-shrink-0">
-          <span className="text-white font-bold text-xl italic">N</span>
+      <div className="px-5 py-5 flex items-center gap-3 h-20 border-b border-zinc-50 bg-white">
+        <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#eef4ff] shadow-sm ring-1 ring-[#dbe6ff] flex-shrink-0">
+          <Image
+            src="/logo.svg"
+            alt="Notarix"
+            width={28}
+            height={28}
+            className="h-7 w-7 object-contain"
+            priority
+          />
         </div>
         {!isCollapsed && (
-          <span className="text-xl font-bold text-zinc-900 tracking-tight">Notarix™</span>
+          <div className="min-w-0">
+            <Image
+              src="/text_2.svg"
+              alt="Notarix"
+              width={126}
+              height={37}
+              className="h-8 w-auto object-contain"
+              priority
+            />
+            <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.32em] text-gray-700">
+              Client Portal
+            </p>
+          </div>
         )}
       </div>
 

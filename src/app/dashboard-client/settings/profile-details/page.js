@@ -87,17 +87,17 @@ export default function ProfileDetailsPage() {
           <div className="space-y-6">
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Company Name</label>
-              <input type="text" defaultValue="Acme Legal Services Corp." className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
+              <input type="text" defaultValue="Acme Legal Services Corp." className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Website</label>
-                <input type="text" defaultValue="https://www.example.com" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
+                <input type="text" defaultValue="https://www.example.com" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Company Type</label>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all">
+                  <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 appearance-none focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all">
                     <option>Law Firm</option>
                     <option>Real Estate</option>
                   </select>
@@ -107,7 +107,7 @@ export default function ProfileDetailsPage() {
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Office Phones</label>
-              <input type="text" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
+              <input type="text" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
             </div>
           </div>
         </div>
@@ -121,21 +121,21 @@ export default function ProfileDetailsPage() {
           <div className="space-y-6">
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Line 1</label>
-              <input type="text" placeholder="Street address or P.O. Box" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+              <input type="text" placeholder="Street address or P.O. Box" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
             </div>
             <div className="space-y-2">
               <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Line 2 (Optional)</label>
-              <input type="text" placeholder="Apartment, suite, unit, building, floor" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+              <input type="text" placeholder="Apartment, suite, unit, building, floor" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">City</label>
-                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">State</label>
                 <div className="relative">
-                  <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm appearance-none">
+                  <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 appearance-none">
                     <option>NY</option>
                     <option>CA</option>
                   </select>
@@ -144,7 +144,7 @@ export default function ProfileDetailsPage() {
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Zip</label>
-                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
             </div>
           </div>
@@ -163,15 +163,15 @@ export default function ProfileDetailsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Full Name</label>
-                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Email</label>
-                <input type="email" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="email" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Phone</label>
-                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
             </div>
           </div>
@@ -182,15 +182,15 @@ export default function ProfileDetailsPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Full Name</label>
-                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Email</label>
-                <input type="email" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="email" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
               <div className="space-y-2">
                 <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Phone</label>
-                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
+                <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-gray-700 placeholder:text-gray-700 focus:outline-none" />
               </div>
             </div>
           </div>

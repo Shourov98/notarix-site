@@ -39,7 +39,7 @@ export default function ProfilePage() {
         ].map(([label, value]) => (
           <div key={label} className="space-y-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
-            <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
         ))}
       </div>
@@ -48,24 +48,24 @@ export default function ProfilePage() {
         <p className="text-xs uppercase tracking-[0.2em] font-bold text-gray-700">Business Address</p>
         <div className="space-y-2">
           <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Address Line 1</label>
-          <input defaultValue="742 Evergreen Terrace" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+          <input defaultValue="742 Evergreen Terrace" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
         </div>
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Address Line 2</label>
-            <input defaultValue="Suite, Apt" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue="Suite, Apt" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">City</label>
-            <input defaultValue="New York" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue="New York" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">State</label>
-            <input defaultValue="New York" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue="New York" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Zip Code</label>
-            <input defaultValue="10001" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue="10001" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
         </div>
       </div>

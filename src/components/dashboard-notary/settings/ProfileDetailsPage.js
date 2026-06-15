@@ -14,7 +14,7 @@ export default function ProfileDetailsPage() {
           ].map(([label, value]) => (
             <div key={label} className="space-y-2">
               <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
-              <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+              <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
             </div>
           ))}
         </div>
@@ -22,7 +22,7 @@ export default function ProfileDetailsPage() {
           <p className="text-xs uppercase tracking-[0.2em] font-bold text-gray-700">Business Address</p>
           <div className="space-y-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Address Line 1</label>
-            <input defaultValue="742 Evergreen Terrace" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue="742 Evergreen Terrace" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
             {[
@@ -33,7 +33,7 @@ export default function ProfileDetailsPage() {
             ].map(([label, value]) => (
               <div key={label} className="space-y-2">
                 <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
-                <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+                <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
               </div>
             ))}
           </div>
@@ -51,12 +51,12 @@ export default function ProfileDetailsPage() {
           ].map(([label, value]) => (
             <div key={label} className="space-y-2">
               <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
-              <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+              <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
             </div>
           ))}
           <div className="space-y-2 xl:col-span-2">
             <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">E&amp;O Coverage Amount ($)</label>
-            <input defaultValue="100,000" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+            <input defaultValue="100,000" className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@ export default function ProfileDetailsPage() {
           ].map(([label, value]) => (
             <div key={label} className="space-y-2">
               <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
-              <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 focus:outline-none focus:border-[#2c49df]" />
+              <input defaultValue={value} className="w-full px-4 py-4 rounded-2xl border border-zinc-300 text-gray-700 placeholder:text-gray-700 focus:outline-none focus:border-[#2c49df]" />
             </div>
           ))}
         </div>

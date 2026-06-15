@@ -13,6 +13,7 @@ import {
   Calendar
 } from "lucide-react";
 import Link from "next/link";
+import { buildAssetUrl } from "@/lib/siteApi";
 
 const defaultDocuments = [
   {
@@ -78,6 +79,82 @@ const defaultDocuments = [
 ];
 
 export default function DocumentsTable({ documents = defaultDocuments }) {
+  const formatDate = (value) => {
+    if (!value) {
+      return "Not available";
+    }
+
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) {
+      return String(value);
+    }
+
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
+
+  const formatSize = (value) => {
+    const bytes = Number(value);
+    if (!Number.isFinite(bytes) || bytes <= 0) {
+      return "Unknown";
+    }
+
+    if (bytes >= 1024 * 1024) {
+      return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+    }
+
+    if (bytes >= 1024) {
+      return `${Math.round(bytes / 1024)} KB`;
+    }
+
+    return `${bytes} B`;
+  };
+
+  const uploadedByTone = (uploadedBy) => {
+    switch (String(uploadedBy || "").toUpperCase()) {
+      case "CLIENT":
+        return "bg-blue-50 text-blue-600";
+      case "NOTARY":
+        return "bg-emerald-50 text-emerald-600";
+      case "ADMIN":
+      case "SUPER_ADMIN":
+        return "bg-purple-50 text-purple-600";
+      default:
+        return "bg-zinc-100 text-zinc-700";
+    }
+  };
+
+  const normalizeDocument = (doc, index) => {
+    const mimeType = doc?.mimeType || doc?.type || "";
+    const name = doc?.name || doc?.originalName || doc?.filename || `Document ${index + 1}`;
+    const orderId = doc?.orderId || doc?.order?.id || doc?.order?.orderId || "Not linked";
+    const uploadedBy =
+      doc?.uploadedBy ||
+      doc?.uploadedByRole ||
+      doc?.ownerRole ||
+      doc?.createdByRole ||
+      "CLIENT";
+    const isImage = mimeType.startsWith("image/");
+
+    return {
+      id: doc?.id || doc?._id || String(index),
+      name,
+      orderId: String(orderId).startsWith("#") ? orderId : orderId === "Not linked" ? orderId : `#${orderId}`,
+      uploadedBy: String(uploadedBy).toUpperCase().replaceAll("_", " "),
+      uploadedByColor: uploadedByTone(uploadedBy),
+      type: doc?.typeLabel || (isImage ? "Image" : mimeType ? mimeType.split("/").pop()?.toUpperCase() : "File"),
+      date: formatDate(doc?.uploadedAt || doc?.createdAt || doc?.updatedAt),
+      size: doc?.sizeLabel || formatSize(doc?.size),
+      icon: isImage ? "image" : "file",
+      iconColor: isImage ? "text-blue-500" : "text-rose-500",
+      iconBg: isImage ? "bg-blue-50" : "bg-rose-50",
+      downloadUrl: doc?.url ? buildAssetUrl(doc.url) : "",
+    };
+  };
+
   const resolveIcon = (icon) => {
     if (typeof icon !== "string") {
       return icon || FileText;
@@ -89,6 +166,8 @@ export default function DocumentsTable({ documents = defaultDocuments }) {
 
     return FileText;
   };
+
+  const normalizedDocuments = (Array.isArray(documents) ? documents : []).map(normalizeDocument);
 
   return (
     <div className="bg-white border border-zinc-100 rounded-[32px] shadow-sm overflow-hidden">
@@ -150,7 +229,7 @@ export default function DocumentsTable({ documents = defaultDocuments }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-50">
-            {documents.map((doc, i) => (
+            {normalizedDocuments.map((doc, i) => (
               <tr key={i} className="hover:bg-zinc-50/50 transition-colors group">
                 <td className="px-6 py-5">
                   <Link href={`/document/${doc.id || "123"}`} className="flex items-center gap-3">
@@ -181,15 +260,27 @@ export default function DocumentsTable({ documents = defaultDocuments }) {
                   <span className="text-sm font-medium text-gray-700">{doc.size}</span>
                 </td>
                 <td className="px-6 py-5">
-                  <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all transform translate-x-2 group-hover:translate-x-0">
+                  <div className="flex items-center justify-end gap-2 transition-all">
                     <Link href={`/document/${doc.id || "123"}`}>
                       <button className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
                         <Eye className="w-4 h-4" />
                       </button>
                     </Link>
-                    <button className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
-                      <Download className="w-4 h-4" />
-                    </button>
+                    {doc.downloadUrl ? (
+                      <a
+                        href={doc.downloadUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all"
+                        aria-label={`Download ${doc.name}`}
+                      >
+                        <Download className="w-4 h-4" />
+                      </a>
+                    ) : (
+                      <button className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
+                        <Download className="w-4 h-4" />
+                      </button>
+                    )}
                     <button className="p-2 text-gray-700 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all">
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -203,7 +294,7 @@ export default function DocumentsTable({ documents = defaultDocuments }) {
 
       {/* Footer / Pagination */}
       <div className="p-6 border-t border-zinc-100 flex items-center justify-between bg-zinc-50/30">
-        <span className="text-sm text-gray-700 font-medium">Showing 5 of 124 documents</span>
+        <span className="text-sm text-gray-700 font-medium">Showing {normalizedDocuments.length} document{normalizedDocuments.length === 1 ? "" : "s"}</span>
         <div className="flex items-center gap-1">
           <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors disabled:opacity-50">
             <ChevronLeft className="w-4 h-4 text-gray-700" />

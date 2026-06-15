@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -18,12 +19,27 @@ export default function Navbar() {
   return (
     <nav className="bg-white border-b border-zinc-100 sticky top-0 z-50">
       <div className="flex items-center justify-between py-4 px-6 max-w-7xl mx-auto">
-        {/* Left: Logo placeholder */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="bg-[#1a4fdb] text-white w-8 h-8 flex items-center justify-center rounded font-bold text-sm">
-            NT
+        <Link href="/" className="flex items-center gap-3">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-[#eef4ff] ring-1 ring-[#dbe6ff] shadow-sm shrink-0">
+            <Image
+              src="/logo.svg"
+              alt="Notarix"
+              width={30}
+              height={30}
+              className="h-8 w-8 object-contain"
+              priority
+            />
           </div>
-          <span className="text-xl font-bold text-zinc-900 tracking-tight">Notarix™</span>
+          <div className="min-w-0">
+            <Image
+              src="/text_2.svg"
+              alt="Notarix"
+              width={140}
+              height={41}
+              className="h-8 w-auto object-contain"
+              priority
+            />
+          </div>
         </Link>
 
         {/* Center: Navigation Links (Desktop) */}

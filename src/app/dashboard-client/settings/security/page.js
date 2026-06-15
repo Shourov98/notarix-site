@@ -69,7 +69,7 @@ export default function SecurityPage() {
                 <input 
                   type={showCurrentPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full bg-transparent outline-none"
+                  className="w-full bg-transparent text-gray-700 placeholder:text-gray-700 outline-none"
                 />
                 <button
                   type="button"
@@ -88,7 +88,7 @@ export default function SecurityPage() {
                 <input 
                   type={showNewPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full bg-transparent outline-none"
+                  className="w-full bg-transparent text-gray-700 placeholder:text-gray-700 outline-none"
                 />
                 <button
                   type="button"
@@ -106,7 +106,7 @@ export default function SecurityPage() {
                 <input 
                   type={showConfirmPassword ? "text" : "password"}
                   placeholder="••••••••"
-                  className="w-full bg-transparent outline-none"
+                  className="w-full bg-transparent text-gray-700 placeholder:text-gray-700 outline-none"
                 />
                 <button
                   type="button"
