@@ -1,9 +1,21 @@
+"use client";
+
+import { useEffect } from "react";
 import StatsOverview from "@/components/dashboard-client/StatsOverview";
 import OrdersTable from "@/components/dashboard-client/OrdersTable";
 import { PlusCircle, Filter } from "lucide-react";
 import Link from "next/link";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { fetchClientOrders, selectSitePortal } from "@/store/sitePortalSlice";
 
 export default function OrdersPage() {
+  const dispatch = useAppDispatch();
+  const { clientOrders, clientOrdersStatus } = useAppSelector(selectSitePortal);
+
+  useEffect(() => {
+    dispatch(fetchClientOrders());
+  }, [dispatch]);
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -31,7 +43,13 @@ export default function OrdersPage() {
       <StatsOverview />
 
       {/* Orders Table */}
-      <OrdersTable />
+      {clientOrdersStatus === "loading" ? (
+        <div className="rounded-[32px] border border-zinc-100 bg-white p-8 text-sm text-zinc-500 shadow-sm">
+          Loading orders...
+        </div>
+      ) : (
+        <OrdersTable orders={clientOrders} />
+      )}
     </div>
   );
 }

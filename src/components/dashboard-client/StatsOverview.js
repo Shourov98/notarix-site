@@ -1,13 +1,27 @@
 import { FileText, Clock, CheckCircle2, AlertCircle, TrendingUp } from "lucide-react";
 
-const stats = [
+const defaultStats = [
   { label: "TOTAL ORDERS", value: "124", trend: "+ 12% from last month", icon: FileText, color: "text-[#1a4fdb]", bg: "bg-blue-50" },
   { label: "ACTIVE ORDERS", value: "12", trend: "6 due this week", icon: Clock, color: "text-amber-500", bg: "bg-amber-50" },
   { label: "COMPLETED ORDERS", value: "108", trend: "98% satisfaction rate", icon: CheckCircle2, color: "text-emerald-500", bg: "bg-emerald-50" },
   { label: "PENDING ORDERS", value: "4", trend: "Awaiting signature", icon: AlertCircle, color: "text-rose-500", bg: "bg-rose-50" },
 ];
 
-export default function StatsOverview() {
+const iconByLabel = {
+  "TOTAL ORDERS": FileText,
+  "ACTIVE ORDERS": Clock,
+  "COMPLETED ORDERS": CheckCircle2,
+  "PENDING ORDERS": AlertCircle,
+};
+
+const toneMap = {
+  primary: { color: "text-[#1a4fdb]", bg: "bg-blue-50" },
+  warning: { color: "text-amber-500", bg: "bg-amber-50" },
+  success: { color: "text-emerald-500", bg: "bg-emerald-50" },
+  danger: { color: "text-rose-500", bg: "bg-rose-50" },
+};
+
+export default function StatsOverview({ stats = defaultStats }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
       {stats.map((stat) => (
@@ -17,8 +31,13 @@ export default function StatsOverview() {
               <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">{stat.label}</p>
               <h3 className="text-3xl font-bold text-zinc-900">{stat.value}</h3>
             </div>
-            <div className={`p-3 rounded-2xl ${stat.bg}`}>
-              <stat.icon className={`w-5 h-5 ${stat.color}`} />
+            <div className={`p-3 rounded-2xl ${stat.bg || toneMap[stat.tone]?.bg || "bg-blue-50"}`}>
+              {(stat.icon || iconByLabel[stat.label]) ? (
+                (() => {
+                  const Icon = stat.icon || iconByLabel[stat.label];
+                  return <Icon className={`w-5 h-5 ${stat.color || toneMap[stat.tone]?.color || "text-[#1a4fdb]"}`} />;
+                })()
+              ) : null}
             </div>
           </div>
           <div className="flex items-center gap-2">

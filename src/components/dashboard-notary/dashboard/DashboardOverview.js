@@ -1,23 +1,33 @@
 import { CalendarDays, CircleDollarSign, ClipboardCheck, HandCoins, MapPin, TimerReset } from "lucide-react";
 
-const stats = [
+const defaultStats = [
   { label: "Completed Total Assignments", value: "1,284", icon: ClipboardCheck },
   { label: "Open Assignments", value: "04", icon: CalendarDays },
   { label: "Total Earnings", value: "$14,205", icon: CircleDollarSign },
 ];
 
-const assignments = [
+const defaultAssignments = [
   { time: "09:30 AM", name: "Benjamin Richardson", detail: "Refinance - 42 Documents", status: "Confirmed", tone: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { time: "01:15 PM", name: "Elena Rodriguez", detail: "Power of Attorney", status: "In Progress", tone: "bg-blue-50 text-blue-600 border-blue-100" },
   { time: "04:00 PM", name: "Samuel Thompson", detail: "Home Equity Line of Credit", status: "Upcoming", tone: "bg-zinc-100 text-zinc-500 border-zinc-200" },
 ];
 
-const requests = [
+const defaultRequests = [
   { title: "First National Bank", type: "Mortgage Deed Signing", time: "Tomorrow, 10:00 AM", location: "Downtown, Seattle (2.4 mi)", amount: "$125.00" },
   { title: "Westside Legal Group", type: "Affidavit Verification", time: "Oct 26, 11:30 AM", location: "Remote / Online", amount: "$85.00" },
 ];
 
-export default function DashboardOverview() {
+export default function DashboardOverview({
+  stats = defaultStats,
+  assignments = defaultAssignments,
+  requests = defaultRequests,
+}) {
+  const iconByLabel = {
+    "Completed Total Assignments": ClipboardCheck,
+    "Open Assignments": CalendarDays,
+    "Total Earnings": CircleDollarSign,
+  };
+
   return (
     <div className="space-y-8">
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
@@ -31,7 +41,10 @@ export default function DashboardOverview() {
                 <p className="text-3xl font-bold text-zinc-900 mt-5">{stat.value}</p>
               </div>
               <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center text-[#2c49df]">
-                <stat.icon className="w-5 h-5" />
+                {(() => {
+                  const Icon = stat.icon || iconByLabel[stat.label] || ClipboardCheck;
+                  return <Icon className="w-5 h-5" />;
+                })()}
               </div>
             </div>
           </div>

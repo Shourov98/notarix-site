@@ -1,12 +1,12 @@
 import { Calendar, Clock3, LocateFixed, Search, SlidersHorizontal } from "lucide-react";
 
-const requests = [
+const defaultRequests = [
   { id: "ORD-4492", type: "RON Service", location: "Virtual - Online Platform", sub: "Nationwide Connectivity", date: "Oct 24, 2023 • 02:30 PM", zone: "Eastern Standard Time (EST)", amount: "$80", docs: "12 Pages", notes: "Loan modifications...", expires: "08:45" },
   { id: "ORD-4510", type: "In-Person", location: "Austin, TX", sub: "4.2 miles away", date: "Oct 25, 2023 • 10:00 AM", zone: "Central Standard Time (CST)", amount: "$125", docs: "45 Pages", notes: "Full closing docs...", expires: "15:20" },
   { id: "ORD-4512", type: "RON Service", location: "Virtual - Online Platform", sub: "Nationwide Connectivity", date: "ASAP • Priority", zone: "Ready for connection now", amount: "$65", docs: "4 Pages", notes: "Power of Attorney...", expires: "02:15" },
 ];
 
-export default function AssignmentRequestsPage() {
+export default function AssignmentRequestsPage({ requests = defaultRequests }) {
   return (
     <div className="space-y-8">
       <div>
