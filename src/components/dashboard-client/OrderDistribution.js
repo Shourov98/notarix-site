@@ -11,7 +11,7 @@ export default function OrderDistribution() {
           
           <div className="text-center">
             <p className="text-3xl font-bold text-zinc-900">124</p>
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Total</p>
+            <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Total</p>
           </div>
         </div>
       </div>

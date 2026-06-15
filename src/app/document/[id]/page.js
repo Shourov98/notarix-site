@@ -21,7 +21,7 @@ export default function DocumentViewerPage() {
       {/* Header */}
       <header className="h-16 border-b border-zinc-200 flex items-center justify-between px-6 bg-white shrink-0">
         <div>
-          <div className="flex items-center gap-2 text-xs font-medium text-zinc-500 mb-1">
+          <div className="flex items-center gap-2 text-xs font-medium text-gray-700 mb-1">
             <Link href="/dashboard-client/documents" className="hover:text-zinc-900 transition-colors">Documents</Link>
             <ChevronRight className="w-3 h-3" />
             <Link href="/dashboard-client/orders/ORD-88219" className="hover:text-zinc-900 transition-colors">Order #ORD-88219</Link>
@@ -32,10 +32,10 @@ export default function DocumentViewerPage() {
         </div>
         
         <div className="flex items-center gap-4">
-          <button className="p-2 text-zinc-500 hover:bg-zinc-50 rounded-lg transition-colors">
+          <button className="p-2 text-gray-700 hover:bg-zinc-50 rounded-lg transition-colors">
             <Download className="w-5 h-5" />
           </button>
-          <button className="p-2 text-zinc-500 hover:bg-zinc-50 rounded-lg transition-colors">
+          <button className="p-2 text-gray-700 hover:bg-zinc-50 rounded-lg transition-colors">
             <Printer className="w-5 h-5" />
           </button>
           <button className="p-2 text-rose-500 hover:bg-rose-50 rounded-lg transition-colors">
@@ -43,7 +43,7 @@ export default function DocumentViewerPage() {
           </button>
           <div className="w-px h-6 bg-zinc-200 mx-2"></div>
           <Link href="/dashboard-client/documents">
-            <button className="p-2 text-zinc-500 hover:bg-zinc-50 rounded-lg transition-colors">
+            <button className="p-2 text-gray-700 hover:bg-zinc-50 rounded-lg transition-colors">
               <X className="w-6 h-6" />
             </button>
           </Link>
@@ -61,11 +61,11 @@ export default function DocumentViewerPage() {
             <div className="flex justify-between items-start mb-12">
               <div>
                 <h1 className="text-[#1a4fdb] text-2xl font-bold tracking-tight mb-2">LOAN AGREEMENT</h1>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Official Verification Document</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Official Verification Document</p>
               </div>
               <div className="text-right">
                 <p className="text-sm font-bold text-zinc-900 mb-1">NOTARIX ID: NX-992-B</p>
-                <p className="text-xs font-medium text-zinc-500">Oct 24, 2023</p>
+                <p className="text-xs font-medium text-gray-700">Oct 24, 2023</p>
               </div>
             </div>
 
@@ -110,29 +110,29 @@ export default function DocumentViewerPage() {
         <div className="w-80 bg-zinc-50 border-l border-zinc-200 flex flex-col shrink-0 overflow-y-auto relative">
           {/* File Details */}
           <div className="p-6 border-b border-zinc-200/60 space-y-6">
-            <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">File Details</h3>
+            <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">File Details</h3>
             <div className="space-y-4">
               <div className="flex justify-between items-start gap-4">
-                <span className="text-xs font-medium text-zinc-500">Name</span>
+                <span className="text-xs font-medium text-gray-700">Name</span>
                 <span className="text-sm font-medium text-zinc-900 text-right break-all">Loan_Agreement_V4.pdf</span>
               </div>
               <div className="flex justify-between items-center gap-4">
-                <span className="text-xs font-medium text-zinc-500">Uploaded By</span>
+                <span className="text-xs font-medium text-gray-700">Uploaded By</span>
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-medium text-zinc-900">Sarah Jenkins</span>
                   <span className="text-[9px] font-bold bg-emerald-100 text-emerald-700 px-1.5 py-0.5 rounded uppercase tracking-widest">Notary</span>
                 </div>
               </div>
               <div className="flex justify-between items-center gap-4">
-                <span className="text-xs font-medium text-zinc-500">Date</span>
+                <span className="text-xs font-medium text-gray-700">Date</span>
                 <span className="text-sm font-medium text-zinc-900">Apr 30, 2026</span>
               </div>
               <div className="flex justify-between items-center gap-4">
-                <span className="text-xs font-medium text-zinc-500">Size</span>
+                <span className="text-xs font-medium text-gray-700">Size</span>
                 <span className="text-sm font-medium text-zinc-900">2.4 MB</span>
               </div>
               <div className="flex justify-between items-center gap-4">
-                <span className="text-xs font-medium text-zinc-500">Type</span>
+                <span className="text-xs font-medium text-gray-700">Type</span>
                 <span className="text-sm font-medium text-zinc-900">PDF</span>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function DocumentViewerPage() {
 
           {/* Participants */}
           <div className="p-6 border-b border-zinc-200/60 space-y-4">
-            <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Participants</h3>
+            <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Participants</h3>
             <div className="flex flex-wrap gap-2">
               <span className="flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full text-[10px] font-bold uppercase tracking-widest border border-emerald-100">
                 <div className="w-1.5 h-1.5 rounded-full bg-emerald-500"></div> Notary
@@ -156,13 +156,13 @@ export default function DocumentViewerPage() {
 
           {/* Notes */}
           <div className="p-6 border-b border-zinc-200/60 space-y-4">
-            <h3 className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Notes</h3>
+            <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Notes</h3>
             <div className="bg-white border border-zinc-200 rounded-2xl p-4 shadow-sm space-y-3">
               <p className="text-sm font-medium text-zinc-800 italic leading-relaxed">
                 "Please review the signature on page 4 specifically for the borrower's initials."
               </p>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-medium text-zinc-400">Sent by Sarah J. • 2h ago</span>
+                <span className="text-[10px] font-medium text-gray-700">Sent by Sarah J. • 2h ago</span>
                 <button className="text-[10px] font-bold text-[#1a4fdb] uppercase tracking-widest hover:underline">Reply</button>
               </div>
             </div>

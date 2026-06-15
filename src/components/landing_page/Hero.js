@@ -23,7 +23,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className="flex items-center gap-6 text-zinc-400">
+          <div className="flex items-center gap-6 text-gray-700">
             <span className="text-xs font-bold uppercase tracking-widest">Trusted By</span>
             <div className="flex gap-4">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
@@ -52,7 +52,7 @@ export default function Hero() {
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
             </div>
             <div>
-              <p className="text-[10px] uppercase font-bold tracking-wider text-zinc-400">Document Status</p>
+              <p className="text-[10px] uppercase font-bold tracking-wider text-gray-700">Document Status</p>
               <p className="text-sm font-bold text-zinc-900">Verified & Sealed</p>
             </div>
           </div>

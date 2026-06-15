@@ -7,7 +7,7 @@ export default function RONOrderView({ id }) {
   return (
     <div className="space-y-6 pb-8">
       <div>
-        <p className="text-sm font-medium text-zinc-500">Orders &nbsp;&gt;&nbsp; Details</p>
+        <p className="text-sm font-medium text-gray-700">Orders &nbsp;&gt;&nbsp; Details</p>
         <div className="flex flex-wrap items-center gap-4 mt-3">
           <h1 className="text-2xl font-bold text-zinc-900">Order #{id}</h1>
           <span className="px-4 py-2 rounded-full bg-orange-50 text-orange-600 font-bold">In Progress</span>
@@ -18,10 +18,10 @@ export default function RONOrderView({ id }) {
         <div className="grid grid-cols-2 xl:grid-cols-6 gap-6">
           {steps.map((step, index) => (
             <div key={step} className="text-center">
-              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center font-bold ${index < 5 ? "bg-[#2c49df] text-white" : "bg-white border border-zinc-300 text-zinc-400"}`}>
+              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center font-bold ${index < 5 ? "bg-[#2c49df] text-white" : "bg-white border border-zinc-300 text-gray-700"}`}>
                 {index + 1}
               </div>
-              <p className={`mt-3 text-sm font-bold ${index < 5 ? "text-[#2c49df]" : "text-zinc-400"}`}>{step}</p>
+              <p className={`mt-3 text-sm font-bold ${index < 5 ? "text-[#2c49df]" : "text-gray-700"}`}>{step}</p>
             </div>
           ))}
         </div>
@@ -35,11 +35,11 @@ export default function RONOrderView({ id }) {
           ["Order Type", "Remote Online"],
         ].map(([label, value]) => (
           <div key={label} className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{label}</p>
+            <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</p>
             <p className="text-xl font-bold text-zinc-900 mt-4">{value}</p>
-            {label === "Signing Date" && <p className="text-sm font-medium text-zinc-500 mt-2">2:30 PM CST</p>}
-            {label === "Location" && <p className="text-sm font-medium text-zinc-500 mt-2">Remote Portal</p>}
-            {label === "Order Type" && <p className="text-sm font-medium text-zinc-500 mt-2">Digital Notarization</p>}
+            {label === "Signing Date" && <p className="text-sm font-medium text-gray-700 mt-2">2:30 PM CST</p>}
+            {label === "Location" && <p className="text-sm font-medium text-gray-700 mt-2">Remote Portal</p>}
+            {label === "Order Type" && <p className="text-sm font-medium text-gray-700 mt-2">Digital Notarization</p>}
           </div>
         ))}
       </div>
@@ -54,19 +54,19 @@ export default function RONOrderView({ id }) {
               </div>
               <div className="mt-6 space-y-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Organization</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Organization</p>
                   <p className="text-zinc-900 font-semibold mt-2">Lone Star Title Services</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Contact Agent</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Contact Agent</p>
                   <p className="text-zinc-900 font-semibold mt-2">Robert Sterling</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Phone Number</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Phone Number</p>
                   <p className="text-zinc-900 font-semibold mt-2">+1 (555) 012-3456</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Email</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Email</p>
                   <p className="text-[#2c49df] font-semibold mt-2">r.sterling@lonestartitle.com</p>
                 </div>
               </div>
@@ -79,15 +79,15 @@ export default function RONOrderView({ id }) {
               </div>
               <div className="mt-6 space-y-4">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Full Name</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Full Name</p>
                   <p className="text-zinc-900 font-semibold mt-2">Sarah Mitchell</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Location</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Location</p>
                   <p className="text-zinc-900 font-semibold mt-2">Austin, TX</p>
                 </div>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">KBA Status</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">KBA Status</p>
                   <span className="inline-block mt-2 px-3 py-1 rounded-lg bg-emerald-50 text-emerald-600 font-bold">Passed</span>
                 </div>
               </div>
@@ -98,16 +98,16 @@ export default function RONOrderView({ id }) {
             <h2 className="text-lg font-bold text-zinc-900">Property &amp; Signing Details</h2>
             <div className="mt-6 space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Full Address</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Full Address</p>
                 <p className="text-xl font-bold text-zinc-900 mt-2">7822 Barton Creek Dr</p>
                 <p className="text-xl font-bold text-zinc-900 mt-1">Austin, TX 78735</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Scheduled Time</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Scheduled Time</p>
                 <p className="text-zinc-700 mt-2">October 24, 2024 at 2:30 PM CST</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Notary Access Code</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Notary Access Code</p>
                 <p className="text-[#2c49df] text-2xl font-bold mt-2">RON-992-X1</p>
               </div>
             </div>
@@ -125,10 +125,10 @@ export default function RONOrderView({ id }) {
                     <FileText className="w-6 h-6 text-red-500" />
                     <div>
                       <p className="text-zinc-900 font-semibold">{file}</p>
-                      <p className="text-zinc-500 text-sm">2.4 MB • 12 Pages</p>
+                      <p className="text-gray-700 text-sm">2.4 MB • 12 Pages</p>
                     </div>
                   </div>
-                  <div className="flex items-center gap-4 text-zinc-400">
+                  <div className="flex items-center gap-4 text-gray-700">
                     <Link href={`/notary-document/${id}`}><Eye className="w-5 h-5" /></Link>
                     <Download className="w-5 h-5" />
                   </div>
@@ -150,17 +150,17 @@ export default function RONOrderView({ id }) {
             </div>
             <div className="p-6 min-h-[280px] space-y-6">
               <div className="max-w-2xl bg-zinc-50 rounded-[24px] p-5">
-                <p className="text-zinc-900 font-bold">Robert Sterling <span className="text-xs text-zinc-400">Client</span> <span className="text-zinc-400 font-medium">10:45 AM</span></p>
+                <p className="text-zinc-900 font-bold">Robert Sterling <span className="text-xs text-gray-700">Client</span> <span className="text-gray-700 font-medium">10:45 AM</span></p>
                 <p className="text-sm font-medium text-zinc-700 mt-3">Hi Team, I&apos;ve just uploaded the finalized Disclosure. Sarah is ready for the session at 2:30.</p>
               </div>
               <div className="max-w-2xl bg-[#eef2ff] rounded-[24px] p-5">
-                <p className="text-zinc-900 font-bold">Admin Support <span className="text-xs text-[#2c49df]">Admin</span> <span className="text-zinc-400 font-medium">10:48 AM</span></p>
+                <p className="text-zinc-900 font-bold">Admin Support <span className="text-xs text-[#2c49df]">Admin</span> <span className="text-gray-700 font-medium">10:48 AM</span></p>
                 <p className="text-sm font-medium text-zinc-700 mt-3">Confirmed, Robert. Sarah&apos;s KBA and ID verification have been successfully validated.</p>
               </div>
             </div>
             <div className="p-4 border-t border-zinc-100">
               <div className="flex items-center gap-3 border border-zinc-200 rounded-2xl px-4 py-3">
-                <MessageSquare className="w-5 h-5 text-zinc-400" />
+                <MessageSquare className="w-5 h-5 text-gray-700" />
                 <input type="text" placeholder="Type a message to participants..." className="flex-1 focus:outline-none" />
                 <button className="text-[#2c49df] font-bold">Send</button>
               </div>
@@ -198,11 +198,11 @@ export default function RONOrderView({ id }) {
             </div>
             <div className="space-y-5 mt-6">
               <div className="flex justify-between">
-                <span className="text-zinc-500">Total Amount</span>
+                <span className="text-gray-700">Total Amount</span>
                 <span className="font-bold text-zinc-900">$150.00</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-zinc-500">Due Date</span>
+                <span className="text-gray-700">Due Date</span>
                 <span className="font-bold text-zinc-900">Upon Completion</span>
               </div>
             </div>
@@ -226,7 +226,7 @@ export default function RONOrderView({ id }) {
                   </div>
                   <div>
                     <p className="font-bold text-zinc-900">{title}</p>
-                    <p className="text-zinc-400 mt-2">{time}</p>
+                    <p className="text-gray-700 mt-2">{time}</p>
                   </div>
                 </div>
               ))}

@@ -14,7 +14,8 @@ import {
   ChevronRight
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { clearPortalSession } from "@/lib/portalSession";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard-client" },
@@ -28,6 +29,12 @@ const menuItems = [
 export default function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    clearPortalSession();
+    router.replace("/login");
+  };
 
   return (
     <aside 
@@ -56,7 +63,7 @@ export default function Sidebar() {
               className={`flex items-center gap-4 px-3 py-3 rounded-xl transition-colors group ${
                 isActive 
                   ? "bg-[#1a4fdb] text-white" 
-                  : "text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900"
+                  : "text-gray-700 hover:bg-zinc-50 hover:text-zinc-900"
               }`}
             >
               <item.icon className={`w-5 h-5 flex-shrink-0 ${isActive ? "text-white" : "group-hover:text-[#1a4fdb]"}`} />
@@ -73,7 +80,7 @@ export default function Sidebar() {
 
       {/* Bottom Actions */}
       <div className="p-3 border-t border-zinc-100 space-y-1 bg-white">
-        <button className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-zinc-500 hover:bg-zinc-50 hover:text-zinc-900 transition-colors group relative">
+        <Link href="/contact" className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-gray-700 hover:bg-zinc-50 hover:text-zinc-900 transition-colors group relative">
           <HelpCircle className="w-5 h-5 flex-shrink-0 group-hover:text-[#1a4fdb]" />
           {!isCollapsed && <span className="font-medium text-sm">Help Center</span>}
           {isCollapsed && (
@@ -81,8 +88,8 @@ export default function Sidebar() {
                 Help Center
              </div>
           )}
-        </button>
-        <button className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors group relative">
+        </Link>
+        <button onClick={handleSignOut} className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors group relative">
           <LogOut className="w-5 h-5 flex-shrink-0" />
           {!isCollapsed && <span className="font-medium text-sm">Sign Out</span>}
           {isCollapsed && (
@@ -96,7 +103,7 @@ export default function Sidebar() {
       {/* Collapse Toggle */}
       <button 
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="fixed top-24 transform bg-white border border-zinc-200 rounded-full p-1 text-zinc-400 hover:text-zinc-900 hover:shadow-md transition-all z-20 shadow-sm"
+        className="fixed top-24 transform bg-white border border-zinc-200 rounded-full p-1 text-gray-700 hover:text-zinc-900 hover:shadow-md transition-all z-20 shadow-sm"
         style={{ left: isCollapsed ? '72px' : '248px' }}
       >
         {isCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}

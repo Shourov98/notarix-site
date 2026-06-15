@@ -22,7 +22,7 @@ export default async function NotarySessionPage({ params }) {
             <Shield className="w-4 h-4" />
             End-to-End Encrypted
           </div>
-          <Info className="w-6 h-6 text-zinc-500" />
+          <Info className="w-6 h-6 text-gray-700" />
           <Link href={`/dashboard-notary/assignments-orders/${id}`} className="px-6 py-3 rounded-2xl bg-[#2c49df] text-white font-bold">
             Complete Signing
           </Link>
@@ -53,7 +53,7 @@ export default async function NotarySessionPage({ params }) {
                 Sarah Jenkins <span className="text-xs uppercase tracking-[0.15em] text-orange-200">Borrower</span>
               </div>
             </div>
-            <div className="h-48 rounded-[24px] bg-[#dfe5f0] flex flex-col items-center justify-center text-zinc-500">
+            <div className="h-48 rounded-[24px] bg-[#dfe5f0] flex flex-col items-center justify-center text-gray-700">
               <Hand className="w-8 h-8" />
               <p className="font-bold mt-4">Witness Participant</p>
               <p className="mt-3 px-4 py-2 rounded-xl bg-zinc-700 text-white text-sm">Witness Waiting</p>
@@ -66,7 +66,7 @@ export default async function NotarySessionPage({ params }) {
             <div className="flex items-center gap-3 text-zinc-700 font-bold">
               <span>Refinance_Agreement_V4.pdf</span>
             </div>
-            <div className="flex items-center gap-6 text-zinc-500">
+            <div className="flex items-center gap-6 text-gray-700">
               <span>115%</span>
               <span>Page 4 of 28</span>
             </div>
@@ -80,7 +80,7 @@ export default async function NotarySessionPage({ params }) {
                 <div className="h-4 w-3/4 bg-zinc-50 rounded"></div>
                 <div className="mt-12 pt-10 border-t border-zinc-200">
                   <div className="border-2 border-dashed border-indigo-300 rounded-[24px] p-8 bg-[#f6f8ff]">
-                    <div className="w-full h-24 border border-zinc-300 rounded-2xl flex items-center justify-center text-zinc-300 italic text-3xl">
+                    <div className="w-full h-24 border border-zinc-300 rounded-2xl flex items-center justify-center text-gray-700 italic text-3xl">
                       Sign Here
                     </div>
                     <button className="block mx-auto mt-6 px-8 py-4 rounded-2xl bg-[#2c49df] text-white font-bold shadow-lg shadow-blue-100">

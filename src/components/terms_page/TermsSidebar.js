@@ -63,7 +63,7 @@ export default function TermsSidebar() {
   return (
     <aside className="hidden lg:block w-64 flex-shrink-0">
       <div className="sticky top-32 max-h-[calc(100vh-160px)] overflow-y-auto pr-4 scrollbar-hide">
-        <h2 className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-6 text-[10px] tracking-[0.1em]">Sections</h2>
+        <h2 className="text-xs font-bold uppercase tracking-wider text-gray-700 mb-6 text-[10px] tracking-[0.1em]">Sections</h2>
         <nav className="space-y-1">
           {sections.map((section) => (
             <a
@@ -73,7 +73,7 @@ export default function TermsSidebar() {
               className={`block py-2 px-3 text-sm rounded-lg transition-all duration-200 ${
                 activeId === section.id
                   ? "bg-blue-50 text-[#1a4fdb] font-semibold border-l-2 border-[#1a4fdb]"
-                  : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50"
+                  : "text-gray-700 hover:text-zinc-900 hover:bg-zinc-50"
               }`}
             >
               {section.title}

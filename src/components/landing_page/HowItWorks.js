@@ -46,7 +46,7 @@ export default function HowItWorks() {
                 {step.icon}
               </div>
               <h3 className="text-xl font-bold text-zinc-900 mb-3">{step.title}</h3>
-              <p className="text-sm text-zinc-500 leading-relaxed">
+              <p className="text-sm text-gray-700 leading-relaxed">
                 {step.description}
               </p>
             </div>

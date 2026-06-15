@@ -14,7 +14,7 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <div className="text-right">
             <p className="text-sm font-bold text-zinc-900 leading-none">Sterling MX</p>
-            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-zinc-400 mt-1">Notary</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-gray-700 mt-1">Notary</p>
           </div>
           <div className="w-11 h-11 rounded-full bg-zinc-100 border border-zinc-200 overflow-hidden">
             <img

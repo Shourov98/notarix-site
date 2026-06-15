@@ -64,13 +64,13 @@ export default function AssignmentRequestsPage() {
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-zinc-900 mb-1">New Assignment Requests</h1>
-        <p className="text-zinc-500 font-medium text-sm">Review and accept available job requests in real-time.</p>
+        <p className="text-gray-700 font-medium text-sm">Review and accept available job requests in real-time.</p>
       </div>
 
       {/* Filter Bar */}
       <div className="flex flex-col xl:flex-row items-center gap-4 bg-white p-4 rounded-[24px] border border-zinc-100 shadow-sm">
         <div className="relative flex-1 w-full group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-[#1a4fdb] transition-colors" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#1a4fdb] transition-colors" />
           <input 
             type="text" 
             placeholder="Search Location or Order ID" 
@@ -100,7 +100,7 @@ export default function AssignmentRequestsPage() {
           <div key={i} className="bg-white border border-zinc-100 rounded-[32px] p-6 shadow-sm hover:shadow-md transition-all flex flex-col group">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Order ID</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Order ID</p>
                 <p className="text-lg font-bold text-zinc-900">{req.id}</p>
               </div>
               <div className="flex flex-col items-end gap-2">
@@ -117,20 +117,20 @@ export default function AssignmentRequestsPage() {
             <div className="space-y-4 mb-6">
               <div className="flex gap-3">
                 <div className="w-8 h-8 rounded-lg bg-zinc-50 flex items-center justify-center shrink-0">
-                  <MapPin className="w-4 h-4 text-zinc-400" />
+                  <MapPin className="w-4 h-4 text-gray-700" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-zinc-800">{req.location}</p>
-                  <p className="text-[10px] font-medium text-zinc-400 mt-0.5 uppercase tracking-wide">{req.subLocation}</p>
+                  <p className="text-[10px] font-medium text-gray-700 mt-0.5 uppercase tracking-wide">{req.subLocation}</p>
                 </div>
               </div>
               <div className="flex gap-3">
                 <div className="w-8 h-8 rounded-lg bg-zinc-50 flex items-center justify-center shrink-0">
-                  <Calendar className="w-4 h-4 text-zinc-400" />
+                  <Calendar className="w-4 h-4 text-gray-700" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-zinc-800">{req.date}</p>
-                  <p className="text-[10px] font-medium text-zinc-400 mt-0.5 uppercase tracking-wide">{req.timeZone}</p>
+                  <p className="text-[10px] font-medium text-gray-700 mt-0.5 uppercase tracking-wide">{req.timeZone}</p>
                 </div>
               </div>
             </div>
@@ -147,14 +147,14 @@ export default function AssignmentRequestsPage() {
 
             <div className="grid grid-cols-2 gap-4 border-t border-zinc-50 pt-6 mb-6">
               <div>
-                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                   <FileText className="w-3 h-3" />
                   Docs
                 </p>
                 <p className="text-xs font-bold text-zinc-800">{req.docs}</p>
               </div>
               <div>
-                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest mb-1 flex items-center gap-1.5">
                   <AlertCircle className="w-3 h-3" />
                   Special Instructions
                 </p>
@@ -171,7 +171,7 @@ export default function AssignmentRequestsPage() {
                <button className="col-span-3 bg-[#1a4fdb] text-white py-3 rounded-xl text-xs font-bold hover:bg-[#1541b8] transition-all shadow-lg shadow-blue-100 active:scale-95">
                  Accept Request
                </button>
-               <button className="col-span-2 bg-white text-zinc-500 border border-zinc-200 py-3 rounded-xl text-xs font-bold hover:bg-zinc-50 transition-all active:scale-95">
+               <button className="col-span-2 bg-white text-gray-700 border border-zinc-200 py-3 rounded-xl text-xs font-bold hover:bg-zinc-50 transition-all active:scale-95">
                  Decline
                </button>
             </div>
@@ -182,11 +182,11 @@ export default function AssignmentRequestsPage() {
       {/* No more requests section */}
       <div className="border-2 border-dashed border-zinc-100 rounded-[40px] p-16 flex flex-col items-center justify-center text-center space-y-4 bg-zinc-50/20">
          <div className="w-16 h-16 bg-zinc-100 rounded-full flex items-center justify-center">
-            <Inbox className="w-8 h-8 text-zinc-300" />
+            <Inbox className="w-8 h-8 text-gray-700" />
          </div>
          <div className="space-y-2">
             <h3 className="text-lg font-bold text-zinc-900">No more requests?</h3>
-            <p className="text-sm font-medium text-zinc-400 max-w-sm">We'll notify you as soon as new jobs matching your profile become available in your area.</p>
+            <p className="text-sm font-medium text-gray-700 max-w-sm">We'll notify you as soon as new jobs matching your profile become available in your area.</p>
          </div>
          <button className="text-[#1a4fdb] font-bold text-sm hover:underline">Update Service Area Radius</button>
       </div>

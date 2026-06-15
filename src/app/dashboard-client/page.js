@@ -27,7 +27,7 @@ export default function DashboardClientPage() {
       {/* Welcome Header */}
       <div>
         <h1 className="text-2xl font-bold text-zinc-900 mb-1">Overview</h1>
-        <p className="text-zinc-500 font-medium">Track and manage your legal document notarizations.</p>
+        <p className="text-gray-700 font-medium">Track and manage your legal document notarizations.</p>
       </div>
 
       {/* Stats Cards */}

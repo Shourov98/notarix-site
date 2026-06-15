@@ -26,7 +26,7 @@ export default function DocumentsPage() {
             <div className="w-12 h-12 mx-auto rounded-xl bg-blue-50 text-[#2c49df] flex items-center justify-center">
               <card.icon className="w-5 h-5" />
             </div>
-            <p className="mt-4 text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{card.label}</p>
+            <p className="mt-4 text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{card.label}</p>
             <p className="mt-3 text-3xl font-bold text-zinc-900">{card.value}</p>
           </div>
         ))}
@@ -35,7 +35,7 @@ export default function DocumentsPage() {
       <div className="bg-white border border-indigo-100 rounded-[24px] overflow-hidden shadow-sm">
         <div className="p-4 border-b border-zinc-100 flex flex-col xl:flex-row gap-4">
           <div className="relative flex-1">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
             <input
               type="text"
               placeholder="Search by file name, Order ID..."
@@ -60,7 +60,7 @@ export default function DocumentsPage() {
             <thead className="bg-zinc-50">
               <tr>
                 {["File Name", "Order ID", "Uploaded By", "Upload Date", "File Type", "Size", "Actions"].map((head) => (
-                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-zinc-500">{head}</th>
+                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-gray-700">{head}</th>
                 ))}
               </tr>
             </thead>
@@ -70,7 +70,7 @@ export default function DocumentsPage() {
                   <td className="px-6 py-5">
                     <div>
                       <p className="text-zinc-900 font-bold">{file.name}</p>
-                      <p className="text-zinc-400 text-sm mt-1">{file.sub}</p>
+                      <p className="text-gray-700 text-sm mt-1">{file.sub}</p>
                     </div>
                   </td>
                   <td className="px-6 py-5 text-zinc-600">{file.orderId}</td>
@@ -92,7 +92,7 @@ export default function DocumentsPage() {
             </tbody>
           </table>
         </div>
-        <div className="px-6 py-5 border-t border-zinc-100 flex items-center justify-between text-sm text-zinc-500">
+        <div className="px-6 py-5 border-t border-zinc-100 flex items-center justify-between text-sm text-gray-700">
           <p>Showing 1 to 4 of 128 documents</p>
           <div className="flex gap-2">
             {["Previous", "1", "2", "3", "Next"].map((item) => (
@@ -110,7 +110,7 @@ export default function DocumentsPage() {
             <ShieldCheck className="w-5 h-5 text-[#2c49df]" />
             <h2 className="text-xl font-bold text-zinc-900">Audit History Timeline</h2>
           </div>
-          <p className="text-sm text-zinc-400">Document UID: 9a8c-f230-11eb</p>
+          <p className="text-sm text-gray-700">Document UID: 9a8c-f230-11eb</p>
         </div>
         <div className="p-6 space-y-8">
           {timeline.map((item, index) => (
@@ -121,7 +121,7 @@ export default function DocumentsPage() {
               </div>
               <div>
                 <p className="text-lg font-bold text-zinc-900">{item.title}</p>
-                <p className="text-sm font-medium text-zinc-500 mt-1">{item.meta}</p>
+                <p className="text-sm font-medium text-gray-700 mt-1">{item.meta}</p>
               </div>
             </div>
           ))}

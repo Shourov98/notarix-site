@@ -61,7 +61,7 @@ export default function PaymentsStats() {
             )}
           </div>
           <div className="space-y-1">
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">{stat.label}</p>
+            <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">{stat.label}</p>
             <p className="text-xl font-bold text-zinc-900">{stat.value}</p>
           </div>
         </div>

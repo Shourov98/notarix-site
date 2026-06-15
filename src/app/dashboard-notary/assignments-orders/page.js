@@ -32,7 +32,7 @@ export default function NotaryAssignmentsOrdersPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-zinc-900">Assignment Orders</h1>
-        <p className="mt-1 text-sm font-medium text-zinc-500">
+        <p className="mt-1 text-sm font-medium text-gray-700">
           Track accepted, active, and completed orders from one place.
         </p>
       </div>
@@ -41,7 +41,7 @@ export default function NotaryAssignmentsOrdersPage() {
         <div className="overflow-x-auto">
           <table className="min-w-[980px] w-full">
             <thead className="bg-zinc-50">
-              <tr className="text-left text-zinc-500">
+              <tr className="text-left text-gray-700">
                 {["Order ID", "Type", "Client", "Borrower", "Location", "Schedule", "Offer", "Status", "Action"].map((head) => (
                   <th key={head} className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest">{head}</th>
                 ))}
@@ -58,8 +58,8 @@ export default function NotaryAssignmentsOrdersPage() {
                   </td>
                   <td className="px-6 py-6 text-sm font-bold text-zinc-700">{row.title}</td>
                   <td className="px-6 py-6 text-sm font-bold text-zinc-700">{row.borrower}</td>
-                  <td className="px-6 py-6 text-sm text-zinc-500">{row.location}</td>
-                  <td className="px-6 py-6 text-sm text-zinc-500">{row.date}</td>
+                  <td className="px-6 py-6 text-sm text-gray-700">{row.location}</td>
+                  <td className="px-6 py-6 text-sm text-gray-700">{row.date}</td>
                   <td className="px-6 py-6 font-bold text-zinc-900">{row.fee}</td>
                   <td className="px-6 py-6">
                     <span className={`rounded-full px-4 py-2 text-sm font-bold ${statusTone(row.workflowStatus)}`}>
@@ -78,7 +78,7 @@ export default function NotaryAssignmentsOrdersPage() {
               ))}
               {rows.length === 0 ? (
                 <tr>
-                  <td colSpan="9" className="px-6 py-12 text-center text-sm text-zinc-500">
+                  <td colSpan="9" className="px-6 py-12 text-center text-sm text-gray-700">
                     {notaryAssignmentsStatus === "loading" ? "Loading assignments..." : "No accepted or completed assignments yet."}
                   </td>
                 </tr>

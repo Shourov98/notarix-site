@@ -19,7 +19,7 @@ export default function PaymentsPage() {
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">Earnings &amp; Payments</h1>
-          <p className="text-zinc-500 font-medium text-sm mt-1">Monitor your income and manage payouts with precision.</p>
+          <p className="text-gray-700 font-medium text-sm mt-1">Monitor your income and manage payouts with precision.</p>
         </div>
         <button className="px-6 py-4 rounded-2xl bg-white border border-zinc-200 text-zinc-800 font-bold flex items-center gap-3 shadow-sm">
           <Download className="w-4 h-4" />
@@ -40,7 +40,7 @@ export default function PaymentsPage() {
                 <card.icon className="w-6 h-6" />
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{card.label}</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{card.label}</p>
                 <p className="text-3xl font-bold text-zinc-900 mt-2">{card.value}</p>
               </div>
             </div>
@@ -67,7 +67,7 @@ export default function PaymentsPage() {
             {chartHeights.map((height, index) => (
               <div key={height} className="flex-1 flex flex-col items-center justify-end gap-4">
                 <div className={`w-full rounded-t-xl bg-indigo-200/80 ${height}`}></div>
-                <span className="text-xs font-bold text-zinc-500">
+                <span className="text-xs font-bold text-gray-700">
                   {["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"][index]}
                 </span>
               </div>
@@ -94,11 +94,11 @@ export default function PaymentsPage() {
           </div>
 
           <div className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
-            <p className="text-sm uppercase tracking-[0.18em] font-bold text-zinc-400">Last Payout</p>
+            <p className="text-sm uppercase tracking-[0.18em] font-bold text-gray-700">Last Payout</p>
             <div className="mt-5 flex items-end justify-between gap-4">
               <div>
                 <p className="text-3xl font-bold text-zinc-900">$1,240.00</p>
-                <p className="text-sm font-medium text-zinc-500 mt-2">Apr 12, 2026</p>
+                <p className="text-sm font-medium text-gray-700 mt-2">Apr 12, 2026</p>
               </div>
               <span className="text-emerald-600 font-bold">Success</span>
             </div>
@@ -130,7 +130,7 @@ export default function PaymentsPage() {
             <thead className="bg-zinc-50">
               <tr>
                 {["Order ID", "Client Name", "Service Type", "Date", "Amount", "Status", "Method", "Actions"].map((head) => (
-                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-zinc-500">{head}</th>
+                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-gray-700">{head}</th>
                 ))}
               </tr>
             </thead>
@@ -152,7 +152,7 @@ export default function PaymentsPage() {
             </tbody>
           </table>
         </div>
-        <div className="px-6 py-5 border-t border-zinc-100 flex items-center justify-between text-sm text-zinc-500">
+        <div className="px-6 py-5 border-t border-zinc-100 flex items-center justify-between text-sm text-gray-700">
           <p>Showing 1 to 3 of 152 transactions</p>
           <div className="flex gap-2">
             <button className="px-4 py-2 rounded-xl border border-zinc-200 text-zinc-700">Previous</button>
@@ -170,7 +170,7 @@ export default function PaymentsPage() {
             <thead className="bg-zinc-50">
               <tr>
                 {["Payout ID", "Date", "Method", "Amount", "Status"].map((head) => (
-                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-zinc-500">{head}</th>
+                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-gray-700">{head}</th>
                 ))}
               </tr>
             </thead>

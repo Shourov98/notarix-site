@@ -58,7 +58,7 @@ export default function NotaryAssignmentsRequestsPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-zinc-900">New Assignment Requests</h1>
-        <p className="mt-1 text-sm font-medium text-zinc-500">
+        <p className="mt-1 text-sm font-medium text-gray-700">
           Review newly assigned orders and accept or decline them.
         </p>
       </div>
@@ -68,7 +68,7 @@ export default function NotaryAssignmentsRequestsPage() {
           <div key={request.id} className="rounded-[24px] border border-indigo-100 bg-white p-6 shadow-sm">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">{request.id}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-700">{request.id}</p>
                 <h2 className="mt-3 text-2xl font-bold text-zinc-900">{request.borrower}</h2>
               </div>
               <span className="rounded-full bg-amber-50 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.15em] text-amber-700">
@@ -107,7 +107,7 @@ export default function NotaryAssignmentsRequestsPage() {
             <h3 className="text-2xl font-bold text-zinc-900">
               {notaryAssignmentsStatus === "loading" ? "Loading requests..." : "No pending requests"}
             </h3>
-            <p className="mx-auto mt-4 max-w-2xl text-sm font-medium text-zinc-500">
+            <p className="mx-auto mt-4 max-w-2xl text-sm font-medium text-gray-700">
               New assignments that match your profile will appear here for review.
             </p>
           </div>

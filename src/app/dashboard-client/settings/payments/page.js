@@ -65,7 +65,7 @@ export default function PaymentsSettingsPage() {
       <div className="p-8 border-b border-zinc-50 bg-zinc-50/10 flex items-center justify-between">
         <div>
           <h2 className="text-xl font-bold text-zinc-900">Payment Methods</h2>
-          <p className="text-zinc-500 font-medium text-xs mt-1">Manage your saved bank details and billing information.</p>
+          <p className="text-gray-700 font-medium text-xs mt-1">Manage your saved bank details and billing information.</p>
         </div>
         <button className="flex items-center gap-2 text-sm font-bold text-[#1a4fdb] hover:underline">
           Bank Account Active
@@ -74,17 +74,17 @@ export default function PaymentsSettingsPage() {
 
       <div className="p-8 space-y-12">
         <section className="space-y-6">
-          <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Banking Profile</h3>
+          <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Banking Profile</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl">
             <div className="p-6 border border-zinc-100 rounded-[24px] bg-white shadow-sm">
               <p className="text-sm font-bold text-zinc-900">{formState.bankName || "Bank Name"}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">
+              <p className="text-xs font-medium text-gray-700 mt-1">
                 {formState.accountType.replaceAll("_", " ") || "checking"}
               </p>
             </div>
             <div className="p-6 border border-zinc-100 rounded-[24px] bg-white shadow-sm">
               <p className="text-sm font-bold text-zinc-900">{formState.accountHolderName || "Account Holder"}</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">
+              <p className="text-xs font-medium text-gray-700 mt-1">
                 {clientBankInfoStatus === "loading" ? "Loading saved details..." : "Stored securely"}
               </p>
             </div>
@@ -100,13 +100,13 @@ export default function PaymentsSettingsPage() {
             </div>
             <div>
               <h3 className="font-bold text-zinc-900">Bank Details</h3>
-              <p className="text-xs font-medium text-zinc-400">Manage the account used for payouts and refunds.</p>
+              <p className="text-xs font-medium text-gray-700">Manage the account used for payouts and refunds.</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl pt-2">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Bank Name</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Bank Name</label>
               <input
                 type="text"
                 value={formState.bankName}
@@ -115,7 +115,7 @@ export default function PaymentsSettingsPage() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Account Holder</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Account Holder</label>
               <input
                 type="text"
                 value={formState.accountHolderName}
@@ -124,7 +124,7 @@ export default function PaymentsSettingsPage() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Account Type</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Account Type</label>
               <select
                 value={formState.accountType}
                 onChange={(event) => updateField("accountType", event.target.value)}
@@ -136,7 +136,7 @@ export default function PaymentsSettingsPage() {
               </select>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Routing Number</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Routing Number</label>
               <input
                 type="text"
                 value={formState.routingNumber}
@@ -145,7 +145,7 @@ export default function PaymentsSettingsPage() {
               />
             </div>
             <div className="space-y-2 md:col-span-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Account Number</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Account Number</label>
               <input
                 type="text"
                 value={formState.accountNumber}

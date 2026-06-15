@@ -1,4 +1,5 @@
 import { Facebook, Linkedin, X } from "lucide-react";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -28,9 +29,9 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-xs uppercase tracking-wider text-zinc-900 mb-4">Resources</h3>
             <ul className="space-y-3 text-sm">
-              <li><a href="/legal-validity" className="hover:text-zinc-900 transition-colors">Legal Validity</a></li>
-              <li><a href="/security" className="hover:text-zinc-900 transition-colors">Security</a></li>
-              <li><a href="#" className="hover:text-zinc-900 transition-colors">Contact Support</a></li>
+              <li><Link href="/legal-validity" className="hover:text-zinc-900 transition-colors">Legal Validity</Link></li>
+              <li><Link href="/security" className="hover:text-zinc-900 transition-colors">Security</Link></li>
+              <li><Link href="/contact" className="hover:text-zinc-900 transition-colors">Contact Support</Link></li>
             </ul>
           </div>
 
@@ -38,11 +39,11 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-xs uppercase tracking-wider text-zinc-900 mb-4">Company</h3>
             <ul className="space-y-3 text-sm">
-              <li><a href="#" className="hover:text-zinc-900 transition-colors">About</a></li>
-              <li><a href="/trust" className="hover:text-zinc-900 transition-colors">Trust Center</a></li>
-              <li><a href="/contact" className="hover:text-zinc-900 transition-colors">Contact</a></li>
-              <li><a href="#" className="hover:text-zinc-900 transition-colors">Privacy Policy</a></li>
-              <li><a href="/terms-of-use" className="hover:text-zinc-900 transition-colors">Terms of Service</a></li>
+              <li><Link href="/trust" className="hover:text-zinc-900 transition-colors">About</Link></li>
+              <li><Link href="/trust" className="hover:text-zinc-900 transition-colors">Trust Center</Link></li>
+              <li><Link href="/contact" className="hover:text-zinc-900 transition-colors">Contact</Link></li>
+              <li><Link href="/security" className="hover:text-zinc-900 transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms-of-use" className="hover:text-zinc-900 transition-colors">Terms of Service</Link></li>
             </ul>
           </div>
 
@@ -64,7 +65,7 @@ export default function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="pt-8 border-t border-zinc-200 text-center text-sm text-zinc-500">
+        <div className="pt-8 border-t border-zinc-200 text-center text-sm text-gray-700">
           © 2026 Notarix™ Technologies Inc. All rights reserved.
         </div>
       </div>

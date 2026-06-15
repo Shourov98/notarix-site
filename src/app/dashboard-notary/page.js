@@ -28,7 +28,7 @@ export default function DashboardNotaryPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-zinc-900">Notary Dashboard</h1>
-        <p className="mt-1 text-sm font-medium text-zinc-500">
+        <p className="mt-1 text-sm font-medium text-gray-700">
           Review new assignments, manage in-progress work, and track completed orders.
         </p>
       </div>
@@ -40,7 +40,7 @@ export default function DashboardNotaryPage() {
             <div key={stat.label} className="rounded-[24px] border border-indigo-100 bg-white p-6 shadow-sm">
               <div className="flex items-start justify-between gap-4">
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500">
+                  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-700">
                     {stat.label}
                   </p>
                   <p className="mt-5 text-3xl font-bold text-zinc-900">{stat.value}</p>
@@ -64,7 +64,7 @@ export default function DashboardNotaryPage() {
           </div>
           <div className="space-y-4 p-6">
             {requests.length === 0 ? (
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-gray-700">
                 {notaryStatus === "loading" ? "Loading requests..." : "No pending requests right now."}
               </p>
             ) : (
@@ -72,9 +72,9 @@ export default function DashboardNotaryPage() {
                 <div key={request.id} className="rounded-[20px] border border-zinc-100 bg-zinc-50 p-5">
                   <div className="flex items-start justify-between gap-4">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">{request.id}</p>
+                      <p className="text-xs font-bold uppercase tracking-[0.18em] text-gray-700">{request.id}</p>
                       <p className="mt-2 text-lg font-bold text-zinc-900">{request.borrower}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{request.location}</p>
+                      <p className="mt-1 text-sm text-gray-700">{request.location}</p>
                     </div>
                     <span className="rounded-full bg-amber-50 px-3 py-1 text-xs font-bold uppercase text-amber-700">
                       Awaiting Acceptance
@@ -99,7 +99,7 @@ export default function DashboardNotaryPage() {
           </div>
           <div className="space-y-4 p-6">
             {assignments.length === 0 ? (
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-gray-700">
                 {notaryStatus === "loading" ? "Loading assignments..." : "No accepted or active assignments yet."}
               </p>
             ) : (
@@ -108,7 +108,7 @@ export default function DashboardNotaryPage() {
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-lg font-bold text-zinc-900">{assignment.name}</p>
-                      <p className="mt-1 text-sm text-zinc-500">{assignment.detail}</p>
+                      <p className="mt-1 text-sm text-gray-700">{assignment.detail}</p>
                     </div>
                     <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase text-[#2c49df]">
                       {assignment.status}

@@ -21,7 +21,7 @@ export default function NotarySettingsLayout({ children }) {
       <div className="w-full xl:w-72 shrink-0 xl:sticky xl:top-0">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">Settings</h1>
-          <p className="text-zinc-500 font-medium text-sm mt-1">Manage account preferences</p>
+          <p className="text-gray-700 font-medium text-sm mt-1">Manage account preferences</p>
         </div>
         <nav className="mt-8 space-y-2">
           {settingsNav.map((item) => {
@@ -33,7 +33,7 @@ export default function NotarySettingsLayout({ children }) {
                 className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
                   isActive
                     ? "bg-white text-[#2c49df] border border-indigo-100 shadow-sm"
-                    : "text-zinc-500 hover:text-zinc-900 hover:bg-white/70"
+                    : "text-gray-700 hover:text-zinc-900 hover:bg-white/70"
                 }`}
               >
                 <item.icon className="w-5 h-5" />

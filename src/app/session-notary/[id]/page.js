@@ -47,10 +47,10 @@ export default function NotaryVideoSessionPage() {
             <ShieldCheck className="w-4 h-4" />
             End-to-End Encrypted
           </div>
-          <button className="p-2 text-zinc-400 hover:text-zinc-600 transition-colors">
+          <button className="p-2 text-gray-700 hover:text-zinc-600 transition-colors">
             <VideoIcon className="w-5 h-5" />
           </button>
-          <button className="p-2 text-zinc-400 hover:text-zinc-600 transition-colors">
+          <button className="p-2 text-gray-700 hover:text-zinc-600 transition-colors">
             <Info className="w-5 h-5" />
           </button>
           <button className="ml-2 bg-[#1a4fdb] text-white px-6 py-2 rounded-xl text-sm font-bold shadow-lg shadow-blue-100 hover:bg-[#1541b8] transition-all">
@@ -101,9 +101,9 @@ export default function NotaryVideoSessionPage() {
              {/* Witness Feed / Waiting */}
              <div className="aspect-square bg-[#e9ecef] rounded-[24px] flex flex-col items-center justify-center relative border border-zinc-100 border-dashed">
                 <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center mb-3 shadow-sm">
-                   <User className="w-6 h-6 text-zinc-300" />
+                   <User className="w-6 h-6 text-gray-700" />
                 </div>
-                <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-[2px]">Witness Participant</span>
+                <span className="text-[8px] font-bold text-gray-700 uppercase tracking-[2px]">Witness Participant</span>
                 <div className="absolute bottom-3 left-3 bg-zinc-800 text-white text-[8px] font-bold px-2 py-1 rounded-lg flex items-center gap-1.5">
                    Witness Waiting
                    <Mic className="w-2.5 h-2.5 text-rose-400" />
@@ -123,16 +123,16 @@ export default function NotaryVideoSessionPage() {
             
             <div className="flex items-center gap-8">
               <div className="flex items-center gap-3 bg-zinc-50 border border-zinc-100 rounded-lg px-2 py-1">
-                 <button className="p-1 hover:bg-white rounded transition-colors text-zinc-400"><Minus className="w-3 h-3" /></button>
+                 <button className="p-1 hover:bg-white rounded transition-colors text-gray-700"><Minus className="w-3 h-3" /></button>
                  <span className="text-[10px] font-bold text-zinc-600 w-8 text-center">115%</span>
-                 <button className="p-1 hover:bg-white rounded transition-colors text-zinc-400"><Plus className="w-3 h-3" /></button>
+                 <button className="p-1 hover:bg-white rounded transition-colors text-gray-700"><Plus className="w-3 h-3" /></button>
               </div>
               
               <div className="flex items-center gap-3">
-                 <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Page 4 of 28</span>
+                 <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Page 4 of 28</span>
                  <div className="flex gap-1">
-                    <button className="p-1.5 hover:bg-zinc-50 rounded-lg border border-zinc-100 text-zinc-400"><ChevronLeft className="w-4 h-4" /></button>
-                    <button className="p-1.5 hover:bg-zinc-50 rounded-lg border border-zinc-100 text-zinc-400"><ChevronRight className="w-4 h-4" /></button>
+                    <button className="p-1.5 hover:bg-zinc-50 rounded-lg border border-zinc-100 text-gray-700"><ChevronLeft className="w-4 h-4" /></button>
+                    <button className="p-1.5 hover:bg-zinc-50 rounded-lg border border-zinc-100 text-gray-700"><ChevronRight className="w-4 h-4" /></button>
                  </div>
               </div>
             </div>
@@ -155,7 +155,7 @@ export default function NotaryVideoSessionPage() {
                      </div>
                      
                      <div className="w-full max-w-md bg-white border border-zinc-200 rounded-xl p-6 h-32 flex items-center justify-center">
-                        <span className="text-zinc-300 font-serif italic text-lg tracking-widest">Sign Here</span>
+                        <span className="text-gray-700 font-serif italic text-lg tracking-widest">Sign Here</span>
                      </div>
                      
                      <button className="mt-6 bg-[#1a4fdb] text-white px-8 py-3 rounded-xl font-bold text-sm shadow-xl shadow-blue-100 hover:scale-105 transition-all">
@@ -168,15 +168,15 @@ export default function NotaryVideoSessionPage() {
                <div className="absolute -right-20 top-40 bg-white border border-zinc-100 rounded-2xl shadow-2xl p-2 space-y-4">
                   <button className="flex flex-col items-center gap-1 p-3 hover:bg-blue-50 rounded-xl group transition-all">
                      <PenLine className="w-5 h-5 text-[#1a4fdb]" />
-                     <span className="text-[8px] font-bold text-zinc-400 group-hover:text-[#1a4fdb] uppercase">Sign</span>
+                     <span className="text-[8px] font-bold text-gray-700 group-hover:text-[#1a4fdb] uppercase">Sign</span>
                   </button>
                   <button className="flex flex-col items-center gap-1 p-3 hover:bg-blue-50 rounded-xl group transition-all">
-                     <Type className="w-5 h-5 text-zinc-400 group-hover:text-[#1a4fdb]" />
-                     <span className="text-[8px] font-bold text-zinc-400 group-hover:text-[#1a4fdb] uppercase">Initial</span>
+                     <Type className="w-5 h-5 text-gray-700 group-hover:text-[#1a4fdb]" />
+                     <span className="text-[8px] font-bold text-gray-700 group-hover:text-[#1a4fdb] uppercase">Initial</span>
                   </button>
                   <button className="flex flex-col items-center gap-1 p-3 hover:bg-blue-50 rounded-xl group transition-all">
-                     <Calendar className="w-5 h-5 text-zinc-400 group-hover:text-[#1a4fdb]" />
-                     <span className="text-[8px] font-bold text-zinc-400 group-hover:text-[#1a4fdb] uppercase">Date</span>
+                     <Calendar className="w-5 h-5 text-gray-700 group-hover:text-[#1a4fdb]" />
+                     <span className="text-[8px] font-bold text-gray-700 group-hover:text-[#1a4fdb] uppercase">Date</span>
                   </button>
                </div>
                
@@ -193,28 +193,28 @@ export default function NotaryVideoSessionPage() {
       <footer className="h-20 bg-white border-t border-zinc-200 px-12 flex items-center justify-center gap-8 shrink-0 relative">
         <div className="flex items-center gap-6">
            <button className="flex flex-col items-center gap-1 group">
-              <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 group-hover:bg-[#1a4fdb] group-hover:text-white transition-all">
+              <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-gray-700 group-hover:bg-[#1a4fdb] group-hover:text-white transition-all">
                  <Mic className="w-5 h-5" />
               </div>
-              <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Mute</span>
+              <span className="text-[8px] font-bold text-gray-700 uppercase tracking-widest">Mute</span>
            </button>
            <button className="flex flex-col items-center gap-1 group">
-              <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 group-hover:bg-[#1a4fdb] group-hover:text-white transition-all">
+              <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-gray-700 group-hover:bg-[#1a4fdb] group-hover:text-white transition-all">
                  <VideoIcon className="w-5 h-5" />
               </div>
-              <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Camera</span>
+              <span className="text-[8px] font-bold text-gray-700 uppercase tracking-widest">Camera</span>
            </button>
            <button className="flex flex-col items-center gap-1 group">
-              <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-zinc-500 group-hover:bg-[#1a4fdb] group-hover:text-white transition-all">
+              <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-gray-700 group-hover:bg-[#1a4fdb] group-hover:text-white transition-all">
                  <ScreenShare className="w-5 h-5" />
               </div>
-              <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Share</span>
+              <span className="text-[8px] font-bold text-gray-700 uppercase tracking-widest">Share</span>
            </button>
            <button className="flex flex-col items-center gap-1 group">
               <div className="w-10 h-10 rounded-full bg-zinc-50 border border-zinc-100 flex items-center justify-center text-rose-500 group-hover:bg-rose-500 group-hover:text-white transition-all">
                  <CircleDot className="w-5 h-5" />
               </div>
-              <span className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest">Record</span>
+              <span className="text-[8px] font-bold text-gray-700 uppercase tracking-widest">Record</span>
            </button>
         </div>
 

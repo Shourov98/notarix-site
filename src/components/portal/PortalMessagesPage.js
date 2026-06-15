@@ -2,10 +2,13 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { Paperclip, Search, Send } from "lucide-react";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
+import { buildAssetUrl, buildApiOrigin } from "@/lib/siteApi";
 import {
+  fetchPortalConversationByOrder,
   fetchPortalConversations,
   fetchPortalMessages,
   markPortalMessageRead,
@@ -36,17 +39,34 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
     messageActionStatus,
   } = useAppSelector(selectSitePortal);
 
+  const searchParams = useSearchParams();
   const [activeConversationId, setActiveConversationId] = useState("");
   const [draft, setDraft] = useState("");
   const [attachments, setAttachments] = useState([]);
   const [search, setSearch] = useState("");
   const currentConversationId = activeConversationId || conversations[0]?.id || "";
   const socketRef = useRef(null);
-  const socketUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5191";
+  const socketUrl = buildApiOrigin();
+  const orderId = searchParams.get("order");
 
   useEffect(() => {
     dispatch(fetchPortalConversations());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!orderId) {
+      return;
+    }
+
+    dispatch(fetchPortalConversationByOrder(orderId))
+      .unwrap()
+      .then((conversation) => {
+        if (conversation?.id) {
+          setActiveConversationId(conversation.id);
+        }
+      })
+      .catch(() => {});
+  }, [dispatch, orderId]);
 
   useEffect(() => {
     const socket = io(socketUrl, {
@@ -149,7 +169,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
         <div className="space-y-6 p-6">
           <h2 className="text-2xl font-bold text-zinc-900">Messages</h2>
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-400" />
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-700" />
             <input
               type="text"
               value={search}
@@ -180,11 +200,11 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
                   <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#1a4fdb]">
                     #{conversation.orderId}
                   </p>
-                  <p className="mt-2 truncate text-xs text-zinc-500">
+                  <p className="mt-2 truncate text-xs text-gray-700">
                     {conversation.lastMessagePreview || "No messages yet"}
                   </p>
                 </div>
-                <span className="text-[10px] font-medium text-zinc-400">
+                <span className="text-[10px] font-medium text-gray-700">
                   {formatMessageTime(conversation.lastMessageAt)}
                 </span>
               </div>
@@ -192,7 +212,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
           ))}
 
           {filteredConversations.length === 0 ? (
-            <p className="px-6 py-8 text-sm text-zinc-500">
+            <p className="px-6 py-8 text-sm text-gray-700">
               {conversationsStatus === "loading" ? "Loading conversations..." : "No conversations available yet."}
             </p>
           ) : null}
@@ -205,7 +225,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
             <p className="text-lg font-bold text-zinc-900">
               {activeConversation?.counterpart?.name || "Select a conversation"}
             </p>
-            <p className="mt-1 text-xs font-medium text-zinc-500">
+            <p className="mt-1 text-xs font-medium text-gray-700">
               {activeConversation?.counterpart?.role || roleLabel}
             </p>
           </div>
@@ -229,7 +249,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
               key={message.id}
               className={message.isOwnMessage ? "ml-auto max-w-[80%]" : "max-w-[80%]"}
             >
-              <p className={`mb-2 text-[10px] font-bold uppercase tracking-widest ${message.isOwnMessage ? "text-right text-[#1a4fdb]" : "text-zinc-400"}`}>
+              <p className={`mb-2 text-[10px] font-bold uppercase tracking-widest ${message.isOwnMessage ? "text-right text-[#1a4fdb]" : "text-gray-700"}`}>
                 {message.senderName} • {formatMessageTime(message.createdAt)}
               </p>
               <div
@@ -245,7 +265,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
                     {message.attachments.map((attachment) => (
                       <a
                         key={attachment.id}
-                        href={`http://localhost:5191${attachment.url}`}
+                        href={buildAssetUrl(attachment.url)}
                         target="_blank"
                         rel="noreferrer"
                         className={`block rounded-xl border px-3 py-2 text-sm ${
@@ -264,7 +284,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
           ))}
 
           {messages.length === 0 ? (
-            <p className="text-sm text-zinc-500">
+            <p className="text-sm text-gray-700">
               {messagesStatus === "loading" ? "Loading messages..." : "No messages yet. Start the conversation."}
             </p>
           ) : null}
@@ -272,7 +292,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
 
         <div className="border-t border-zinc-100 p-4">
           <div className="flex items-center gap-3">
-            <label className="rounded-xl border border-zinc-200 p-3 text-zinc-500 hover:bg-zinc-50">
+            <label className="rounded-xl border border-zinc-200 p-3 text-gray-700 hover:bg-zinc-50">
               <Paperclip className="h-5 w-5" />
               <input
                 type="file"
@@ -299,7 +319,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
             </button>
           </div>
           {attachments.length > 0 ? (
-            <p className="mt-3 text-xs text-zinc-500">
+            <p className="mt-3 text-xs text-gray-700">
               {attachments.length} attachment{attachments.length === 1 ? "" : "s"} selected
             </p>
           ) : null}

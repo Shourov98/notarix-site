@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   UserRound,
 } from "lucide-react";
+import { buildAssetUrl } from "@/lib/siteApi";
 import { fetchClientOrder, selectSitePortal } from "@/store/sitePortalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -20,7 +21,7 @@ const cardClass =
 
 const InfoRow = ({ label, value }) => (
   <div className="rounded-2xl border border-zinc-100 bg-zinc-50 p-4">
-    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">
+    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-700">
       {label}
     </p>
     <p className="mt-2 text-sm font-semibold text-zinc-900">
@@ -70,7 +71,7 @@ export default function ClientOrderDetailsPage() {
     <div className="mx-auto max-w-5xl space-y-6 pb-24">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-zinc-400">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-gray-700">
             Order Details
           </p>
           <h1 className="mt-1 text-3xl font-bold text-zinc-900">{activeClientOrder.id}</h1>
@@ -157,12 +158,12 @@ export default function ClientOrderDetailsPage() {
                       <FileText className="h-5 w-5 text-[#1a4fdb]" />
                       <div>
                         <p className="font-semibold text-zinc-900">{document.name}</p>
-                        <p className="text-xs text-zinc-500">{document.mimeType || "Uploaded file"}</p>
+                        <p className="text-xs text-gray-700">{document.mimeType || "Uploaded file"}</p>
                       </div>
                     </div>
                     {document.url ? (
                       <a
-                        href={`http://localhost:5191${document.url}`}
+                        href={buildAssetUrl(document.url)}
                         target="_blank"
                         rel="noreferrer"
                         className="text-sm font-semibold text-[#1a4fdb]"
@@ -210,7 +211,7 @@ export default function ClientOrderDetailsPage() {
                 activeClientOrder.timeline.map((entry) => (
                   <div key={`${entry.status}-${entry.changedAt}`} className="border-l-2 border-zinc-200 pl-4">
                     <p className="font-semibold text-zinc-900">{entry.status}</p>
-                    <p className="text-sm text-zinc-500">
+                    <p className="text-sm text-gray-700">
                       {new Date(entry.changedAt).toLocaleString("en-US")}
                     </p>
                     {entry.note ? (

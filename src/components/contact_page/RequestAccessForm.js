@@ -145,7 +145,7 @@ export default function RequestAccessForm() {
                       ? "Tell us more about your team, volume, and onboarding needs..."
                       : "Tell us about your notary experience, commission state, and service coverage..."
                   }
-                  className="w-full resize-none rounded-2xl border border-[#d4dbef] bg-[#f6f7ff] px-4 py-4 text-lg text-zinc-900 outline-none transition placeholder:text-zinc-500 focus:border-[#2349db] focus:bg-white"
+                  className="w-full resize-none rounded-2xl border border-[#d4dbef] bg-[#f6f7ff] px-4 py-4 text-lg text-zinc-900 outline-none transition placeholder:text-gray-700 focus:border-[#2349db] focus:bg-white"
                 />
               </label>
             </div>
@@ -204,7 +204,7 @@ function Field({ label, name, type = "text", placeholder }) {
         name={name}
         type={type}
         placeholder={placeholder}
-        className="w-full rounded-2xl border border-[#d4dbef] bg-[#f6f7ff] px-4 py-4 text-lg text-zinc-900 outline-none transition placeholder:text-zinc-500 focus:border-[#2349db] focus:bg-white"
+        className="w-full rounded-2xl border border-[#d4dbef] bg-[#f6f7ff] px-4 py-4 text-lg text-zinc-900 outline-none transition placeholder:text-gray-700 focus:border-[#2349db] focus:bg-white"
       />
     </label>
   );

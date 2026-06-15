@@ -43,7 +43,7 @@ export default function NotaryOrdersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 mb-1">Assignments Orders</h1>
-          <p className="text-zinc-500 font-medium text-sm">Manage and track your notary assignments</p>
+          <p className="text-gray-700 font-medium text-sm">Manage and track your notary assignments</p>
         </div>
         <div className="flex items-center gap-3">
           <button className="bg-zinc-50 text-zinc-600 border border-zinc-200 px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-zinc-100 transition-all active:scale-95">
@@ -58,7 +58,7 @@ export default function NotaryOrdersPage() {
         <div className="p-6 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-zinc-50/50">
           <div className="flex flex-wrap items-center gap-4">
             <div className="flex items-center gap-2">
-              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status:</span>
+              <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Status:</span>
               <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none">
                 <option>All Statuses</option>
                 <option>In Progress</option>
@@ -68,13 +68,13 @@ export default function NotaryOrdersPage() {
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="text-sm text-zinc-500 font-medium">Showing 1-2 of 2 assignments</span>
+            <span className="text-sm text-gray-700 font-medium">Showing 1-2 of 2 assignments</span>
             <div className="flex items-center gap-1">
               <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
-                <ChevronLeft className="w-4 h-4 text-zinc-500" />
+                <ChevronLeft className="w-4 h-4 text-gray-700" />
               </button>
               <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
-                <ChevronRight className="w-4 h-4 text-zinc-500" />
+                <ChevronRight className="w-4 h-4 text-gray-700" />
               </button>
             </div>
           </div>
@@ -85,13 +85,13 @@ export default function NotaryOrdersPage() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-zinc-100">
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order ID</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Signer's Name</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Type</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Client</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Actions</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Order ID</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Signer's Name</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Service Type</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Client</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Date</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Status</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-50">
@@ -109,10 +109,10 @@ export default function NotaryOrdersPage() {
                     <span className="text-sm font-medium text-zinc-600">{order.serviceType}</span>
                   </td>
                   <td className="px-6 py-5">
-                    <span className="text-sm font-medium text-zinc-500">{order.client}</span>
+                    <span className="text-sm font-medium text-gray-700">{order.client}</span>
                   </td>
                   <td className="px-6 py-5">
-                    <span className="text-sm font-medium text-zinc-500">{order.date}</span>
+                    <span className="text-sm font-medium text-gray-700">{order.date}</span>
                   </td>
                   <td className="px-6 py-5">
                     <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${order.statusColor}`}>
@@ -122,7 +122,7 @@ export default function NotaryOrdersPage() {
                   <td className="px-6 py-5">
                     <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                       <Link href={`/dashboard-notary/orders/${order.id.replace('#', '')}`}>
-                        <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
+                        <button className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
                           <Eye className="w-4 h-4" />
                         </button>
                       </Link>

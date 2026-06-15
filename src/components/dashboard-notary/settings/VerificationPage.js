@@ -30,7 +30,7 @@ export default function VerificationPage() {
           <div className="p-6 border-r border-zinc-100">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-zinc-900">Profile fields</h2>
-              <p className="text-sm font-medium text-zinc-500">5/8 Completed</p>
+              <p className="text-sm font-medium text-gray-700">5/8 Completed</p>
             </div>
             <div className="mt-6 space-y-4">
               {fields.map((field) => (
@@ -52,7 +52,7 @@ export default function VerificationPage() {
           <div className="p-6">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold text-zinc-900">Required documents</h2>
-              <p className="text-sm font-medium text-zinc-500">3/7 Uploaded</p>
+              <p className="text-sm font-medium text-gray-700">3/7 Uploaded</p>
             </div>
             <div className="mt-6 space-y-4">
               {documents.map((document) => (
@@ -67,7 +67,7 @@ export default function VerificationPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     {document.alert && <span className="text-orange-500 text-sm font-bold uppercase">{document.alert}</span>}
-                    {document.view && <Eye className="w-4 h-4 text-zinc-400" />}
+                    {document.view && <Eye className="w-4 h-4 text-gray-700" />}
                     {document.upload && <Upload className="w-4 h-4 text-[#2c49df]" />}
                   </div>
                 </div>
@@ -90,7 +90,7 @@ export default function VerificationPage() {
             <div className="w-32 h-3 rounded-full bg-zinc-100 overflow-hidden">
               <div className="w-[53%] h-full bg-[#2c49df]"></div>
             </div>
-            <p className="text-sm font-medium text-zinc-500">Overall Progress: 53%</p>
+            <p className="text-sm font-medium text-gray-700">Overall Progress: 53%</p>
           </div>
           <button className="px-6 py-4 rounded-2xl bg-[#2c49df] text-white font-bold shadow-lg shadow-blue-100">
             Submit for Review

@@ -9,7 +9,7 @@ const defaultStats = [
 const defaultAssignments = [
   { time: "09:30 AM", name: "Benjamin Richardson", detail: "Refinance - 42 Documents", status: "Confirmed", tone: "bg-emerald-50 text-emerald-600 border-emerald-100" },
   { time: "01:15 PM", name: "Elena Rodriguez", detail: "Power of Attorney", status: "In Progress", tone: "bg-blue-50 text-blue-600 border-blue-100" },
-  { time: "04:00 PM", name: "Samuel Thompson", detail: "Home Equity Line of Credit", status: "Upcoming", tone: "bg-zinc-100 text-zinc-500 border-zinc-200" },
+  { time: "04:00 PM", name: "Samuel Thompson", detail: "Home Equity Line of Credit", status: "Upcoming", tone: "bg-zinc-100 text-gray-700 border-zinc-200" },
 ];
 
 const defaultRequests = [
@@ -35,7 +35,7 @@ export default function DashboardOverview({
           <div key={stat.label} className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-zinc-500 max-w-[16ch]">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-700 max-w-[16ch]">
                   {stat.label}
                 </p>
                 <p className="text-3xl font-bold text-zinc-900 mt-5">{stat.value}</p>
@@ -63,7 +63,7 @@ export default function DashboardOverview({
                 <div className="w-24 text-2xl font-bold tracking-tight text-zinc-900">{item.time}</div>
                 <div className="flex-1">
                   <p className="text-xl font-bold text-zinc-900">{item.name}</p>
-                  <p className="text-sm font-medium text-zinc-500 mt-1">{item.detail}</p>
+                  <p className="text-sm font-medium text-gray-700 mt-1">{item.detail}</p>
                 </div>
                 <span className={`self-start md:self-center text-xs font-bold px-4 py-2 rounded-full border ${item.tone}`}>
                   {item.status.toUpperCase()}
@@ -93,22 +93,22 @@ export default function DashboardOverview({
           {requests.map((request) => (
             <div key={request.title} className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
               <div className="flex items-start justify-between gap-4">
-                <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center text-zinc-500">
+                <div className="w-12 h-12 rounded-xl bg-zinc-100 flex items-center justify-center text-gray-700">
                   <HandCoins className="w-5 h-5" />
                 </div>
                 <p className="text-lg font-bold tracking-tight text-zinc-700">{request.amount}</p>
               </div>
               <div className="mt-6">
                 <h3 className="text-xl font-bold text-zinc-900">{request.title}</h3>
-                <p className="text-sm font-medium text-zinc-500 mt-2">{request.type}</p>
+                <p className="text-sm font-medium text-gray-700 mt-2">{request.type}</p>
               </div>
               <div className="space-y-3 mt-6 text-zinc-600">
                 <div className="flex items-center gap-3">
-                  <TimerReset className="w-4 h-4 text-zinc-400" />
+                  <TimerReset className="w-4 h-4 text-gray-700" />
                   <span>{request.time}</span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <MapPin className="w-4 h-4 text-zinc-400" />
+                  <MapPin className="w-4 h-4 text-gray-700" />
                   <span>{request.location}</span>
                 </div>
               </div>

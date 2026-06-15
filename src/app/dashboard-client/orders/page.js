@@ -22,7 +22,7 @@ export default function OrdersPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 mb-1">Orders</h1>
-          <p className="text-zinc-500 font-medium text-sm">Manage, track, and create notary service orders</p>
+          <p className="text-gray-700 font-medium text-sm">Manage, track, and create notary service orders</p>
         </div>
         <div className="flex items-center gap-3">
           <Link 
@@ -44,7 +44,7 @@ export default function OrdersPage() {
 
       {/* Orders Table */}
       {clientOrdersStatus === "loading" ? (
-        <div className="rounded-[32px] border border-zinc-100 bg-white p-8 text-sm text-zinc-500 shadow-sm">
+        <div className="rounded-[32px] border border-zinc-100 bg-white p-8 text-sm text-gray-700 shadow-sm">
           Loading orders...
         </div>
       ) : (

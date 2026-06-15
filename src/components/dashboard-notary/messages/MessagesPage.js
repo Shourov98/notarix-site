@@ -13,7 +13,7 @@ export default function MessagesPage() {
         <div className="p-6 space-y-6">
           <h1 className="text-2xl font-bold text-zinc-900">Messages</h1>
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700" />
             <input
               type="text"
               placeholder="Search conversations..."
@@ -44,10 +44,10 @@ export default function MessagesPage() {
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center justify-between gap-2">
                     <p className="text-zinc-900 font-bold">{conversation.name}</p>
-                    <p className="text-sm text-zinc-400">{conversation.time}</p>
+                    <p className="text-sm text-gray-700">{conversation.time}</p>
                   </div>
                   <p className="text-[#2c49df] font-bold text-sm mt-1">#{conversation.id}</p>
-                  <p className="text-zinc-500 text-sm mt-2 truncate">{conversation.preview}</p>
+                  <p className="text-gray-700 text-sm mt-2 truncate">{conversation.preview}</p>
                 </div>
               </div>
             </div>
@@ -74,7 +74,7 @@ export default function MessagesPage() {
 
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           <div className="flex justify-center">
-            <span className="px-4 py-2 rounded-full bg-zinc-50 text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">Today</span>
+            <span className="px-4 py-2 rounded-full bg-zinc-50 text-xs font-bold uppercase tracking-[0.18em] text-gray-700">Today</span>
           </div>
           <div className="max-w-2xl">
             <div className="bg-[#f1f0ff] rounded-[24px] rounded-tl-sm p-6">
@@ -82,7 +82,7 @@ export default function MessagesPage() {
                 Good morning! I&apos;m ready for the notarization. I&apos;ve uploaded the property survey document for you to check first.
               </p>
             </div>
-            <p className="text-zinc-400 mt-2 text-sm">10:21 AM</p>
+            <p className="text-gray-700 mt-2 text-sm">10:21 AM</p>
           </div>
 
           <div className="max-w-2xl border border-dashed border-indigo-200 rounded-[24px] p-5">
@@ -93,7 +93,7 @@ export default function MessagesPage() {
                 </div>
                 <div>
                   <p className="text-base font-bold text-zinc-900">Property_Survey.pdf</p>
-                  <p className="text-sm font-medium text-zinc-500">2.4 MB • PDF Document</p>
+                  <p className="text-sm font-medium text-gray-700">2.4 MB • PDF Document</p>
                 </div>
               </div>
               <button className="text-[#2c49df] font-bold">Download</button>
@@ -106,13 +106,13 @@ export default function MessagesPage() {
                 Received. I am reviewing the document now. It looks complete. Would you like to start the video verification session in 5 minutes?
               </p>
             </div>
-            <p className="text-zinc-400 mt-2 text-sm text-right">10:24 AM • Read</p>
+            <p className="text-gray-700 mt-2 text-sm text-right">10:24 AM • Read</p>
           </div>
         </div>
 
         <div className="p-4 border-t border-zinc-100">
           <div className="flex items-center gap-3 border border-zinc-200 rounded-2xl px-4 py-3">
-            <Phone className="w-5 h-5 text-zinc-400" />
+            <Phone className="w-5 h-5 text-gray-700" />
             <input
               type="text"
               placeholder="Type your message here..."
@@ -127,51 +127,51 @@ export default function MessagesPage() {
 
       <div className="w-80 border-l border-zinc-100 bg-zinc-50/60 shrink-0 p-6 space-y-8">
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] font-bold text-zinc-400">Order Context</p>
+          <p className="text-xs uppercase tracking-[0.25em] font-bold text-gray-700">Order Context</p>
           <div className="mt-5 bg-white border border-zinc-200 rounded-[24px] p-5 space-y-5">
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Order ID</p>
+              <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Order ID</p>
               <p className="text-3xl font-bold text-[#2c49df] mt-2">#RD-77291</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Client</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Client</p>
                 <p className="text-zinc-900 font-semibold mt-2">Sarah J.</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Notary</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Notary</p>
                 <p className="text-zinc-900 font-semibold mt-2">You</p>
               </div>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Status</p>
+              <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Status</p>
               <span className="inline-flex items-center gap-2 mt-2 px-3 py-1 rounded-full bg-blue-50 text-[#2c49df] font-bold text-sm">
                 <span className="w-2 h-2 rounded-full bg-[#2c49df]"></span>
                 Assigned
               </span>
             </div>
             <div>
-              <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Signing Date</p>
+              <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Signing Date</p>
               <p className="text-zinc-900 font-semibold mt-2">Apr 24, 2026</p>
             </div>
           </div>
         </div>
 
         <div>
-          <p className="text-xs uppercase tracking-[0.25em] font-bold text-zinc-400">Quick Actions</p>
+          <p className="text-xs uppercase tracking-[0.25em] font-bold text-gray-700">Quick Actions</p>
           <div className="mt-5 space-y-4">
             <button className="w-full px-5 py-4 rounded-2xl bg-white border border-zinc-200 text-zinc-800 font-semibold flex items-center gap-3">
-              <Eye className="w-5 h-5 text-zinc-400" />
+              <Eye className="w-5 h-5 text-gray-700" />
               View Order
             </button>
             <button className="w-full px-5 py-4 rounded-2xl bg-white border border-zinc-200 text-zinc-800 font-semibold flex items-center gap-3">
-              <CheckCircle2 className="w-5 h-5 text-zinc-400" />
+              <CheckCircle2 className="w-5 h-5 text-gray-700" />
               Mark Complete
             </button>
           </div>
         </div>
 
-        <div className="pt-16 flex items-center gap-4 text-zinc-400">
+        <div className="pt-16 flex items-center gap-4 text-gray-700">
           <Shield className="w-7 h-7 text-[#2c49df]" />
           <p className="text-xs uppercase tracking-[0.24em] font-bold">Secure Session Active</p>
         </div>

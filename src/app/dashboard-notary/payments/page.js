@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Download, Landmark, Wallet, WalletCards } from "lucide-react";
 import { toast } from "sonner";
-import { getNotaryPayments } from "@/lib/siteApi";
+import { buildAssetUrl, getNotaryPayments } from "@/lib/siteApi";
 
 const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
 
@@ -56,7 +56,7 @@ export default function NotaryPaymentsPage() {
       <div className="flex flex-col gap-4 xl:flex-row xl:items-center xl:justify-between">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">Earnings &amp; Payments</h1>
-          <p className="mt-1 text-sm font-medium text-zinc-500">
+          <p className="mt-1 text-sm font-medium text-gray-700">
             Track your payout schedule and completed transfers from assigned orders.
           </p>
         </div>
@@ -83,7 +83,7 @@ export default function NotaryPaymentsPage() {
                 <card.icon className="h-6 w-6" />
               </div>
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.18em] text-zinc-400">{card.label}</p>
+                <p className="text-xs font-bold uppercase tracking-[0.18em] text-gray-700">{card.label}</p>
                 <p className="mt-2 text-3xl font-bold text-zinc-900">{card.value}</p>
               </div>
             </div>
@@ -110,7 +110,7 @@ export default function NotaryPaymentsPage() {
             <thead className="bg-zinc-50">
               <tr>
                 {["Order", "Client", "Amount", "Status", "Release", "Method", "Proof"].map((head) => (
-                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-zinc-500">
+                  <th key={head} className="px-6 py-5 text-left text-sm font-bold text-gray-700">
                     {head}
                   </th>
                 ))}
@@ -133,13 +133,13 @@ export default function NotaryPaymentsPage() {
                   </td>
                   <td className="px-6 py-6 text-zinc-600">
                     {record.releaseDays ? `${record.releaseDays} days` : "Not set"}
-                    <div className="mt-1 text-xs text-zinc-400">{record.dueDateLabel}</div>
+                    <div className="mt-1 text-xs text-gray-700">{record.dueDateLabel}</div>
                   </td>
                   <td className="px-6 py-6 text-zinc-600">{record.method}</td>
                   <td className="px-6 py-6 text-sm">
                     {record.proof?.url ? (
                       <a
-                        href={`http://localhost:5191${record.proof.url}`}
+                        href={buildAssetUrl(record.proof.url)}
                         target="_blank"
                         rel="noreferrer"
                         className="font-bold text-[#2c49df] hover:underline"
@@ -147,7 +147,7 @@ export default function NotaryPaymentsPage() {
                         View proof
                       </a>
                     ) : (
-                      <span className="text-zinc-400">Pending admin upload</span>
+                      <span className="text-gray-700">Pending admin upload</span>
                     )}
                   </td>
                 </tr>
@@ -157,9 +157,9 @@ export default function NotaryPaymentsPage() {
         </div>
 
         {loading ? (
-          <p className="px-6 py-5 text-sm text-zinc-500">Loading payouts...</p>
+          <p className="px-6 py-5 text-sm text-gray-700">Loading payouts...</p>
         ) : records.length === 0 ? (
-          <p className="px-6 py-5 text-sm text-zinc-500">No payout records available yet.</p>
+          <p className="px-6 py-5 text-sm text-gray-700">No payout records available yet.</p>
         ) : null}
       </div>
     </div>

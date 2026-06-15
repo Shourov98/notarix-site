@@ -1,9 +1,24 @@
 import { readPortalSession } from "@/lib/portalSession";
 
+export const buildApiOrigin = () =>
+  (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5191").replace(/\/+$/, "");
+
 const buildBaseUrl = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5191";
+  const baseUrl = buildApiOrigin();
   const prefix = process.env.NEXT_PUBLIC_API_PREFIX || "/api/v1";
-  return `${baseUrl.replace(/\/+$/, "")}${prefix.replace(/\/+$/, "")}`;
+  return `${baseUrl}${prefix.replace(/\/+$/, "")}`;
+};
+
+export const buildAssetUrl = (path) => {
+  if (!path) {
+    return "";
+  }
+
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+
+  return `${buildApiOrigin()}${path.startsWith("/") ? path : `/${path}`}`;
 };
 
 const requestJson = async (path, options = {}) => {
@@ -274,6 +289,8 @@ export const loginPortalUser = async (body) => {
 
   return {
     ...data,
+    accessToken: data?.accessToken || data?.access_token || "",
+    refreshToken: data?.refreshToken || data?.refresh_token || "",
     dashboardPath: resolveDashboardPath(data?.role || body?.role),
   };
 };

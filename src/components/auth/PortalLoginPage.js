@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { LockKeyhole, Mail } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole, Mail } from "lucide-react";
 import { loginPortalUser } from "@/lib/siteApi";
 import { savePortalSession } from "@/lib/portalSession";
 import NotarixBrand from "@/components/public/NotarixBrand";
@@ -21,6 +21,7 @@ export default function PortalLoginPage() {
   const router = useRouter();
   const [role, setRole] = useState("client");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -124,7 +125,7 @@ export default function PortalLoginPage() {
                         name="email"
                         type="email"
                         placeholder="name@company.com"
-                        className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-zinc-500"
+                        className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-gray-700"
                       />
                     </span>
                   </label>
@@ -137,10 +138,22 @@ export default function PortalLoginPage() {
                       <LockKeyhole className="h-5 w-5 text-[#6b7bb1]" />
                       <input
                         name="password"
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
-                        className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-zinc-500"
+                        className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-gray-700"
                       />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((current) => !current)}
+                        aria-label={showPassword ? "Hide password" : "Show password"}
+                        className="text-[#6b7bb1] transition hover:text-[#2349db]"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="h-5 w-5" />
+                        ) : (
+                          <Eye className="h-5 w-5" />
+                        )}
+                      </button>
                     </span>
                   </label>
                 </div>

@@ -64,7 +64,7 @@ export default function PaymentsSettingsPage() {
       <div className="flex flex-col xl:flex-row xl:items-start justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold text-zinc-900">Payment Settings</h2>
-          <p className="text-zinc-500 font-medium text-sm mt-1">Manage your billing accounts, payout preferences, and financial security.</p>
+          <p className="text-gray-700 font-medium text-sm mt-1">Manage your billing accounts, payout preferences, and financial security.</p>
         </div>
         <button className="px-6 py-4 rounded-2xl bg-[#2c49df] text-white font-bold shadow-lg shadow-blue-100">
           Bank Account on File
@@ -77,7 +77,7 @@ export default function PaymentsSettingsPage() {
           <div className="w-6 h-6 rounded-full border border-zinc-400"></div>
           <div>
             <p className="text-lg font-bold text-zinc-900">{formState.bankName || "Bank account"}</p>
-            <p className="text-sm font-medium text-zinc-500 mt-1">
+            <p className="text-sm font-medium text-gray-700 mt-1">
               {formState.accountType.replaceAll("_", " ") || "Checking"} account
             </p>
           </div>
@@ -127,7 +127,7 @@ export default function PaymentsSettingsPage() {
               placeholder="Account Number"
               className="w-full rounded-2xl border border-zinc-200 px-4 py-3"
             />
-            <p className="italic text-sm font-medium text-zinc-500">
+            <p className="italic text-sm font-medium text-gray-700">
               {notaryBankInfoStatus === "loading"
                 ? "Loading saved bank info..."
                 : "Your payout details are stored securely and only visible to Super Admin."}

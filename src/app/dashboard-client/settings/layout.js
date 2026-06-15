@@ -28,7 +28,7 @@ export default function SettingsLayout({ children }) {
         {/* Page Header Moved into Sticky Column */}
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 mb-1">Settings</h1>
-          <p className="text-zinc-500 font-medium text-sm leading-relaxed">Manage account preferences</p>
+          <p className="text-gray-700 font-medium text-sm leading-relaxed">Manage account preferences</p>
         </div>
 
         {/* Sub Navigation */}
@@ -42,10 +42,10 @@ export default function SettingsLayout({ children }) {
                 className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all group ${
                   isActive 
                     ? "bg-white text-[#1a4fdb] shadow-sm border border-zinc-100 ring-1 ring-zinc-100" 
-                    : "text-zinc-500 hover:text-zinc-900 hover:bg-zinc-50"
+                    : "text-gray-700 hover:text-zinc-900 hover:bg-zinc-50"
                 }`}
               >
-                <item.icon className={`w-5 h-5 ${isActive ? "text-[#1a4fdb]" : "text-zinc-400 group-hover:text-zinc-600"}`} />
+                <item.icon className={`w-5 h-5 ${isActive ? "text-[#1a4fdb]" : "text-gray-700 group-hover:text-zinc-600"}`} />
                 <span className="text-sm font-bold">{item.label}</span>
                 {isActive && (
                   <div className="ml-auto w-1.5 h-1.5 bg-[#1a4fdb] rounded-full shadow-[0_0_8px_rgba(26,79,219,0.5)]"></div>

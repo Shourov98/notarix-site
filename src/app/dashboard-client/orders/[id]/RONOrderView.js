@@ -24,7 +24,7 @@ export default function RONOrderView({ id }) {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 mb-1">Your Notary Session</h1>
-          <p className="text-zinc-500 font-medium text-sm">Review details and complete your online notarization</p>
+          <p className="text-gray-700 font-medium text-sm">Review details and complete your online notarization</p>
         </div>
         <div className="flex items-center gap-2 bg-emerald-50 text-emerald-600 px-4 py-2 rounded-full text-sm font-bold border border-emerald-100">
           <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
@@ -69,16 +69,16 @@ export default function RONOrderView({ id }) {
               </div>
               <div className="space-y-4">
                 <div>
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Address</p>
+                  <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Address</p>
                   <p className="text-sm font-bold text-zinc-800">4522 West Maple Avenue</p>
                 </div>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">City</p>
+                    <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">City</p>
                     <p className="text-sm font-bold text-zinc-800">Austin</p>
                   </div>
                   <div>
-                    <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">State / ZIP</p>
+                    <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">State / ZIP</p>
                     <p className="text-sm font-bold text-zinc-800">Texas, 78701</p>
                   </div>
                 </div>
@@ -93,15 +93,15 @@ export default function RONOrderView({ id }) {
               </div>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-full overflow-hidden bg-zinc-100 border border-zinc-200 shrink-0 flex items-center justify-center">
-                   <User className="w-6 h-6 text-zinc-400" />
+                   <User className="w-6 h-6 text-gray-700" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-zinc-900">Robert Vance</p>
-                  <p className="text-[10px] font-medium text-zinc-500 mt-0.5">r.vance@notarix.com</p>
+                  <p className="text-[10px] font-medium text-gray-700 mt-0.5">r.vance@notarix.com</p>
                 </div>
               </div>
               <div className="pt-4 border-t border-zinc-50 flex items-center justify-between">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Notary Status</span>
+                <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Notary Status</span>
                 <span className="bg-blue-50 text-blue-600 text-[9px] font-bold px-2 py-1 rounded uppercase tracking-widest">Online</span>
               </div>
             </div>
@@ -127,7 +127,7 @@ export default function RONOrderView({ id }) {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-zinc-900">Step 1: Upload ID</p>
-                  <p className="text-[10px] font-medium text-zinc-500 mt-0.5">Driver's License Approved</p>
+                  <p className="text-[10px] font-medium text-gray-700 mt-0.5">Driver's License Approved</p>
                 </div>
               </div>
               <div className="bg-zinc-50/50 border border-zinc-100 rounded-2xl p-4 flex items-center gap-4">
@@ -136,7 +136,7 @@ export default function RONOrderView({ id }) {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-zinc-900">Step 2: Face Check</p>
-                  <p className="text-[10px] font-medium text-zinc-500 mt-0.5">Biometric Match Confirmed</p>
+                  <p className="text-[10px] font-medium text-gray-700 mt-0.5">Biometric Match Confirmed</p>
                 </div>
               </div>
             </div>
@@ -149,20 +149,20 @@ export default function RONOrderView({ id }) {
           {/* Order Details */}
           <div className="bg-white border border-zinc-100 rounded-[32px] p-6 shadow-sm space-y-6">
             <div className="flex items-center justify-between border-b border-zinc-50 pb-4">
-              <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order {id || "#RON-260427"}</h3>
+              <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Order {id || "#RON-260427"}</h3>
               <Info className="w-4 h-4 text-[#1a4fdb]" />
             </div>
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-zinc-500">Type</span>
+                <span className="text-xs font-medium text-gray-700">Type</span>
                 <span className="text-sm font-bold text-zinc-900">Remote Online</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-zinc-500">Date</span>
+                <span className="text-xs font-medium text-gray-700">Date</span>
                 <span className="text-sm font-bold text-zinc-900">Oct 28, 2024</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-xs font-medium text-zinc-500">Time</span>
+                <span className="text-xs font-medium text-gray-700">Time</span>
                 <span className="text-sm font-bold text-[#1a4fdb]">2:00 PM EST</span>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function RONOrderView({ id }) {
                 <FileText className="w-4 h-4" />
                 <h3 className="text-[10px] font-bold uppercase tracking-widest">Documents</h3>
               </div>
-              <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">2 Files</span>
+              <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">2 Files</span>
             </div>
             
             <div className="space-y-4">
@@ -210,12 +210,12 @@ export default function RONOrderView({ id }) {
             
             <div className="flex justify-between items-end">
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Total Amount Paid</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Total Amount Paid</p>
                 <p className="text-2xl font-bold text-zinc-900">$125.00</p>
               </div>
               <div className="text-right">
                 <span className="bg-emerald-50 text-emerald-600 text-[9px] font-bold px-2 py-1 rounded uppercase tracking-widest mb-1 inline-block">Paid</span>
-                <p className="text-[10px] font-medium text-zinc-500">via Visa **** 4242</p>
+                <p className="text-[10px] font-medium text-gray-700">via Visa **** 4242</p>
               </div>
             </div>
           </div>

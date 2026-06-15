@@ -15,7 +15,7 @@ export default function InPersonDocumentViewPage() {
       <header className="h-20 px-8 bg-white border-b border-zinc-200 flex items-center justify-between shrink-0 z-10">
         <div>
           <h1 className="text-xl font-bold text-zinc-900 leading-tight">Document Preview</h1>
-          <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">
+          <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mt-1">
             Real Estate Closing Affidavit / ORD-77291-TX
           </p>
         </div>
@@ -36,7 +36,7 @@ export default function InPersonDocumentViewPage() {
         
         {/* Left Sidebar: Pages */}
         <div className="w-40 bg-white border-r border-zinc-200 shrink-0 overflow-y-auto flex flex-col items-center py-6 gap-6 z-10">
-          <span className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest mb-2">Pages (28)</span>
+          <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-2">Pages (28)</span>
           
           <div className="relative cursor-pointer group">
             <div className="w-24 h-32 bg-zinc-50 border-2 border-[#1a4fdb] rounded-lg shadow-sm"></div>
@@ -61,7 +61,7 @@ export default function InPersonDocumentViewPage() {
           
           <div className="relative cursor-pointer group">
             <div className="w-24 h-32 bg-white border border-zinc-200 rounded-lg shadow-sm group-hover:border-zinc-300 transition-colors flex items-center justify-center">
-              <span className="text-zinc-300 text-xs font-medium">description</span>
+              <span className="text-gray-700 text-xs font-medium">description</span>
             </div>
             <div className="absolute -bottom-2 -right-2 bg-zinc-400 text-white text-[10px] font-bold w-5 h-5 rounded flex items-center justify-center shadow-sm">
               4
@@ -84,11 +84,11 @@ export default function InPersonDocumentViewPage() {
             <div className="flex justify-between items-start mb-16 relative z-10">
               <div>
                 <h2 className="text-3xl font-bold text-zinc-900 mb-2">Affidavit of Title</h2>
-                <p className="text-zinc-500 font-medium">State of Texas | County of Travis</p>
+                <p className="text-gray-700 font-medium">State of Texas | County of Travis</p>
               </div>
               <div className="text-right">
                 <p className="text-[#1a4fdb] font-bold text-lg">NOTARIX™ Verified</p>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mt-1">ID: TX-99201-B</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mt-1">ID: TX-99201-B</p>
               </div>
             </div>
 
@@ -110,7 +110,7 @@ export default function InPersonDocumentViewPage() {
             {/* Signatures */}
             <div className="mt-32 space-y-16 relative z-10">
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2">Affiant Signature</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-2">Affiant Signature</p>
                 <div className="w-80 h-px bg-zinc-900"></div>
               </div>
 
@@ -127,7 +127,7 @@ export default function InPersonDocumentViewPage() {
 
             {/* Footer Note */}
             <div className="mt-auto pt-16 relative z-10">
-              <p className="text-xs text-zinc-400 italic">
+              <p className="text-xs text-gray-700 italic">
                 This document was digitally prepared via Notarix™ Authority Systems. For verification purposes
                 only. Physical seal required for finalization.
               </p>
@@ -144,31 +144,31 @@ export default function InPersonDocumentViewPage() {
               <div className="w-2 h-2 bg-emerald-500 rounded-full"></div>
               <span className="text-xs font-bold">Ready for Signing</span>
             </div>
-            <Lock className="w-4 h-4 text-zinc-400" />
+            <Lock className="w-4 h-4 text-gray-700" />
           </div>
 
           <div className="flex-1 overflow-y-auto">
             {/* Document Details */}
             <div className="p-6 border-b border-zinc-100 space-y-4">
-              <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Document Details</h3>
+              <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Document Details</h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-zinc-500 font-medium">File Name</span>
+                  <span className="text-gray-700 font-medium">File Name</span>
                   <span className="text-zinc-900 font-bold">Affidavit_Title_TX.pdf</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-zinc-500 font-medium">Uploaded By</span>
+                  <span className="text-gray-700 font-medium">Uploaded By</span>
                   <div className="flex items-center gap-1.5">
                     <span className="text-zinc-900 font-bold">Sarah Jenkins</span>
                     <CheckCircle2 className="w-3.5 h-3.5 text-[#1a4fdb]" />
                   </div>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-zinc-500 font-medium">Date</span>
+                  <span className="text-gray-700 font-medium">Date</span>
                   <span className="text-zinc-900 font-bold">Oct 24, 2023</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-zinc-500 font-medium">Total Pages</span>
+                  <span className="text-gray-700 font-medium">Total Pages</span>
                   <span className="text-zinc-900 font-bold">28 Pages</span>
                 </div>
               </div>
@@ -176,7 +176,7 @@ export default function InPersonDocumentViewPage() {
 
             {/* Preparation Checklist */}
             <div className="p-6 border-b border-zinc-100 space-y-4">
-              <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Preparation Checklist</h3>
+              <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Preparation Checklist</h3>
               <div className="space-y-3">
                 {[
                   { label: "Document printed", checked: true },
@@ -201,25 +201,25 @@ export default function InPersonDocumentViewPage() {
 
             {/* Special Instructions */}
             <div className="p-6 space-y-4">
-              <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Special Instructions</h3>
+              <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Special Instructions</h3>
               <div className="bg-zinc-50 border border-zinc-200 p-4 rounded-2xl relative">
                 <p className="text-sm font-medium text-zinc-700 leading-relaxed mb-6">
                   Bring extra blue pens, signer prefers physical copies. Ensure the property map on page 14 is highlighted for clear reference during signing.
                 </p>
-                <span className="absolute bottom-3 right-4 text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Auto-saved</span>
+                <span className="absolute bottom-3 right-4 text-[9px] font-bold text-gray-700 uppercase tracking-widest">Auto-saved</span>
               </div>
             </div>
           </div>
 
           <div className="p-6 bg-zinc-50 border-t border-zinc-200 mt-auto">
-             <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-[2px] text-center">Confidential Legal Workspace</p>
+             <p className="text-[10px] font-bold text-gray-700 uppercase tracking-[2px] text-center">Confidential Legal Workspace</p>
           </div>
         </div>
       </div>
 
       {/* Main Footer */}
       <footer className="h-12 bg-white border-t border-zinc-200 flex items-center justify-center z-10 px-6 shrink-0 relative">
-        <span className="text-zinc-500 text-xs font-medium mx-auto">© 2026 Notarix™ Technologies Inc. All rights reserved.</span>
+        <span className="text-gray-700 text-xs font-medium mx-auto">© 2026 Notarix™ Technologies Inc. All rights reserved.</span>
       </footer>
     </div>
   );

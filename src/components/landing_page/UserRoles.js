@@ -44,7 +44,7 @@ export default function UserRoles() {
 
           {/* Right Side: Professionals */}
           <div className="flex-1 bg-[#eef0f6] p-12 lg:p-16 text-zinc-900">
-            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-zinc-500">
+            <h3 className="text-[10px] font-bold uppercase tracking-[0.2em] mb-4 text-gray-700">
               For Legal Professionals
             </h3>
             <h2 className="text-3xl md:text-4xl font-bold mb-12">

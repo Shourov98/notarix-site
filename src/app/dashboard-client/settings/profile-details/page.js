@@ -20,7 +20,7 @@ export default function ProfileDetailsPage() {
       {/* Section Header */}
       <div className="p-8 border-b border-zinc-50 bg-zinc-50/10">
         <h1 className="text-2xl font-bold text-zinc-900 mb-1">Client Profile Setup</h1>
-        <p className="text-zinc-500 font-medium text-sm">Complete all required fields and documentation to finalize the verification process.</p>
+        <p className="text-gray-700 font-medium text-sm">Complete all required fields and documentation to finalize the verification process.</p>
       </div>
 
       <div className="p-8 space-y-10">
@@ -42,7 +42,7 @@ export default function ProfileDetailsPage() {
           <div className="grid grid-cols-1 md:grid-cols-2">
             {/* Left Col: Profile Fields */}
             <div className="p-6 border-r border-zinc-100 space-y-4">
-              <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-b border-zinc-50 pb-2">Profile Fields</h3>
+              <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-zinc-50 pb-2">Profile Fields</h3>
               <div className="space-y-3">
                 {[
                   { label: "Company Logo", status: "MISSING", color: "bg-amber-50 text-amber-600" },
@@ -60,7 +60,7 @@ export default function ProfileDetailsPage() {
             </div>
             {/* Right Col: Required Documents */}
             <div className="p-6 space-y-4">
-              <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest border-b border-zinc-50 pb-2">Required Documents</h3>
+              <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest border-b border-zinc-50 pb-2">Required Documents</h3>
               <div className="space-y-3">
                 {[
                   { label: "Service Agreement", status: "MISSING", color: "bg-amber-50 text-amber-600" },
@@ -86,27 +86,27 @@ export default function ProfileDetailsPage() {
           </div>
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Company Name</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Company Name</label>
               <input type="text" defaultValue="Acme Legal Services Corp." className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Website</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Website</label>
                 <input type="text" defaultValue="https://www.example.com" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Company Type</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Company Type</label>
                 <div className="relative">
                   <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm appearance-none focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all">
                     <option>Law Firm</option>
                     <option>Real Estate</option>
                   </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
                 </div>
               </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Office Phones</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Office Phones</label>
               <input type="text" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
             </div>
           </div>
@@ -120,30 +120,30 @@ export default function ProfileDetailsPage() {
           </div>
           <div className="space-y-6">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Line 1</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Line 1</label>
               <input type="text" placeholder="Street address or P.O. Box" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Line 2 (Optional)</label>
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Line 2 (Optional)</label>
               <input type="text" placeholder="Apartment, suite, unit, building, floor" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">City</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">City</label>
                 <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">State</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">State</label>
                 <div className="relative">
                   <select className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm appearance-none">
                     <option>NY</option>
                     <option>CA</option>
                   </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
+                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
                 </div>
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Zip</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Zip</label>
                 <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
             </div>
@@ -162,15 +162,15 @@ export default function ProfileDetailsPage() {
             <h3 className="text-[10px] font-bold text-[#1a4fdb] uppercase tracking-widest">Primary Representative</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Full Name</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Full Name</label>
                 <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Email</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Email</label>
                 <input type="email" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Phone</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Phone</label>
                 <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
             </div>
@@ -178,18 +178,18 @@ export default function ProfileDetailsPage() {
 
           {/* Secondary */}
           <div className="space-y-6">
-            <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Secondary Representative</h3>
+            <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Secondary Representative</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Full Name</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Full Name</label>
                 <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Email</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Email</label>
                 <input type="email" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
               <div className="space-y-2">
-                <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Phone</label>
+                <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Phone</label>
                 <input type="text" className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none" />
               </div>
             </div>
@@ -203,7 +203,7 @@ export default function ProfileDetailsPage() {
               <UploadCloud className="w-5 h-5 text-[#1a4fdb]" />
               <h2 className="text-lg font-bold text-zinc-900">Document Workspace</h2>
             </div>
-            <span className="text-xs font-bold text-zinc-400 uppercase tracking-widest">2 of 7 Uploaded</span>
+            <span className="text-xs font-bold text-gray-700 uppercase tracking-widest">2 of 7 Uploaded</span>
           </div>
           
           <div className="space-y-4">
@@ -219,7 +219,7 @@ export default function ProfileDetailsPage() {
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-zinc-900">{doc.label}</h4>
-                    <p className="text-xs font-medium text-zinc-400">{doc.sub}</p>
+                    <p className="text-xs font-medium text-gray-700">{doc.sub}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-6">
@@ -243,7 +243,7 @@ export default function ProfileDetailsPage() {
             </div>
             <div className="space-y-2">
               <h3 className="text-sm font-bold text-zinc-900 uppercase tracking-[4px]">Seal Pending</h3>
-              <p className="text-xs font-medium text-zinc-400 leading-relaxed max-w-[240px]">
+              <p className="text-xs font-medium text-gray-700 leading-relaxed max-w-[240px]">
                 The Digital Seal will be issued upon 100% verification of documentation.
               </p>
             </div>
@@ -251,7 +251,7 @@ export default function ProfileDetailsPage() {
 
           {/* Recent Activity Card */}
           <div className="bg-white border border-zinc-100 rounded-[32px] p-8 shadow-sm space-y-8">
-            <h3 className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Recent Activity</h3>
+            <h3 className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Recent Activity</h3>
             <div className="space-y-8 relative pl-6 before:absolute before:inset-y-2 before:left-[11px] before:w-0.5 before:bg-zinc-100">
               {[
                 { title: "W-9 Form Uploaded", time: "2 HOURS AGO • BY SYSTEM", current: true },
@@ -260,8 +260,8 @@ export default function ProfileDetailsPage() {
               ].map((activity, i) => (
                 <div key={i} className="relative">
                   <div className={`absolute left-[-23px] top-1 w-2.5 h-2.5 rounded-full border-2 border-white ${activity.current ? 'bg-[#1a4fdb] ring-4 ring-blue-50' : 'bg-zinc-200'}`}></div>
-                  <h4 className={`text-xs font-bold ${activity.current ? 'text-zinc-900' : 'text-zinc-500'}`}>{activity.title}</h4>
-                  <p className="text-[9px] font-bold text-zinc-400 mt-1">{activity.time}</p>
+                  <h4 className={`text-xs font-bold ${activity.current ? 'text-zinc-900' : 'text-gray-700'}`}>{activity.title}</h4>
+                  <p className="text-[9px] font-bold text-gray-700 mt-1">{activity.time}</p>
                 </div>
               ))}
             </div>

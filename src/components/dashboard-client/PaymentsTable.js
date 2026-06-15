@@ -67,7 +67,7 @@ export default function PaymentsTable() {
         <h3 className="font-bold text-zinc-900">Recent Transactions</h3>
         <div className="flex items-center gap-3">
           <div className="relative group">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-[#1a4fdb] transition-colors" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#1a4fdb] transition-colors" />
             <input 
               type="text" 
               placeholder="Search orders..." 
@@ -86,13 +86,13 @@ export default function PaymentsTable() {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-zinc-50 bg-zinc-50/30">
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order ID</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Signer's Name</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Amount</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Status</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Method</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Transaction ID</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Due Date</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Order ID</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Signer's Name</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Amount</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Status</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Method</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Transaction ID</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-right">Due Date</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-50">
@@ -119,13 +119,13 @@ export default function PaymentsTable() {
                   </span>
                 </td>
                 <td className="px-6 py-5 text-center">
-                  <span className="text-sm font-medium text-zinc-500">{tx.method}</span>
+                  <span className="text-sm font-medium text-gray-700">{tx.method}</span>
                 </td>
                 <td className="px-6 py-5 text-center">
-                  <span className="text-sm font-medium text-zinc-500">{tx.transactionId}</span>
+                  <span className="text-sm font-medium text-gray-700">{tx.transactionId}</span>
                 </td>
                 <td className="px-6 py-5 text-right">
-                  <span className="text-sm font-medium text-zinc-500">{tx.dueDate}</span>
+                  <span className="text-sm font-medium text-gray-700">{tx.dueDate}</span>
                 </td>
               </tr>
             ))}
@@ -135,13 +135,13 @@ export default function PaymentsTable() {
 
       {/* Pagination Footer */}
       <div className="p-6 border-t border-zinc-100 flex items-center justify-between bg-zinc-50/10">
-        <span className="text-sm text-zinc-500 font-medium">Showing <span className="font-bold text-zinc-900">1-10</span> of 48 transactions</span>
+        <span className="text-sm text-gray-700 font-medium">Showing <span className="font-bold text-zinc-900">1-10</span> of 48 transactions</span>
         <div className="flex items-center gap-1">
           <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
-            <ChevronLeft className="w-4 h-4 text-zinc-500" />
+            <ChevronLeft className="w-4 h-4 text-gray-700" />
           </button>
           <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
-            <ChevronRight className="w-4 h-4 text-zinc-500" />
+            <ChevronRight className="w-4 h-4 text-gray-700" />
           </button>
         </div>
       </div>

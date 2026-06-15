@@ -27,7 +27,7 @@ export default function ProfilePage() {
           </div>
           <div>
             <h3 className="text-xl font-bold text-zinc-900 mb-1">James R. Wilson</h3>
-            <p className="text-xs font-medium text-zinc-400 mb-2">Member since January 2024 • <span className="text-[#1a4fdb]">Verified Professional</span></p>
+            <p className="text-xs font-medium text-gray-700 mb-2">Member since January 2024 • <span className="text-[#1a4fdb]">Verified Professional</span></p>
             <button className="text-sm font-bold text-[#1a4fdb] hover:underline">Change photo</button>
           </div>
         </div>
@@ -35,7 +35,7 @@ export default function ProfilePage() {
         {/* Form Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl">
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Full Name</label>
+            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Full Name</label>
             <input 
               type="text" 
               defaultValue="James R. Wilson"
@@ -43,7 +43,7 @@ export default function ProfilePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Email Address</label>
+            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Email Address</label>
             <input 
               type="email" 
               defaultValue="james.wilson@corporate.com"
@@ -51,7 +51,7 @@ export default function ProfilePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Phone Number</label>
+            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Phone Number</label>
             <input 
               type="text" 
               defaultValue="+1 (555) 012-3456"
@@ -59,7 +59,7 @@ export default function ProfilePage() {
             />
           </div>
           <div className="space-y-2">
-            <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Company Name</label>
+            <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Company Name</label>
             <input 
               type="text" 
               defaultValue="Wilson & Partners Legal"

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Download, ShieldCheck } from "lucide-react";
 import { toast } from "sonner";
-import { getClientPayments } from "@/lib/siteApi";
+import { buildAssetUrl, getClientPayments } from "@/lib/siteApi";
 
 const formatCurrency = (value) => `$${Number(value || 0).toFixed(2)}`;
 
@@ -64,7 +64,7 @@ export default function ClientPaymentsPage() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="mb-1 text-2xl font-bold text-zinc-900">Payments</h1>
-          <p className="text-sm font-medium text-zinc-500">
+          <p className="text-sm font-medium text-gray-700">
             Review invoices, receipts, and outstanding balances for your orders.
           </p>
         </div>
@@ -81,7 +81,7 @@ export default function ClientPaymentsPage() {
           { label: "Outstanding Balance", value: formatCurrency(summary.pending) },
         ].map((card) => (
           <div key={card.label} className="rounded-[32px] border border-zinc-100 bg-white p-6 shadow-sm">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">{card.label}</p>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-700">{card.label}</p>
             <p className="mt-3 text-2xl font-bold text-zinc-900">{card.value}</p>
           </div>
         ))}
@@ -104,7 +104,7 @@ export default function ClientPaymentsPage() {
             <thead className="bg-zinc-50/40">
               <tr>
                 {["Order", "Company", "Amount", "Status", "Method", "Due", "Receipt"].map((head) => (
-                  <th key={head} className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-zinc-400">
+                  <th key={head} className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest text-gray-700">
                     {head}
                   </th>
                 ))}
@@ -130,7 +130,7 @@ export default function ClientPaymentsPage() {
                   <td className="px-6 py-5 text-sm">
                     {record.proof?.url ? (
                       <a
-                        href={`http://localhost:5191${record.proof.url}`}
+                        href={buildAssetUrl(record.proof.url)}
                         target="_blank"
                         rel="noreferrer"
                         className="font-bold text-[#1a4fdb] hover:underline"
@@ -138,7 +138,7 @@ export default function ClientPaymentsPage() {
                         View
                       </a>
                     ) : (
-                      <span className="text-zinc-400">Not uploaded</span>
+                      <span className="text-gray-700">Not uploaded</span>
                     )}
                   </td>
                 </tr>
@@ -148,13 +148,13 @@ export default function ClientPaymentsPage() {
         </div>
 
         {loading ? (
-          <p className="p-6 text-sm text-zinc-500">Loading payments...</p>
+          <p className="p-6 text-sm text-gray-700">Loading payments...</p>
         ) : records.length === 0 ? (
-          <p className="p-6 text-sm text-zinc-500">No payment records found yet.</p>
+          <p className="p-6 text-sm text-gray-700">No payment records found yet.</p>
         ) : null}
       </div>
 
-      <div className="flex items-center gap-2 text-zinc-400">
+      <div className="flex items-center gap-2 text-gray-700">
         <ShieldCheck className="h-4 w-4" />
         <span className="text-xs font-medium uppercase tracking-widest">
           Manual payment records are securely archived for each order.

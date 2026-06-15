@@ -10,7 +10,7 @@ export default function DashboardNotaryLayout({ children }) {
         <main className="flex-1 overflow-y-auto p-8">
           <div className="max-w-[1600px] mx-auto pb-12">{children}</div>
         </main>
-        <footer className="py-4 px-8 border-t border-zinc-100 text-center text-sm text-zinc-400 font-medium bg-white shrink-0">
+        <footer className="py-4 px-8 border-t border-zinc-100 text-center text-sm text-gray-700 font-medium bg-white shrink-0">
           © 2026 Notarix™ Technologies Inc. All rights reserved.
         </footer>
       </div>

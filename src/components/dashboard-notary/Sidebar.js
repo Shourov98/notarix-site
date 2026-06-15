@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  Bell,
   BriefcaseBusiness,
   CircleHelp,
   CreditCard,
@@ -13,7 +12,8 @@ import {
   ClipboardList,
 } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { clearPortalSession } from "@/lib/portalSession";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard-notary" },
@@ -27,6 +27,12 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    clearPortalSession();
+    router.replace("/login");
+  };
 
   return (
     <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col sticky top-0 h-screen shrink-0 z-50">
@@ -36,7 +42,7 @@ export default function Sidebar() {
         </div>
         <div>
           <p className="text-xl leading-none font-bold tracking-tight text-zinc-900">Notarix</p>
-          <p className="text-[10px] tracking-[0.35em] uppercase text-zinc-400 font-bold mt-1">Portal</p>
+          <p className="text-[10px] tracking-[0.35em] uppercase text-gray-700 font-bold mt-1">Portal</p>
         </div>
       </div>
 
@@ -64,11 +70,11 @@ export default function Sidebar() {
       </nav>
 
       <div className="px-4 py-5 space-y-2 border-t border-zinc-100 bg-white">
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-600 hover:bg-zinc-50 transition-colors">
+        <Link href="/contact" className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-zinc-600 hover:bg-zinc-50 transition-colors">
           <CircleHelp className="w-5 h-5" />
           <span className="text-sm font-medium">Help Center</span>
-        </button>
-        <button className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition-colors">
+        </Link>
+        <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition-colors">
           <LogOut className="w-5 h-5" />
           <span className="text-sm font-medium">Sign Out</span>
         </button>

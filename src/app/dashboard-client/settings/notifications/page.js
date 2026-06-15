@@ -51,7 +51,7 @@ export default function NotificationsPage() {
       {/* Section Header */}
       <div className="p-8 border-b border-zinc-50 bg-zinc-50/10">
         <h2 className="text-xl font-bold text-zinc-900">Notifications</h2>
-        <p className="text-zinc-500 font-medium text-xs mt-1">Choose what updates you want to receive and how they are delivered.</p>
+        <p className="text-gray-700 font-medium text-xs mt-1">Choose what updates you want to receive and how they are delivered.</p>
       </div>
 
       <div className="p-8 space-y-12">
@@ -63,7 +63,7 @@ export default function NotificationsPage() {
               </div>
               <div>
                 <h3 className="font-bold text-zinc-900">{section.title}</h3>
-                <p className="text-xs font-medium text-zinc-400">{section.description}</p>
+                <p className="text-xs font-medium text-gray-700">{section.description}</p>
               </div>
             </div>
 
@@ -72,7 +72,7 @@ export default function NotificationsPage() {
                 <div key={optIdx} className="flex items-center justify-between p-5 border border-zinc-100 rounded-2xl hover:border-blue-100 transition-colors bg-white group">
                   <div className="space-y-1">
                     <h4 className="text-sm font-bold text-zinc-900">{option.label}</h4>
-                    <p className="text-xs font-medium text-zinc-400">{option.description}</p>
+                    <p className="text-xs font-medium text-gray-700">{option.description}</p>
                   </div>
                   <div className={`w-12 h-6 rounded-full relative cursor-pointer transition-colors duration-200 ${option.enabled ? 'bg-[#1a4fdb]' : 'bg-zinc-200'}`}>
                     <div className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-200 shadow-sm ${option.enabled ? 'left-7' : 'left-1'}`}></div>

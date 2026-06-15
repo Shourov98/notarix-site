@@ -8,7 +8,7 @@ export default function InPersonOrderView({ id }) {
     <div className="space-y-6 pb-8">
       <div>
         <h1 className="text-2xl font-bold text-zinc-900">Order Details</h1>
-        <p className="text-sm font-medium text-zinc-500 mt-1">
+        <p className="text-sm font-medium text-gray-700 mt-1">
           Order #{id} • In-Person
         </p>
       </div>
@@ -17,10 +17,10 @@ export default function InPersonOrderView({ id }) {
         <div className="grid grid-cols-2 xl:grid-cols-6 gap-6">
           {steps.map((step, index) => (
             <div key={step} className="text-center relative">
-              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center font-bold ${index < 2 ? "bg-[#2c49df] text-white" : index === 0 ? "bg-emerald-500 text-white" : "bg-zinc-100 text-zinc-400"}`}>
+              <div className={`w-12 h-12 mx-auto rounded-full flex items-center justify-center font-bold ${index < 2 ? "bg-[#2c49df] text-white" : index === 0 ? "bg-emerald-500 text-white" : "bg-zinc-100 text-gray-700"}`}>
                 {index + 1}
               </div>
-              <p className={`mt-3 text-sm font-bold ${index < 2 ? "text-[#2c49df]" : "text-zinc-400"}`}>{step}</p>
+              <p className={`mt-3 text-sm font-bold ${index < 2 ? "text-[#2c49df]" : "text-gray-700"}`}>{step}</p>
             </div>
           ))}
         </div>
@@ -36,7 +36,7 @@ export default function InPersonOrderView({ id }) {
           <div key={label} className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
             <div className="flex items-center gap-3 text-[#2c49df]">
               <Icon className="w-5 h-5" />
-              <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{label}</p>
+              <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</p>
             </div>
               <p className={`mt-5 ${label === "Estimated Fee" ? "text-emerald-600" : "text-zinc-900"} text-xl font-bold`}>
                 {value}
@@ -54,11 +54,11 @@ export default function InPersonOrderView({ id }) {
                 <h2 className="text-lg font-bold text-zinc-900">Client Info</h2>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Vendor</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Vendor</p>
                 <p className="text-zinc-900 font-bold mt-2">Reliant Title &amp; Escrow</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Service Type</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Service Type</p>
                 <p className="text-zinc-900 font-bold mt-2">Purchase</p>
               </div>
             </div>
@@ -69,11 +69,11 @@ export default function InPersonOrderView({ id }) {
                 <h2 className="text-lg font-bold text-zinc-900">Borrower Info</h2>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Primary Signer</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Primary Signer</p>
                 <p className="text-zinc-900 font-bold mt-2">Kevin Baker</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Phone Number</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Phone Number</p>
                 <p className="text-[#2c49df] font-bold mt-2">+1 512-555-0123</p>
               </div>
             </div>
@@ -86,10 +86,10 @@ export default function InPersonOrderView({ id }) {
                 <h2 className="text-lg font-bold text-zinc-900">Property &amp; Signing Location</h2>
               </div>
               <p className="text-zinc-900 font-semibold mt-5">123 Maple St, Austin, TX 78701</p>
-              <p className="text-zinc-500 mt-2">Residential Property • Single Family Home</p>
+              <p className="text-gray-700 mt-2">Residential Property • Single Family Home</p>
             </div>
             <div className="p-6">
-              <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Appointment Details</p>
+              <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Appointment Details</p>
               <p className="italic text-zinc-600 mt-4">&quot;Call upon arrival, park in driveway.&quot;</p>
             </div>
           </div>
@@ -107,7 +107,7 @@ export default function InPersonOrderView({ id }) {
                       <FileText className="w-5 h-5 text-red-500" />
                       <span className="font-medium text-zinc-800">{file}</span>
                     </div>
-                    <button className="text-zinc-400 hover:text-[#2c49df]">
+                    <button className="text-gray-700 hover:text-[#2c49df]">
                       <Download className="w-4 h-4" />
                     </button>
                   </div>
@@ -141,7 +141,7 @@ export default function InPersonOrderView({ id }) {
             </div>
             <div className="p-6 min-h-[220px]">
               <div className="max-w-2xl bg-zinc-50 rounded-[24px] p-5">
-                <p className="text-zinc-400 text-sm font-bold">Vendor • 08:15 AM</p>
+                <p className="text-gray-700 text-sm font-bold">Vendor • 08:15 AM</p>
                 <p className="text-sm font-medium text-zinc-700 mt-3">Hi, please ensure the signer has their current TX driver&apos;s license ready for verification.</p>
               </div>
             </div>
@@ -165,7 +165,7 @@ export default function InPersonOrderView({ id }) {
                 ["Total Payout", "$175.00"],
               ].map(([label, value], index) => (
                 <div key={label}>
-                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{label}</p>
+                  <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</p>
                   <p className={`mt-3 text-3xl font-bold ${index === 2 ? "text-[#2c49df]" : "text-zinc-900"}`}>{value}</p>
                 </div>
               ))}
@@ -182,14 +182,14 @@ export default function InPersonOrderView({ id }) {
                 <Play className="w-4 h-4" />
                 Start Signing
               </button>
-              <button className="w-full py-4 rounded-2xl bg-zinc-100 text-zinc-500 font-bold flex items-center justify-center gap-2">
+              <button className="w-full py-4 rounded-2xl bg-zinc-100 text-gray-700 font-bold flex items-center justify-center gap-2">
                 <Upload className="w-4 h-4" />
                 Upload Documents
               </button>
-              <button className="w-full py-4 rounded-2xl bg-zinc-100 text-zinc-400 font-bold">
+              <button className="w-full py-4 rounded-2xl bg-zinc-100 text-gray-700 font-bold">
                 Mark as Completed
               </button>
-              <p className="text-center text-sm text-zinc-400">Available after document upload</p>
+              <p className="text-center text-sm text-gray-700">Available after document upload</p>
             </div>
           </div>
 
@@ -198,7 +198,7 @@ export default function InPersonOrderView({ id }) {
               <BadgeCheck className="w-8 h-8" />
             </div>
             <p className="text-lg font-bold text-[#2c49df] mt-6">Digital Seal Enabled</p>
-            <p className="text-sm font-medium text-zinc-500 mt-3">This order is protected by Notarix real-time verification logs.</p>
+            <p className="text-sm font-medium text-gray-700 mt-3">This order is protected by Notarix real-time verification logs.</p>
           </div>
         </div>
       </div>

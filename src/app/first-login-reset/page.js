@@ -3,7 +3,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
-import { LockKeyhole } from "lucide-react";
+import { Eye, EyeOff, LockKeyhole } from "lucide-react";
 import NotarixBrand from "@/components/public/NotarixBrand";
 import { clearPortalSession, readPortalSession } from "@/lib/portalSession";
 import { resetPortalFirstLoginPassword } from "@/lib/siteApi";
@@ -13,6 +13,8 @@ function FirstLoginResetContent() {
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "client";
   const [loading, setLoading] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   useEffect(() => {
     const session = readPortalSession();
@@ -75,11 +77,19 @@ function FirstLoginResetContent() {
                   <LockKeyhole className="h-5 w-5 text-[#6b7bb1]" />
                   <input
                     name="newPassword"
-                    type="password"
+                    type={showNewPassword ? "text" : "password"}
                     minLength={8}
                     placeholder="Choose a strong password"
-                    className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-zinc-500"
+                    className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-gray-700"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowNewPassword((current) => !current)}
+                    aria-label={showNewPassword ? "Hide password" : "Show password"}
+                    className="text-[#6b7bb1] transition hover:text-[#2349db]"
+                  >
+                    {showNewPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
                 </span>
               </label>
 
@@ -91,11 +101,19 @@ function FirstLoginResetContent() {
                   <LockKeyhole className="h-5 w-5 text-[#6b7bb1]" />
                   <input
                     name="confirmPassword"
-                    type="password"
+                    type={showConfirmPassword ? "text" : "password"}
                     minLength={8}
                     placeholder="Re-enter your password"
-                    className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-zinc-500"
+                    className="w-full bg-transparent text-lg text-zinc-900 outline-none placeholder:text-gray-700"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmPassword((current) => !current)}
+                    aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                    className="text-[#6b7bb1] transition hover:text-[#2349db]"
+                  >
+                    {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                  </button>
                 </span>
               </label>
 

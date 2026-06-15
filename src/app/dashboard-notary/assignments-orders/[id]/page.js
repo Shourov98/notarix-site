@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import { buildAssetUrl } from "@/lib/siteApi";
 import {
   acceptNotaryAssignment,
   completeNotaryAssignment,
@@ -19,7 +20,7 @@ const cardClass =
 
 const InfoRow = ({ label, value }) => (
   <div className="rounded-2xl border border-zinc-100 bg-zinc-50 p-4">
-    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-zinc-400">{label}</p>
+    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-gray-700">{label}</p>
     <p className="mt-2 text-sm font-semibold text-zinc-900">{value || "Not provided"}</p>
   </div>
 );
@@ -84,7 +85,7 @@ export default function AssignmentOrderDetailPage() {
   };
 
   if (activeNotaryAssignmentStatus === "loading" && !activeNotaryAssignment) {
-    return <div className="py-12 text-sm text-zinc-500">Loading assignment...</div>;
+    return <div className="py-12 text-sm text-gray-700">Loading assignment...</div>;
   }
 
   if (!activeNotaryAssignment) {
@@ -104,7 +105,7 @@ export default function AssignmentOrderDetailPage() {
     <div className="space-y-6 pb-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
-          <p className="text-sm font-medium text-zinc-500">Assignments &gt; Details</p>
+          <p className="text-sm font-medium text-gray-700">Assignments &gt; Details</p>
           <div className="mt-3 flex flex-wrap items-center gap-4">
             <h1 className="text-2xl font-bold text-zinc-900">{order.id}</h1>
             <span className="rounded-full bg-blue-50 px-4 py-2 font-bold text-[#2c49df]">
@@ -148,16 +149,16 @@ export default function AssignmentOrderDetailPage() {
             <h2 className="text-lg font-bold text-zinc-900">Client Documents</h2>
             <div className="space-y-3">
               {(order.documents || []).length === 0 ? (
-                <p className="text-sm text-zinc-500">No client documents uploaded yet.</p>
+                <p className="text-sm text-gray-700">No client documents uploaded yet.</p>
               ) : (
                 order.documents.map((document) => (
                   <div key={document.id} className="flex items-center justify-between rounded-2xl border border-zinc-100 bg-zinc-50 p-4">
                     <div>
                       <p className="font-semibold text-zinc-900">{document.name}</p>
-                      <p className="text-xs text-zinc-500">{document.mimeType || "Uploaded file"}</p>
+                      <p className="text-xs text-gray-700">{document.mimeType || "Uploaded file"}</p>
                     </div>
                     {document.url ? (
-                      <a href={`http://localhost:5191${document.url}`} target="_blank" rel="noreferrer" className="text-sm font-bold text-[#2c49df]">
+                      <a href={buildAssetUrl(document.url)} target="_blank" rel="noreferrer" className="text-sm font-bold text-[#2c49df]">
                         Open
                       </a>
                     ) : null}
@@ -184,7 +185,7 @@ export default function AssignmentOrderDetailPage() {
                   <div key={document.id} className="flex items-center justify-between rounded-2xl border border-zinc-100 bg-zinc-50 p-4">
                     <p className="font-semibold text-zinc-900">{document.name}</p>
                     {document.url ? (
-                      <a href={`http://localhost:5191${document.url}`} target="_blank" rel="noreferrer" className="text-sm font-bold text-[#2c49df]">
+                      <a href={buildAssetUrl(document.url)} target="_blank" rel="noreferrer" className="text-sm font-bold text-[#2c49df]">
                         Open
                       </a>
                     ) : null}
@@ -250,7 +251,7 @@ export default function AssignmentOrderDetailPage() {
               {(order.timeline || []).map((entry) => (
                 <div key={`${entry.status}-${entry.changedAt}`} className="border-l-2 border-zinc-200 pl-4">
                   <p className="font-semibold text-zinc-900">{entry.status}</p>
-                  <p className="text-sm text-zinc-500">{new Date(entry.changedAt).toLocaleString("en-US")}</p>
+                  <p className="text-sm text-gray-700">{new Date(entry.changedAt).toLocaleString("en-US")}</p>
                   {entry.note ? <p className="mt-1 text-sm text-zinc-600">{entry.note}</p> : null}
                 </div>
               ))}

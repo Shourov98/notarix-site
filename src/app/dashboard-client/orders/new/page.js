@@ -27,9 +27,9 @@ import { uploadClientOrderDocuments } from "@/lib/siteApi";
 const sectionCard =
   "bg-white border border-zinc-100 rounded-[32px] p-8 shadow-sm space-y-6";
 const inputClass =
-  "w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all";
+  "w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm text-zinc-900 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all";
 const labelClass =
-  "text-[10px] font-bold text-zinc-400 uppercase tracking-widest";
+  "text-[10px] font-bold text-gray-700 uppercase tracking-widest";
 
 const initialState = {
   vendorCode: "26NC4999",
@@ -162,7 +162,7 @@ export default function NewOrderPage() {
                 <option>Power of Attorney</option>
                 <option>Real Estate Closing</option>
               </select>
-              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
+              <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
             </div>
           </div>
         </div>
@@ -229,7 +229,7 @@ export default function NewOrderPage() {
                   <option>California</option>
                   <option>Florida</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
               </div>
             </div>
             <div className="space-y-2">
@@ -245,7 +245,7 @@ export default function NewOrderPage() {
                   <option>MST</option>
                   <option>PST</option>
                 </select>
-                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 pointer-events-none" />
+                <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 pointer-events-none" />
               </div>
             </div>
           </div>
@@ -356,7 +356,7 @@ export default function NewOrderPage() {
           <textarea
             rows={8}
             placeholder="Provide any specific requests, entry codes, or borrower requirements here..."
-            className={`${inputClass} resize-none placeholder:text-zinc-400`}
+            className={`${inputClass} resize-none placeholder:text-gray-700`}
             value={formState.specialInstructions}
             onChange={(event) => updateField("specialInstructions", event.target.value)}
           />
@@ -389,7 +389,7 @@ export default function NewOrderPage() {
             </div>
             <div className="text-center">
               <p className="text-sm font-bold text-zinc-900">Click to upload order documents</p>
-              <p className="text-xs font-medium text-zinc-400 mt-1">Support for PDF, DOC, DOCX, PNG, JPG, JPEG</p>
+              <p className="text-xs font-medium text-gray-700 mt-1">Support for PDF, DOC, DOCX, PNG, JPG, JPEG</p>
             </div>
             <span className="px-6 py-2.5 bg-white border border-zinc-200 rounded-xl text-sm font-bold text-[#1a4fdb] shadow-sm">
               Select Files
@@ -405,10 +405,10 @@ export default function NewOrderPage() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-zinc-700">{file.name}</p>
-                    <p className="text-[10px] font-medium text-zinc-400">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                    <p className="text-[10px] font-medium text-gray-700">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
                   </div>
                 </div>
-                <button type="button" onClick={() => removeFile(index)} className="p-2 text-zinc-400 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all">
+                <button type="button" onClick={() => removeFile(index)} className="p-2 text-gray-700 hover:text-rose-500 hover:bg-rose-50 rounded-lg transition-all">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
@@ -418,11 +418,11 @@ export default function NewOrderPage() {
       </div>
 
       <div className="fixed bottom-0 left-0 right-0 lg:left-64 bg-white border-t border-zinc-100 px-8 py-4 flex items-center justify-between z-50">
-        <Link href="/dashboard-client/orders" className="text-sm font-bold text-zinc-500 hover:text-zinc-900 transition-colors">
+        <Link href="/dashboard-client/orders" className="text-sm font-bold text-gray-700 hover:text-zinc-900 transition-colors">
           Cancel
         </Link>
         <div className="flex items-center gap-3">
-          <button type="button" className="px-8 py-2.5 bg-zinc-100 text-zinc-500 rounded-xl text-sm font-bold">
+          <button type="button" className="px-8 py-2.5 bg-zinc-100 text-gray-700 rounded-xl text-sm font-bold">
             Save Draft
           </button>
           <button

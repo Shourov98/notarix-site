@@ -4,7 +4,7 @@ const activities = [
   { icon: User, title: "Notary assigned to #NY-90210", time: "15 minutes ago", bg: "bg-blue-50", color: "text-[#1a4fdb]" },
   { icon: Upload, title: "Document uploaded successfully", time: "2 hours ago", bg: "bg-emerald-50", color: "text-emerald-500" },
   { icon: Calendar, title: "Appointment rescheduled for Oct 26", time: "Yesterday", bg: "bg-amber-50", color: "text-amber-500" },
-  { icon: Search, title: "Audit trail generated for Q3", time: "2 days ago", bg: "bg-zinc-50", color: "text-zinc-500" },
+  { icon: Search, title: "Audit trail generated for Q3", time: "2 days ago", bg: "bg-zinc-50", color: "text-gray-700" },
 ];
 
 export default function ActivityFeed() {
@@ -23,7 +23,7 @@ export default function ActivityFeed() {
             </div>
             <div>
               <p className="text-sm font-bold text-zinc-900 mb-1">{activity.title}</p>
-              <p className="text-xs text-zinc-400 font-medium">{activity.time}</p>
+              <p className="text-xs text-gray-700 font-medium">{activity.time}</p>
             </div>
           </div>
         ))}

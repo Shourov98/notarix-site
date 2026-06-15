@@ -11,12 +11,12 @@ export default function AssignmentRequestsPage({ requests = defaultRequests }) {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-zinc-900">New Assignment Requests</h1>
-        <p className="text-zinc-500 font-medium text-sm mt-1">Review and accept available job requests in real-time.</p>
+        <p className="text-gray-700 font-medium text-sm mt-1">Review and accept available job requests in real-time.</p>
       </div>
 
       <div className="bg-white border border-indigo-100 rounded-[24px] p-4 shadow-sm flex flex-col xl:flex-row gap-4">
         <div className="relative flex-1">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
           <input
             type="text"
             placeholder="Search Location or Order ID"
@@ -41,7 +41,7 @@ export default function AssignmentRequestsPage({ requests = defaultRequests }) {
           <div key={request.id} className="bg-white border border-indigo-100 rounded-[24px] p-6 shadow-sm">
             <div className="flex items-start justify-between gap-4">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[0.2em] text-zinc-400">Order ID</p>
+                <p className="text-xs font-bold uppercase tracking-[0.2em] text-gray-700">Order ID</p>
                 <h2 className="text-2xl font-bold text-zinc-900 mt-3">#{request.id}</h2>
               </div>
               <div className="space-y-2 text-right">
@@ -56,17 +56,17 @@ export default function AssignmentRequestsPage({ requests = defaultRequests }) {
 
             <div className="mt-7 space-y-5 text-zinc-700">
               <div className="flex gap-3">
-                <LocateFixed className="w-5 h-5 text-zinc-400 shrink-0 mt-1" />
+                <LocateFixed className="w-5 h-5 text-gray-700 shrink-0 mt-1" />
                 <div>
                   <p className="text-xl font-bold text-zinc-900">{request.location}</p>
-                  <p className="text-sm font-medium text-zinc-500 mt-1">{request.sub}</p>
+                  <p className="text-sm font-medium text-gray-700 mt-1">{request.sub}</p>
                 </div>
               </div>
               <div className="flex gap-3">
-                <Calendar className="w-5 h-5 text-zinc-400 shrink-0 mt-1" />
+                <Calendar className="w-5 h-5 text-gray-700 shrink-0 mt-1" />
                 <div>
                   <p className="text-xl font-bold text-zinc-900">{request.date}</p>
-                  <p className="text-sm font-medium text-zinc-500 mt-1">{request.zone}</p>
+                  <p className="text-sm font-medium text-gray-700 mt-1">{request.zone}</p>
                 </div>
               </div>
             </div>
@@ -83,11 +83,11 @@ export default function AssignmentRequestsPage({ requests = defaultRequests }) {
 
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Docs</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Docs</p>
                 <p className="text-2xl font-bold text-zinc-900 mt-2">{request.docs}</p>
               </div>
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">Special Instructions</p>
+                <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Special Instructions</p>
                 <p className="text-zinc-700 mt-2">{request.notes}</p>
               </div>
             </div>
@@ -110,11 +110,11 @@ export default function AssignmentRequestsPage({ requests = defaultRequests }) {
       </div>
 
       <div className="bg-[#f7f8ff] border border-dashed border-indigo-200 rounded-[24px] p-16 text-center">
-        <div className="w-20 h-20 mx-auto rounded-full bg-zinc-100 flex items-center justify-center text-zinc-400">
+        <div className="w-20 h-20 mx-auto rounded-full bg-zinc-100 flex items-center justify-center text-gray-700">
           <LocateFixed className="w-8 h-8" />
         </div>
         <h3 className="text-2xl font-bold text-zinc-900 mt-8">No more requests?</h3>
-        <p className="text-zinc-500 text-sm font-medium mt-4 max-w-2xl mx-auto">
+        <p className="text-gray-700 text-sm font-medium mt-4 max-w-2xl mx-auto">
           We&apos;ll notify you as soon as new jobs matching your profile become available in your area.
         </p>
         <button className="text-[#2c49df] font-bold mt-6 hover:underline">Update Service Area Radius</button>

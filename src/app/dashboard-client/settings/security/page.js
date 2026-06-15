@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { 
   Lock, 
   ShieldCheck, 
@@ -8,7 +9,9 @@ import {
   MapPin, 
   Monitor,
   CheckCircle2,
-  XCircle
+  XCircle,
+  Eye,
+  EyeOff
 } from "lucide-react";
 
 const activeSessions = [
@@ -33,12 +36,16 @@ const activeSessions = [
 ];
 
 export default function SecurityPage() {
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
   return (
     <div className="flex flex-col h-full bg-white">
       {/* Section Header */}
       <div className="p-8 border-b border-zinc-50 bg-zinc-50/10">
         <h2 className="text-xl font-bold text-zinc-900">Security Settings</h2>
-        <p className="text-zinc-500 font-medium text-xs mt-1">Manage your password and protect your account with extra security layers.</p>
+        <p className="text-gray-700 font-medium text-xs mt-1">Manage your password and protect your account with extra security layers.</p>
       </div>
 
       <div className="p-8 space-y-12">
@@ -51,35 +58,65 @@ export default function SecurityPage() {
             </div>
             <div>
               <h3 className="font-bold text-zinc-900">Password Management</h3>
-              <p className="text-xs font-medium text-zinc-400">Change your password to keep your account secure.</p>
+              <p className="text-xs font-medium text-gray-700">Change your password to keep your account secure.</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl pt-2">
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Current Password</label>
-              <input 
-                type="password" 
-                placeholder="••••••••"
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
-              />
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Current Password</label>
+              <div className="flex items-center gap-3 w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-[#1a4fdb]/10 focus-within:border-[#1a4fdb] transition-all">
+                <input 
+                  type={showCurrentPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="w-full bg-transparent outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowCurrentPassword((current) => !current)}
+                  aria-label={showCurrentPassword ? "Hide password" : "Show password"}
+                  className="text-gray-700 transition hover:text-[#1a4fdb]"
+                >
+                  {showCurrentPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
             <div className="hidden md:block"></div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">New Password</label>
-              <input 
-                type="password" 
-                placeholder="••••••••"
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
-              />
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">New Password</label>
+              <div className="flex items-center gap-3 w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-[#1a4fdb]/10 focus-within:border-[#1a4fdb] transition-all">
+                <input 
+                  type={showNewPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="w-full bg-transparent outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowNewPassword((current) => !current)}
+                  aria-label={showNewPassword ? "Hide password" : "Show password"}
+                  className="text-gray-700 transition hover:text-[#1a4fdb]"
+                >
+                  {showNewPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
             <div className="space-y-2">
-              <label className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Confirm New Password</label>
-              <input 
-                type="password" 
-                placeholder="••••••••"
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all"
-              />
+              <label className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Confirm New Password</label>
+              <div className="flex items-center gap-3 w-full px-4 py-3 bg-zinc-50 border border-zinc-100 rounded-xl text-sm focus-within:outline-none focus-within:ring-2 focus-within:ring-[#1a4fdb]/10 focus-within:border-[#1a4fdb] transition-all">
+                <input 
+                  type={showConfirmPassword ? "text" : "password"}
+                  placeholder="••••••••"
+                  className="w-full bg-transparent outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPassword((current) => !current)}
+                  aria-label={showConfirmPassword ? "Hide password" : "Show password"}
+                  className="text-gray-700 transition hover:text-[#1a4fdb]"
+                >
+                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
           </div>
           <div className="flex justify-start">
@@ -100,12 +137,12 @@ export default function SecurityPage() {
               </div>
               <div>
                 <h3 className="font-bold text-zinc-900">Two-Factor Authentication (2FA)</h3>
-                <p className="text-xs font-medium text-zinc-400">Add an extra layer of security to your account.</p>
+                <p className="text-xs font-medium text-gray-700">Add an extra layer of security to your account.</p>
               </div>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-right">
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Status</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Status</p>
                 <span className="text-xs font-bold text-rose-500 uppercase">Disabled</span>
               </div>
               <div className="w-12 h-6 bg-zinc-200 rounded-full relative cursor-pointer">
@@ -125,7 +162,7 @@ export default function SecurityPage() {
             </div>
             <div>
               <h3 className="font-bold text-zinc-900">Device History</h3>
-              <p className="text-xs font-medium text-zinc-400">Manage and revoke your active sessions on different devices.</p>
+              <p className="text-xs font-medium text-gray-700">Manage and revoke your active sessions on different devices.</p>
             </div>
           </div>
 
@@ -134,7 +171,7 @@ export default function SecurityPage() {
               <div key={i} className="flex items-center justify-between p-5 border border-zinc-100 rounded-2xl hover:border-blue-100 transition-colors bg-white">
                 <div className="flex items-center gap-4">
                   <div className="w-10 h-10 bg-zinc-50 rounded-xl flex items-center justify-center border border-zinc-100">
-                    {session.device.includes('iPhone') ? <Smartphone className="w-5 h-5 text-zinc-500" /> : <Monitor className="w-5 h-5 text-zinc-500" />}
+                    {session.device.includes('iPhone') ? <Smartphone className="w-5 h-5 text-gray-700" /> : <Monitor className="w-5 h-5 text-gray-700" />}
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
@@ -143,7 +180,7 @@ export default function SecurityPage() {
                         <span className="text-[9px] font-bold bg-emerald-50 text-emerald-600 px-1.5 py-0.5 rounded uppercase tracking-widest">Active Now</span>
                       )}
                     </div>
-                    <div className="flex items-center gap-3 mt-1 text-zinc-400">
+                    <div className="flex items-center gap-3 mt-1 text-gray-700">
                       <div className="flex items-center gap-1.5">
                         <MapPin className="w-3 h-3" />
                         <span className="text-[10px] font-medium uppercase tracking-wider">{session.location}</span>

@@ -21,14 +21,57 @@ const toneMap = {
   danger: { color: "text-rose-500", bg: "bg-rose-50" },
 };
 
+const normalizeStats = (stats) => {
+  if (Array.isArray(stats)) {
+    return stats;
+  }
+
+  if (!stats || typeof stats !== "object") {
+    return defaultStats;
+  }
+
+  return [
+    {
+      label: "TOTAL ORDERS",
+      value: stats.totalOrders ?? "0",
+      trend: "All orders",
+      icon: FileText,
+      tone: "primary",
+    },
+    {
+      label: "ACTIVE ORDERS",
+      value: stats.pendingOrders ?? "0",
+      trend: "Pending review or in progress",
+      icon: Clock,
+      tone: "warning",
+    },
+    {
+      label: "COMPLETED ORDERS",
+      value: stats.completedOrders ?? "0",
+      trend: "Completed successfully",
+      icon: CheckCircle2,
+      tone: "success",
+    },
+    {
+      label: "OUTSTANDING PAYMENTS",
+      value: stats.outstandingPayments ?? "$0.00",
+      trend: "Awaiting payment",
+      icon: AlertCircle,
+      tone: "danger",
+    },
+  ];
+};
+
 export default function StatsOverview({ stats = defaultStats }) {
+  const normalizedStats = normalizeStats(stats);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-      {stats.map((stat) => (
+      {normalizedStats.map((stat) => (
         <div key={stat.label} className="bg-white p-6 rounded-3xl border border-zinc-100 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex justify-between items-start mb-4">
             <div>
-              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">{stat.label}</p>
+              <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">{stat.label}</p>
               <h3 className="text-3xl font-bold text-zinc-900">{stat.value}</h3>
             </div>
             <div className={`p-3 rounded-2xl ${stat.bg || toneMap[stat.tone]?.bg || "bg-blue-50"}`}>
@@ -42,7 +85,7 @@ export default function StatsOverview({ stats = defaultStats }) {
           </div>
           <div className="flex items-center gap-2">
             {stat.label === "TOTAL ORDERS" && <TrendingUp className="w-3 h-3 text-emerald-500" />}
-            <p className={`text-xs font-medium ${stat.label === "TOTAL ORDERS" ? "text-emerald-500" : "text-zinc-500"}`}>
+            <p className={`text-xs font-medium ${stat.label === "TOTAL ORDERS" ? "text-emerald-500" : "text-gray-700"}`}>
               {stat.trend}
             </p>
           </div>

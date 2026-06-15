@@ -50,7 +50,7 @@ export default function TermsOfUsePage() {
           {/* Sticky Search Bar Mockup */}
           <div className="sticky top-24 z-20 bg-white/90 backdrop-blur-sm pt-4 pb-8 mb-8">
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
               <input 
                 type="text" 
                 placeholder="Search within Terms..." 
@@ -137,13 +137,13 @@ export default function TermsOfUsePage() {
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
                 <div className="bg-[#eff1f9] p-8 rounded-2xl border border-blue-100/50">
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 mb-4">Notary Responsibility</h4>
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-700 mb-4">Notary Responsibility</h4>
                   <p className="text-sm text-zinc-700 leading-relaxed">
                     The notary is solely responsible for determining the signer's identity and willingness to sign under penalty of law.
                   </p>
                 </div>
                 <div className="bg-[#eff1f9] p-8 rounded-2xl border border-blue-100/50">
-                  <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-zinc-500 mb-4">Platform Role</h4>
+                  <h4 className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-700 mb-4">Platform Role</h4>
                   <p className="text-sm text-zinc-700 leading-relaxed">
                     Notarix provides the technology for the session recording and credential analysis but does not attest to the truthfulness of the notary act.
                   </p>
@@ -171,7 +171,7 @@ export default function TermsOfUsePage() {
               <section key={section.id} id={section.id} className="scroll-mt-32 pt-8 border-t border-zinc-50">
                 <h2 className="text-2xl font-bold text-zinc-900 mb-6">{section.title}</h2>
                 <div className="bg-zinc-50/50 border border-dashed border-zinc-200 rounded-2xl p-12 text-center">
-                  <p className="text-zinc-400 italic">This section content follows our standard legal framework for {section.title.split('. ')[1].toLowerCase()}. Please refer to the full legal documentation for details.</p>
+                  <p className="text-gray-700 italic">This section content follows our standard legal framework for {section.title.split('. ')[1].toLowerCase()}. Please refer to the full legal documentation for details.</p>
                 </div>
               </section>
             ))}

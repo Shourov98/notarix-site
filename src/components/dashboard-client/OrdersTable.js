@@ -107,7 +107,7 @@ export default function OrdersTable({ orders = fallbackOrders }) {
       <div className="p-6 border-b border-zinc-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-zinc-50/50">
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status:</span>
+            <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Status:</span>
             <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer">
               <option>All Statuses</option>
               <option>Completed</option>
@@ -116,7 +116,7 @@ export default function OrdersTable({ orders = fallbackOrders }) {
             </select>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date Range:</span>
+            <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Date Range:</span>
             <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer">
               <option>Last 30 Days</option>
               <option>Last 3 Months</option>
@@ -124,7 +124,7 @@ export default function OrdersTable({ orders = fallbackOrders }) {
             </select>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service:</span>
+            <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Service:</span>
             <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer">
               <option>All Services</option>
               <option>Real Estate Closing</option>
@@ -134,13 +134,13 @@ export default function OrdersTable({ orders = fallbackOrders }) {
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-zinc-500 font-medium">Showing {orders.length} orders</span>
+          <span className="text-sm text-gray-700 font-medium">Showing {orders.length} orders</span>
           <div className="flex items-center gap-1">
             <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
-              <ChevronLeft className="w-4 h-4 text-zinc-500" />
+              <ChevronLeft className="w-4 h-4 text-gray-700" />
             </button>
             <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
-              <ChevronRight className="w-4 h-4 text-zinc-500" />
+              <ChevronRight className="w-4 h-4 text-gray-700" />
             </button>
           </div>
         </div>
@@ -151,21 +151,28 @@ export default function OrdersTable({ orders = fallbackOrders }) {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-zinc-100">
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order ID</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Signer&apos;s Name</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Type</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Location</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Status</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Notary</th>
-              <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Actions</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Order ID</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Signer&apos;s Name</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Service Type</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Location</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Date</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Status</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Notary</th>
+              <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-right">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-50">
             {orders.map((order, i) => (
               <tr key={order.id || i} className="hover:bg-zinc-50/50 transition-colors group">
+                {(() => {
+                  const normalizedOrderId = String(order.id || "").replace(/^#/, "");
+                  const orderDetailHref = `/dashboard-client/orders/${normalizedOrderId}`;
+                  const orderMessagesHref = `/dashboard-client/messages?order=${encodeURIComponent(normalizedOrderId)}`;
+
+                  return (
+                    <>
                 <td className="px-6 py-5">
-                  <Link href={`/dashboard-client/orders/${String(order.id).replace('#', '')}`}>
+                  <Link href={orderDetailHref}>
                     <span className="text-sm font-bold text-[#1a4fdb] hover:underline cursor-pointer">{order.id}</span>
                   </Link>
                 </td>
@@ -176,10 +183,10 @@ export default function OrdersTable({ orders = fallbackOrders }) {
                   <span className="text-sm font-medium text-zinc-600">{order.serviceType}</span>
                 </td>
                 <td className="px-6 py-5">
-                  <span className="text-sm font-medium text-zinc-500">{order.location}</span>
+                  <span className="text-sm font-medium text-gray-700">{order.location}</span>
                 </td>
                 <td className="px-6 py-5">
-                  <span className="text-sm font-medium text-zinc-500">{order.date}</span>
+                  <span className="text-sm font-medium text-gray-700">{order.date}</span>
                 </td>
                 <td className="px-6 py-5">
                   <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${order.statusColor || getStatusStyles(order.status)}`}>
@@ -195,25 +202,36 @@ export default function OrdersTable({ orders = fallbackOrders }) {
                       <span className="text-sm font-medium text-zinc-700">{order.notary.name}</span>
                     </div>
                   ) : (
-                    <span className="text-sm font-medium text-zinc-300 italic">Unassigned</span>
+                    <span className="text-sm font-medium text-gray-700 italic">Unassigned</span>
                   )}
                 </td>
                 <td className="px-6 py-5">
                   <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
+                    <Link
+                      href={orderDetailHref}
+                      aria-label={`View order ${order.id}`}
+                      className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all"
+                    >
                       <Eye className="w-4 h-4" />
-                    </button>
+                    </Link>
                     {order.status === "Cancelled" ? (
-                      <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
+                      <button type="button" className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
                         <RotateCcw className="w-4 h-4" />
                       </button>
                     ) : (
-                      <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
+                      <Link
+                        href={orderMessagesHref}
+                        aria-label={`Open messages for order ${order.id}`}
+                        className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all"
+                      >
                         <MessageSquare className="w-4 h-4" />
-                      </button>
+                      </Link>
                     )}
                   </div>
                 </td>
+                    </>
+                  );
+                })()}
               </tr>
             ))}
           </tbody>
@@ -229,17 +247,17 @@ export default function OrdersTable({ orders = fallbackOrders }) {
               className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold transition-all ${
                 page === 1 
                   ? "bg-white border border-zinc-200 text-[#1a4fdb] shadow-sm" 
-                  : "text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100"
+                  : "text-gray-700 hover:text-zinc-600 hover:bg-zinc-100"
               }`}
             >
               {page}
             </button>
           ))}
         </div>
-        <button className="flex items-center gap-2 text-xs font-bold text-[#1a4fdb] hover:text-[#1541b8] transition-colors">
+        <Link href="/dashboard-client/documents" className="flex items-center gap-2 text-xs font-bold text-[#1a4fdb] hover:text-[#1541b8] transition-colors">
           Download Report
           <Download className="w-3.5 h-3.5" />
-        </button>
+        </Link>
       </div>
     </div>
   );

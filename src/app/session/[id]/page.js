@@ -77,11 +77,11 @@ export default function VideoSessionPage() {
                 <div className="flex justify-between items-start border-b border-zinc-100 pb-8">
                    <div>
                       <h2 className="text-[#1a4fdb] text-xl font-bold tracking-tight mb-1">DEED OF TRUST</h2>
-                      <p className="text-[8px] font-bold text-zinc-400 uppercase tracking-widest leading-none">Security Instrument • Legal Form 422-A</p>
+                      <p className="text-[8px] font-bold text-gray-700 uppercase tracking-widest leading-none">Security Instrument • Legal Form 422-A</p>
                    </div>
                    <div className="text-right">
                       <div className="w-16 h-16 border-2 border-dashed border-zinc-200 rounded flex items-center justify-center mb-1 ml-auto">
-                         <span className="text-[8px] text-zinc-300 font-bold uppercase text-center leading-tight">Seal Area</span>
+                         <span className="text-[8px] text-gray-700 font-bold uppercase text-center leading-tight">Seal Area</span>
                       </div>
                    </div>
                 </div>
@@ -114,11 +114,11 @@ export default function VideoSessionPage() {
                       <div className="flex justify-between items-end gap-12">
                          <div className="flex-1 space-y-2">
                             <div className="h-px bg-zinc-900 w-full"></div>
-                            <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest">Borrower's Signature</p>
+                            <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest">Borrower's Signature</p>
                          </div>
                          <div className="flex-1 space-y-2">
                             <div className="h-px bg-zinc-300 w-full"></div>
-                            <p className="text-[9px] font-bold text-zinc-300 uppercase tracking-widest">Date</p>
+                            <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest">Date</p>
                          </div>
                       </div>
                    </div>

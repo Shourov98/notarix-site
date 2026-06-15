@@ -15,7 +15,7 @@ function NotificationCard({ title, description }) {
     <div className="flex items-center justify-between gap-4 px-4 py-5 rounded-2xl border border-zinc-200">
       <div>
         <p className="text-lg font-bold text-zinc-900">{title}</p>
-        <p className="text-sm font-medium text-zinc-500 mt-1">{description}</p>
+        <p className="text-sm font-medium text-gray-700 mt-1">{description}</p>
       </div>
       <div className="w-16 h-8 rounded-full bg-[#2c49df] relative shrink-0">
         <div className="absolute right-1 top-1 w-6 h-6 rounded-full bg-white"></div>

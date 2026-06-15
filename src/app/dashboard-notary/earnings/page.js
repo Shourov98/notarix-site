@@ -38,7 +38,7 @@ export default function EarningsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900 mb-1">Earnings & Payments</h1>
-          <p className="text-zinc-500 font-medium text-sm">Monitor your income and manage payouts with precision.</p>
+          <p className="text-gray-700 font-medium text-sm">Monitor your income and manage payouts with precision.</p>
         </div>
         <button className="bg-white text-zinc-700 border border-zinc-200 px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-zinc-50 transition-all active:scale-95 shadow-sm">
           <Download className="w-4 h-4" />
@@ -59,7 +59,7 @@ export default function EarningsPage() {
               <stat.icon className={`w-5 h-5 ${stat.color}`} />
             </div>
             <div>
-              <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">{stat.label}</p>
+              <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">{stat.label}</p>
               <p className="text-2xl font-bold text-zinc-900">{stat.value}</p>
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function EarningsPage() {
                   className={`px-6 py-2 text-xs font-bold rounded-xl transition-all ${
                     activeTab === tab 
                       ? "bg-white text-[#1a4fdb] shadow-sm border border-zinc-100" 
-                      : "text-zinc-400 hover:text-zinc-600"
+                      : "text-gray-700 hover:text-zinc-600"
                   }`}
                 >
                   {tab}
@@ -105,7 +105,7 @@ export default function EarningsPage() {
                       ${(h * 120).toLocaleString()}
                    </div>
                 </div>
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-tighter">{months[i]}</span>
+                <span className="text-[10px] font-bold text-gray-700 uppercase tracking-tighter">{months[i]}</span>
               </div>
             ))}
           </div>
@@ -139,12 +139,12 @@ export default function EarningsPage() {
 
           <div className="bg-white border border-zinc-100 rounded-[24px] p-6 shadow-sm flex items-center justify-between shrink-0">
              <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-2 flex items-center gap-1.5">
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-2 flex items-center gap-1.5">
                    <Clock className="w-3.5 h-3.5" />
                    Last Payout
                 </p>
                 <p className="text-lg font-bold text-zinc-900">$1,240.00</p>
-                <p className="text-xs font-medium text-zinc-500">Apr 12, 2026</p>
+                <p className="text-xs font-medium text-gray-700">Apr 12, 2026</p>
              </div>
              <div className="flex items-center gap-1.5 text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
                 <CheckCircle2 className="w-3.5 h-3.5" />
@@ -157,7 +157,7 @@ export default function EarningsPage() {
       {/* Filter Bar */}
       <div className="flex flex-col xl:flex-row items-center gap-4 bg-white p-4 rounded-[24px] border border-zinc-100 shadow-sm">
         <div className="relative flex-1 w-full group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400 group-focus-within:text-[#1a4fdb] transition-colors" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700 group-focus-within:text-[#1a4fdb] transition-colors" />
           <input 
             type="text" 
             placeholder="Search by Client Name or Order ID..." 
@@ -186,14 +186,14 @@ export default function EarningsPage() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-zinc-100">
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Order ID</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Client Name</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Type</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Amount</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Status</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-center">Method</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Actions</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Order ID</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Client Name</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Service Type</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Date</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Amount</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Status</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-center">Method</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-right">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-50">
@@ -214,7 +214,7 @@ export default function EarningsPage() {
                     <span className="text-sm font-medium text-zinc-600">{row.service}</span>
                   </td>
                   <td className="px-6 py-5">
-                    <span className="text-sm font-medium text-zinc-500">{row.date}</span>
+                    <span className="text-sm font-medium text-gray-700">{row.date}</span>
                   </td>
                   <td className="px-6 py-5">
                     <span className="text-sm font-bold text-zinc-900">{row.amount}</span>
@@ -226,7 +226,7 @@ export default function EarningsPage() {
                     </span>
                   </td>
                   <td className="px-6 py-5 text-center">
-                    <span className="text-sm font-medium text-zinc-500">{row.method}</span>
+                    <span className="text-sm font-medium text-gray-700">{row.method}</span>
                   </td>
                   <td className="px-6 py-5 text-right">
                      <button className="p-2 text-[#1a4fdb] hover:bg-blue-50 rounded-lg transition-all">
@@ -239,7 +239,7 @@ export default function EarningsPage() {
           </table>
          </div>
          <div className="p-6 border-t border-zinc-100 flex items-center justify-between bg-zinc-50/10">
-          <span className="text-sm text-zinc-500 font-medium">Showing 1 to 3 of 152 transactions</span>
+          <span className="text-sm text-gray-700 font-medium">Showing 1 to 3 of 152 transactions</span>
           <div className="flex items-center gap-2">
             <button className="px-4 py-2 border border-zinc-200 rounded-lg text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-colors bg-white shadow-sm">Previous</button>
             <button className="px-4 py-2 border border-zinc-200 rounded-lg text-xs font-bold text-zinc-700 hover:bg-zinc-50 transition-colors bg-white shadow-sm">Next</button>
@@ -256,11 +256,11 @@ export default function EarningsPage() {
           <table className="w-full text-left border-collapse">
             <thead>
               <tr className="border-b border-zinc-100 bg-zinc-50/30">
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Payout ID</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Date</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Method</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Amount</th>
-                <th className="px-6 py-5 text-[10px] font-bold text-zinc-400 uppercase tracking-widest text-right">Status</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Payout ID</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Date</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest">Method</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-right">Amount</th>
+                <th className="px-6 py-5 text-[10px] font-bold text-gray-700 uppercase tracking-widest text-right">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-zinc-50">
@@ -273,7 +273,7 @@ export default function EarningsPage() {
                     <span className="text-sm font-medium text-zinc-600">{row.date}</span>
                   </td>
                   <td className="px-6 py-5">
-                    <span className="text-sm font-medium text-zinc-500">{row.method}</span>
+                    <span className="text-sm font-medium text-gray-700">{row.method}</span>
                   </td>
                   <td className="px-6 py-5 text-right">
                     <span className="text-sm font-bold text-zinc-900">{row.amount}</span>

@@ -33,15 +33,15 @@ export default function NCOrderView({ id }) {
       <div className="bg-white border border-zinc-100 rounded-[32px] p-8 shadow-sm flex items-center justify-between">
         <div className="flex gap-16">
           <div>
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Order ID</p>
+            <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Order ID</p>
             <p className="text-lg font-bold text-zinc-900">{id || "26NC4999"}</p>
           </div>
           <div>
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Signer</p>
+            <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Signer</p>
             <p className="text-lg font-bold text-zinc-900">Jonathan Miller</p>
           </div>
           <div>
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Created</p>
+            <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Created</p>
             <p className="text-lg font-bold text-zinc-900">Apr 24, 2026</p>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function NCOrderView({ id }) {
                   ? "bg-[#1a4fdb] border-[#1a4fdb] text-white" 
                   : step.current
                     ? "bg-white border-[#1a4fdb] text-[#1a4fdb] ring-4 ring-blue-50"
-                    : "bg-white border-zinc-100 text-zinc-300"
+                    : "bg-white border-zinc-100 text-gray-700"
               }`}>
                 {step.completed ? (
                   <Check className="w-5 h-5" />
@@ -73,7 +73,7 @@ export default function NCOrderView({ id }) {
                 )}
               </div>
               <span className={`text-[10px] font-bold uppercase tracking-wider ${
-                step.current || step.completed ? "text-[#1a4fdb]" : "text-zinc-400"
+                step.current || step.completed ? "text-[#1a4fdb]" : "text-gray-700"
               }`}>
                 {step.label}
               </span>
@@ -95,22 +95,22 @@ export default function NCOrderView({ id }) {
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Full Name</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Full Name</p>
                 <p className="text-sm font-bold text-zinc-800">Jonathan Miller</p>
               </div>
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Address</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Address</p>
                 <p className="text-sm font-medium text-zinc-600 leading-relaxed">
                   4522 Oakwood Dr, Ste 400<br />
                   Austin, TX 78701
                 </p>
               </div>
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Phone</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Phone</p>
                 <p className="text-sm font-bold text-zinc-800">(512) 555-0192</p>
               </div>
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Email</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Email</p>
                 <p className="text-sm font-bold text-zinc-800">j.miller@notarix.io</p>
               </div>
             </div>
@@ -124,17 +124,17 @@ export default function NCOrderView({ id }) {
             </div>
             <div className="space-y-4">
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Signing Type</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Signing Type</p>
                 <span className="inline-block bg-blue-50 text-[#1a4fdb] text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">Remote</span>
               </div>
               <div>
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Scheduled Time</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Scheduled Time</p>
                 <p className="text-sm font-bold text-zinc-800">2:30 PM EST</p>
               </div>
               <div className="space-y-2">
-                <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Instructions</p>
+                <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Instructions</p>
                 <div className="bg-zinc-50 rounded-2xl p-4">
-                  <p className="text-xs font-medium text-zinc-500 italic leading-relaxed">
+                  <p className="text-xs font-medium text-gray-700 italic leading-relaxed">
                     "Please ensure all secondary signers have valid government-issued ID ready before the session starts."
                   </p>
                 </div>
@@ -185,13 +185,13 @@ export default function NCOrderView({ id }) {
             </div>
 
             <div className="p-4 border-t border-zinc-50 bg-white flex items-center gap-3">
-              <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] transition-colors">
+              <button className="p-2 text-gray-700 hover:text-[#1a4fdb] transition-colors">
                 <Paperclip className="w-5 h-5" />
               </button>
               <input 
                 type="text" 
                 placeholder="Type your message..."
-                className="flex-1 text-sm font-medium focus:outline-none placeholder:text-zinc-400"
+                className="flex-1 text-sm font-medium focus:outline-none placeholder:text-gray-700"
               />
               <button className="p-2.5 bg-[#1a4fdb] text-white rounded-xl hover:bg-[#1541b8] transition-all">
                 <Send className="w-4 h-4" />
@@ -214,12 +214,12 @@ export default function NCOrderView({ id }) {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-zinc-800">Closing_Disclosure.pdf</p>
-                    <p className="text-[10px] font-medium text-zinc-400">Uploaded 2h ago • 2.4 MB</p>
+                    <p className="text-[10px] font-medium text-gray-700">Uploaded 2h ago • 2.4 MB</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="text-[10px] font-bold text-zinc-400 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Preview</button>
-                  <button className="text-[10px] font-bold text-zinc-400 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Download</button>
+                  <button className="text-[10px] font-bold text-gray-700 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Preview</button>
+                  <button className="text-[10px] font-bold text-gray-700 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Download</button>
                 </div>
               </div>
 
@@ -230,12 +230,12 @@ export default function NCOrderView({ id }) {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-zinc-800">Title_Insurance_Agreement.pdf</p>
-                    <p className="text-[10px] font-medium text-zinc-400">Uploaded 1h ago • 1.1 MB</p>
+                    <p className="text-[10px] font-medium text-gray-700">Uploaded 1h ago • 1.1 MB</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <button className="text-[10px] font-bold text-zinc-400 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Preview</button>
-                  <button className="text-[10px] font-bold text-zinc-400 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Download</button>
+                  <button className="text-[10px] font-bold text-gray-700 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Preview</button>
+                  <button className="text-[10px] font-bold text-gray-700 hover:text-[#1a4fdb] uppercase tracking-widest transition-colors">Download</button>
                 </div>
               </div>
             </div>
@@ -270,11 +270,11 @@ export default function NCOrderView({ id }) {
           <div className="bg-white border border-zinc-100 rounded-[32px] p-6 shadow-sm space-y-6">
             <div className="space-y-4 border-b border-zinc-50 pb-6">
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Service Fee</span>
+                <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Service Fee</span>
                 <span className="text-sm font-bold text-zinc-800">$125.00</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest">Remote Convenience</span>
+                <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Remote Convenience</span>
                 <span className="text-sm font-bold text-zinc-800">$25.00</span>
               </div>
             </div>

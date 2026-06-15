@@ -31,11 +31,11 @@ export default function AssignmentsOrdersPage({
       <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">Assignments</h1>
-          <p className="text-zinc-500 font-medium text-sm mt-1">Manage your assigned orders and verification workflow</p>
+          <p className="text-gray-700 font-medium text-sm mt-1">Manage your assigned orders and verification workflow</p>
         </div>
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-400" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-700" />
             <input
               type="text"
               placeholder="Search orders..."
@@ -62,9 +62,9 @@ export default function AssignmentsOrdersPage({
                 return <Icon className="w-5 h-5" />;
               })()}
             </div>
-            <p className="mt-5 text-xs uppercase tracking-[0.18em] font-bold text-zinc-400">{stat.label}</p>
+            <p className="mt-5 text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{stat.label}</p>
             <p className="mt-3 text-3xl font-bold text-zinc-900">{stat.value}</p>
-            <p className="mt-2 text-sm font-medium text-zinc-500">{stat.sub}</p>
+            <p className="mt-2 text-sm font-medium text-gray-700">{stat.sub}</p>
           </div>
         ))}
       </div>
@@ -73,7 +73,7 @@ export default function AssignmentsOrdersPage({
         <div className="overflow-x-auto">
           <table className="w-full min-w-[1100px]">
             <thead className="bg-zinc-50">
-              <tr className="text-left text-zinc-500">
+              <tr className="text-left text-gray-700">
                 {["Order ID", "Order Type", "Title Company&apos;s Name", "Borrower Name", "Location", "Date & Time", "Fee", "Status", "Actions"].map((head) => (
                   <th key={head} className="px-6 py-5 text-[10px] font-bold uppercase tracking-widest">{head}</th>
                 ))}
@@ -94,8 +94,8 @@ export default function AssignmentsOrdersPage({
                   </td>
                   <td className="px-6 py-6 text-sm font-bold text-zinc-700">{row.title}</td>
                   <td className="px-6 py-6 text-sm font-bold text-zinc-700">{row.borrower}</td>
-                  <td className="px-6 py-6 text-sm font-medium text-zinc-500">{row.location}</td>
-                  <td className="px-6 py-6 text-sm font-medium text-zinc-500">{row.date}</td>
+                  <td className="px-6 py-6 text-sm font-medium text-gray-700">{row.location}</td>
+                  <td className="px-6 py-6 text-sm font-medium text-gray-700">{row.date}</td>
                   <td className="px-6 py-6 text-zinc-900 font-bold">{row.fee}</td>
                   <td className="px-6 py-6">
                     <span className={`text-sm font-bold px-4 py-2 rounded-full ${row.tone}`}>{row.status}</span>
@@ -111,7 +111,7 @@ export default function AssignmentsOrdersPage({
                         <Eye className="w-4 h-4" />
                         {row.action}
                       </Link>
-                      <button className="text-zinc-400 hover:text-zinc-700">
+                      <button className="text-gray-700 hover:text-zinc-700">
                         <MoreVertical className="w-4 h-4" />
                       </button>
                     </div>
@@ -122,9 +122,9 @@ export default function AssignmentsOrdersPage({
           </table>
         </div>
         <div className="px-6 py-5 border-t border-zinc-100 flex items-center justify-between gap-4 text-sm">
-          <p className="text-zinc-500">Showing 4 of 124 assignments</p>
+          <p className="text-gray-700">Showing 4 of 124 assignments</p>
           <div className="flex gap-2">
-            <button className="px-4 py-2 rounded-xl border border-zinc-200 text-zinc-400">Previous</button>
+            <button className="px-4 py-2 rounded-xl border border-zinc-200 text-gray-700">Previous</button>
             <button className="px-4 py-2 rounded-xl border border-zinc-200 text-zinc-800">Next</button>
           </div>
         </div>

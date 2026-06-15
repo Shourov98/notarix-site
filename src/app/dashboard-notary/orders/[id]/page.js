@@ -37,7 +37,7 @@ export default function NotaryOrderDetailsPage() {
     <div className="space-y-6 pb-24">
       {/* Header & Breadcrumbs */}
       <div className="space-y-4">
-        <div className="flex items-center gap-2 text-xs font-medium text-zinc-400">
+        <div className="flex items-center gap-2 text-xs font-medium text-gray-700">
           <Link href="/dashboard-notary/orders" className="hover:text-zinc-900 transition-colors">Orders</Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-zinc-900">Details</span>
@@ -62,12 +62,12 @@ export default function NotaryOrderDetailsPage() {
                   ? "bg-[#1a4fdb] border-[#1a4fdb] text-white" 
                   : step.current
                     ? "bg-white border-[#1a4fdb] text-[#1a4fdb] ring-4 ring-blue-50"
-                    : "bg-white border-zinc-100 text-zinc-300"
+                    : "bg-white border-zinc-100 text-gray-700"
               }`}>
                 {step.completed ? <Check className="w-5 h-5" /> : <span className="text-sm font-bold">{step.number}</span>}
               </div>
               <span className={`text-[10px] font-bold uppercase tracking-wider ${
-                step.current || step.completed ? "text-[#1a4fdb]" : "text-zinc-400"
+                step.current || step.completed ? "text-[#1a4fdb]" : "text-gray-700"
               }`}>
                 {step.label}
               </span>
@@ -85,9 +85,9 @@ export default function NotaryOrderDetailsPage() {
           { label: "ORDER TYPE", value: "Remote Online", sub: "Digital Notarization" },
         ].map((stat, i) => (
           <div key={i} className="bg-white border border-zinc-100 p-6 rounded-[32px] shadow-sm">
-            <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-3">{stat.label}</p>
+            <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-3">{stat.label}</p>
             <p className="text-xl font-bold text-zinc-900">{stat.value}</p>
-            {stat.sub && <p className="text-xs font-medium text-zinc-400 mt-1">{stat.sub}</p>}
+            {stat.sub && <p className="text-xs font-medium text-gray-700 mt-1">{stat.sub}</p>}
           </div>
         ))}
       </div>
@@ -109,19 +109,19 @@ export default function NotaryOrderDetailsPage() {
                 </div>
                 <div className="space-y-4 flex-1">
                   <div>
-                    <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Organization</p>
+                    <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Organization</p>
                     <p className="text-sm font-bold text-zinc-800">Lone Star Title Services</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Contact Agent</p>
+                    <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Contact Agent</p>
                     <p className="text-sm font-bold text-zinc-800">Robert Sterling</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Phone Number</p>
+                    <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Phone Number</p>
                     <p className="text-sm font-bold text-zinc-800">+1 (555) 012-3456</p>
                   </div>
                   <div>
-                    <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Email</p>
+                    <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Email</p>
                     <p className="text-xs font-bold text-[#1a4fdb] break-all">r.sterling@lonestartitle.com</p>
                   </div>
                 </div>
@@ -136,15 +136,15 @@ export default function NotaryOrderDetailsPage() {
               </div>
               <div className="space-y-6">
                 <div>
-                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Full Name</p>
+                  <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Full Name</p>
                   <p className="text-sm font-bold text-zinc-800">Sarah Mitchell</p>
                 </div>
                 <div>
-                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-1">Location</p>
-                  <p className="text-sm font-bold text-zinc-800 text-zinc-500">Austin, TX</p>
+                  <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-1">Location</p>
+                  <p className="text-sm font-bold text-zinc-800 text-gray-700">Austin, TX</p>
                 </div>
                 <div>
-                  <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-2">KBA Status</p>
+                  <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-2">KBA Status</p>
                   <span className="bg-emerald-50 text-emerald-600 text-[9px] font-bold px-2 py-1 rounded uppercase tracking-widest border border-emerald-100">Passed</span>
                 </div>
               </div>
@@ -156,19 +156,19 @@ export default function NotaryOrderDetailsPage() {
             <h3 className="font-bold text-zinc-900">Property & Signing Details</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div>
-                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-2">Full Address</p>
+                <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-2">Full Address</p>
                 <p className="text-sm font-bold text-zinc-800 leading-relaxed">
                   7822 Barton Creek Dr<br />
                   Austin, TX 78735
                 </p>
               </div>
               <div>
-                <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-2">Scheduled Time</p>
+                <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-2">Scheduled Time</p>
                 <p className="text-sm font-bold text-zinc-800">October 24, 2024 at 2:30 PM CST</p>
               </div>
             </div>
             <div>
-              <p className="text-[9px] font-bold text-zinc-400 uppercase tracking-widest leading-none mb-2">Notary Access Code</p>
+              <p className="text-[9px] font-bold text-gray-700 uppercase tracking-widest leading-none mb-2">Notary Access Code</p>
               <p className="text-lg font-bold text-[#1a4fdb] tracking-[2px]">RON-992-X1</p>
             </div>
           </div>
@@ -194,12 +194,12 @@ export default function NotaryOrderDetailsPage() {
                     </div>
                     <div>
                       <p className="text-sm font-bold text-zinc-800">{doc.name}</p>
-                      <p className="text-[10px] font-medium text-zinc-400">{doc.size}</p>
+                      <p className="text-[10px] font-medium text-gray-700">{doc.size}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-white rounded-lg transition-all shadow-sm"><Eye className="w-4 h-4" /></button>
-                    <button className="p-2 text-zinc-400 hover:text-[#1a4fdb] hover:bg-white rounded-lg transition-all shadow-sm"><Download className="w-4 h-4" /></button>
+                    <button className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-white rounded-lg transition-all shadow-sm"><Eye className="w-4 h-4" /></button>
+                    <button className="p-2 text-gray-700 hover:text-[#1a4fdb] hover:bg-white rounded-lg transition-all shadow-sm"><Download className="w-4 h-4" /></button>
                   </div>
                 </div>
               ))}
@@ -223,12 +223,12 @@ export default function NotaryOrderDetailsPage() {
             
             <div className="p-6 space-y-8 bg-zinc-50/20 h-[320px] overflow-y-auto">
               <div className="flex gap-4">
-                <div className="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-[10px] font-bold text-zinc-500 shrink-0">CM</div>
+                <div className="w-8 h-8 rounded-full bg-zinc-200 flex items-center justify-center text-[10px] font-bold text-gray-700 shrink-0">CM</div>
                 <div className="space-y-2 flex-1">
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold text-zinc-900 uppercase tracking-widest">Robert Sterling</span>
-                    <span className="text-[9px] font-bold bg-zinc-100 text-zinc-400 px-1.5 py-0.5 rounded uppercase tracking-widest">Client</span>
-                    <span className="text-[10px] font-medium text-zinc-400">10:45 AM</span>
+                    <span className="text-[9px] font-bold bg-zinc-100 text-gray-700 px-1.5 py-0.5 rounded uppercase tracking-widest">Client</span>
+                    <span className="text-[10px] font-medium text-gray-700">10:45 AM</span>
                   </div>
                   <div className="bg-white border border-zinc-100 p-4 rounded-2xl rounded-tl-none shadow-sm inline-block max-w-[80%]">
                     <p className="text-sm font-medium text-zinc-600 leading-relaxed">
@@ -244,7 +244,7 @@ export default function NotaryOrderDetailsPage() {
                   <div className="flex items-center gap-2">
                     <span className="text-[10px] font-bold text-zinc-900 uppercase tracking-widest">Admin Support</span>
                     <span className="text-[9px] font-bold bg-blue-50 text-blue-600 px-1.5 py-0.5 rounded uppercase tracking-widest">Admin</span>
-                    <span className="text-[10px] font-medium text-zinc-400">10:48 AM</span>
+                    <span className="text-[10px] font-medium text-gray-700">10:48 AM</span>
                   </div>
                   <div className="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl rounded-tl-none shadow-sm inline-block max-w-[80%]">
                     <p className="text-sm font-medium text-zinc-600 leading-relaxed">
@@ -258,8 +258,8 @@ export default function NotaryOrderDetailsPage() {
             <div className="p-4 border-t border-zinc-100 bg-white">
               <div className="relative group">
                 <input type="text" placeholder="Type a message to participants..." className="w-full pl-4 pr-12 py-3 border border-zinc-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] transition-all" />
-                <button className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-zinc-400 hover:text-[#1a4fdb] transition-colors"><Send className="w-4 h-4" /></button>
-                <button className="absolute right-10 top-1/2 -translate-y-1/2 p-1.5 text-zinc-400 hover:text-[#1a4fdb] transition-colors"><Paperclip className="w-4 h-4" /></button>
+                <button className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 text-gray-700 hover:text-[#1a4fdb] transition-colors"><Send className="w-4 h-4" /></button>
+                <button className="absolute right-10 top-1/2 -translate-y-1/2 p-1.5 text-gray-700 hover:text-[#1a4fdb] transition-colors"><Paperclip className="w-4 h-4" /></button>
               </div>
             </div>
           </div>
@@ -310,12 +310,12 @@ export default function NotaryOrderDetailsPage() {
             <div className="space-y-6">
               <div className="flex justify-between items-end">
                 <div>
-                  <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-widest mb-1">Total Amount</p>
+                  <p className="text-[10px] font-bold text-gray-700 uppercase tracking-widest mb-1">Total Amount</p>
                   <p className="text-3xl font-bold text-zinc-900">$150.00</p>
                 </div>
               </div>
               <div className="flex justify-between items-center text-sm font-medium">
-                <span className="text-zinc-500">Due Date</span>
+                <span className="text-gray-700">Due Date</span>
                 <span className="text-zinc-900">Upon Completion</span>
               </div>
               <button className="w-full border border-zinc-200 text-zinc-700 py-3.5 rounded-2xl font-bold text-sm hover:bg-zinc-50 transition-all active:scale-95">
@@ -338,7 +338,7 @@ export default function NotaryOrderDetailsPage() {
                     event.status === 'success' ? 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)]' : 'bg-[#1a4fdb]'
                   }`}></div>
                   <h4 className="text-xs font-bold text-zinc-800">{event.title}</h4>
-                  <p className="text-[9px] font-bold text-zinc-400 mt-1 uppercase">{event.time}</p>
+                  <p className="text-[9px] font-bold text-gray-700 mt-1 uppercase">{event.time}</p>
                 </div>
               ))}
             </div>
