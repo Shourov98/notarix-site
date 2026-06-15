@@ -1,9 +1,12 @@
+import { Suspense } from "react";
 import RequestAccessForm from "@/components/contact_page/RequestAccessForm";
 
 export default function ContactPage() {
   return (
     <main>
-      <RequestAccessForm />
+      <Suspense fallback={null}>
+        <RequestAccessForm />
+      </Suspense>
     </main>
   );
 }

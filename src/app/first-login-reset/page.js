@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { LockKeyhole } from "lucide-react";
@@ -8,7 +8,7 @@ import NotarixBrand from "@/components/public/NotarixBrand";
 import { clearPortalSession, readPortalSession } from "@/lib/portalSession";
 import { resetPortalFirstLoginPassword } from "@/lib/siteApi";
 
-export default function FirstLoginResetPage() {
+function FirstLoginResetContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role") || "client";
@@ -111,5 +111,13 @@ export default function FirstLoginResetPage() {
         </section>
       </div>
     </main>
+  );
+}
+
+export default function FirstLoginResetPage() {
+  return (
+    <Suspense fallback={null}>
+      <FirstLoginResetContent />
+    </Suspense>
   );
 }
