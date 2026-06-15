@@ -42,8 +42,14 @@ const roleDashboardMap = {
   Notary: "/dashboard-notary",
 };
 
-export const getClientOverview = async () => requestJson("/site/client/overview");
-export const getNotaryOverview = async () => requestJson("/site/notary/overview");
+export const getClientOverview = async () =>
+  requestJson("/site/client/overview", {
+    authMode: "portal",
+  });
+export const getNotaryOverview = async () =>
+  requestJson("/site/notary/overview", {
+    authMode: "portal",
+  });
 export const getSiteDocument = async (id) => requestJson(`/site/documents/${id}`);
 export const getSiteSession = async (id) => requestJson(`/site/sessions/${id}`);
 export const getClientBankInfo = async () =>
