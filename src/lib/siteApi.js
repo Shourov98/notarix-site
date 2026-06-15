@@ -37,9 +37,15 @@ const requestJson = async (path, options = {}) => {
   return payload?.data || payload;
 };
 
-const roleDashboardMap = {
-  Client: "/dashboard-client",
-  Notary: "/dashboard-notary",
+const resolveDashboardPath = (role) => {
+  const normalized = String(role || "").trim().toLowerCase();
+  if (normalized === "client") {
+    return "/dashboard-client";
+  }
+  if (normalized === "notary") {
+    return "/dashboard-notary";
+  }
+  return "/";
 };
 
 export const getClientOverview = async () =>
@@ -268,7 +274,7 @@ export const loginPortalUser = async (body) => {
 
   return {
     ...data,
-    dashboardPath: roleDashboardMap[data?.role] || "/",
+    dashboardPath: resolveDashboardPath(data?.role || body?.role),
   };
 };
 

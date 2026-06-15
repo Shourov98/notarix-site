@@ -14,6 +14,9 @@ const tabs = [
   { label: "Notary", value: "notary" },
 ];
 
+const fallbackDashboardPath = (role) =>
+  role === "notary" ? "/dashboard-notary" : "/dashboard-client";
+
 export default function PortalLoginPage() {
   const router = useRouter();
   const [role, setRole] = useState("client");
@@ -25,7 +28,7 @@ export default function PortalLoginPage() {
     const formData = new FormData(event.currentTarget);
     const payload = {
       role,
-      email: String(formData.get("email") || "").trim(),
+      email: String(formData.get("email") || "").trim().toLowerCase(),
       password: String(formData.get("password") || ""),
     };
 
@@ -40,11 +43,10 @@ export default function PortalLoginPage() {
       const session = await loginPortalUser(payload);
       savePortalSession(session);
       toast.success(`${role === "client" ? "Client" : "Notary"} login successful.`);
-      router.push(
-        session.passwordResetRequired
-          ? `/first-login-reset?role=${role}`
-          : session.dashboardPath
-      );
+      const nextPath = session.passwordResetRequired
+        ? `/first-login-reset?role=${role}`
+        : session.dashboardPath || fallbackDashboardPath(role);
+      router.replace(nextPath);
     } catch (error) {
       toast.error(error.message || "Unable to sign in right now.");
     } finally {
