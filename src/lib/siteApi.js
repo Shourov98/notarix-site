@@ -301,3 +301,11 @@ export const resetPortalFirstLoginPassword = async (body) =>
     body: JSON.stringify(body),
     authMode: "portal",
   });
+
+export const logoutPortalUser = async ({ refreshToken } = {}) =>
+  requestJson("/site/auth/logout", {
+    method: "POST",
+    body: JSON.stringify(refreshToken ? { refreshToken } : {}),
+    authMode: "portal",
+  });
+
