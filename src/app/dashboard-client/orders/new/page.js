@@ -31,6 +31,22 @@ const inputClass =
 const labelClass =
   "text-[10px] font-bold text-gray-700 uppercase tracking-widest";
 
+const requiredFieldLabels = [
+  ["vendorCode", "Vendor Code"],
+  ["serviceType", "Service Type"],
+  ["signerFirstName", "First Name"],
+  ["signerLastName", "Last Name"],
+  ["signerPhone", "Phone"],
+  ["signerEmail", "Email"],
+  ["propertyAddress.line1", "Street Address"],
+  ["propertyAddress.city", "City"],
+  ["propertyAddress.state", "State"],
+  ["propertyAddress.zip", "Zip"],
+  ["signingDate", "Signing Date"],
+  ["signingTime", "Signing Time"],
+  ["feeAmount", "Fee Amount"],
+];
+
 const initialState = {
   vendorCode: "26NC4999",
   serviceType: "Loan Signing",
@@ -67,6 +83,7 @@ export default function NewOrderPage() {
   const { createOrderStatus } = useAppSelector(selectSitePortal);
   const [formState, setFormState] = useState(initialState);
   const [documents, setDocuments] = useState([]);
+  const [missingFields, setMissingFields] = useState([]);
 
   const updateField = (field, value) =>
     setFormState((current) => ({ ...current, [field]: value }));
@@ -88,23 +105,28 @@ export default function NewOrderPage() {
   const removeFile = (indexToRemove) =>
     setDocuments((current) => current.filter((_, index) => index !== indexToRemove));
 
+  const getFieldValue = (fieldPath) =>
+    fieldPath.split(".").reduce((value, key) => value?.[key], formState);
+
+  const getMissingRequiredFields = () =>
+    requiredFieldLabels
+      .filter(([fieldPath]) => {
+        const value = getFieldValue(fieldPath);
+
+        if (typeof value === "string") {
+          return value.trim() === "";
+        }
+
+        return value === null || value === undefined;
+      })
+      .map(([, label]) => label);
+
   const handleSubmit = async () => {
-    if (
-      !formState.vendorCode ||
-      !formState.serviceType ||
-      !formState.signerFirstName ||
-      !formState.signerLastName ||
-      !formState.signerPhone ||
-      !formState.signerEmail ||
-      !formState.propertyAddress.line1 ||
-      !formState.propertyAddress.city ||
-      !formState.propertyAddress.state ||
-      !formState.propertyAddress.zip ||
-      !formState.signingDate ||
-      !formState.signingTime ||
-      !formState.feeAmount
-    ) {
-      toast.error("Please complete all required order fields.");
+    const nextMissingFields = getMissingRequiredFields();
+    setMissingFields(nextMissingFields);
+
+    if (nextMissingFields.length > 0) {
+      toast.error(`Please fill: ${nextMissingFields.join(", ")}`);
       return;
     }
 
@@ -121,6 +143,7 @@ export default function NewOrderPage() {
       }
 
       await dispatch(fetchClientOrders());
+      setMissingFields([]);
       toast.success("Order created successfully.");
       router.push("/dashboard-client/orders");
     } catch (error) {
@@ -131,6 +154,11 @@ export default function NewOrderPage() {
   return (
     <div className="max-w-5xl mx-auto space-y-6 pb-24">
       <h1 className="text-2xl font-bold text-zinc-900">Create New Order</h1>
+      {missingFields.length > 0 ? (
+        <div className="rounded-2xl border border-rose-200 bg-rose-50 px-5 py-4 text-sm text-rose-700">
+          Missing required fields: {missingFields.join(", ")}
+        </div>
+      ) : null}
 
       <div className={sectionCard}>
         <div className="flex items-center gap-3 border-b border-zinc-50 pb-4">

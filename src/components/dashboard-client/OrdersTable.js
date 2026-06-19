@@ -26,7 +26,7 @@ const fallbackOrders = [
     }
   },
   {
-    id: "#26NC4999",
+    id: "#26NC5000",
     signerName: "Sarah Harrison",
     serviceType: "Real Estate Closing",
     location: "Austin, TX 78799",
@@ -39,7 +39,7 @@ const fallbackOrders = [
     }
   },
   {
-    id: "#26NC4999",
+    id: "#26NC5001",
     signerName: "David Miller",
     serviceType: "Power of Attorney",
     location: "Dallas, TX 75299",
@@ -52,7 +52,7 @@ const fallbackOrders = [
     }
   },
   {
-    id: "#26NC4999",
+    id: "#26NC5002",
     signerName: "Elena Rodriguez",
     serviceType: "Loan Signing",
     location: "Houston, TX 77099",
@@ -65,7 +65,7 @@ const fallbackOrders = [
     }
   },
   {
-    id: "#26NC4999",
+    id: "#26NC5003",
     signerName: "Robert Wilson",
     serviceType: "Health Directive",
     location: "San Antonio, TX 78299",
@@ -75,7 +75,7 @@ const fallbackOrders = [
     notary: null
   },
   {
-    id: "#26NC4999",
+    id: "#26NC5004",
     signerName: "Alice Cooper",
     serviceType: "Identity Verification",
     location: "Austin, TX 73799",
@@ -101,6 +101,18 @@ const getStatusStyles = (status) => {
 };
 
 export default function OrdersTable({ orders = fallbackOrders }) {
+  const getOrderKey = (order, index) =>
+    [
+      order?.id,
+      order?._id,
+      order?.date,
+      order?.serviceType,
+      order?.signerName,
+      index,
+    ]
+      .filter(Boolean)
+      .join("-");
+
   return (
     <div className="bg-white border border-zinc-100 rounded-[32px] shadow-sm overflow-hidden">
       {/* Filters & Actions Header */}
@@ -163,7 +175,7 @@ export default function OrdersTable({ orders = fallbackOrders }) {
           </thead>
           <tbody className="divide-y divide-zinc-50">
             {orders.map((order, i) => (
-              <tr key={order.id || i} className="hover:bg-zinc-50/50 transition-colors group">
+              <tr key={getOrderKey(order, i)} className="hover:bg-zinc-50/50 transition-colors group">
                 {(() => {
                   const normalizedOrderId = String(order.id || "").replace(/^#/, "");
                   const orderDetailHref = `/dashboard-client/orders/${normalizedOrderId}`;
