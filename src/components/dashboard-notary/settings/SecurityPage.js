@@ -1,58 +1,222 @@
 "use client";
 
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { readPortalSession, clearPortalSession } from "@/lib/portalSession";
+import { logoutPortalUser, resetPortalFirstLoginPassword } from "@/lib/siteApi";
+
+const strengthLabel = (password) => {
+  if (!password) return { label: "", color: "bg-zinc-200" };
+  let score = 0;
+  if (password.length >= 8) score += 1;
+  if (/[A-Z]/.test(password)) score += 1;
+  if (/[0-9]/.test(password)) score += 1;
+  if (/[^A-Za-z0-9]/.test(password)) score += 1;
+  if (score <= 1) return { label: "Weak", color: "bg-rose-500" };
+  if (score === 2) return { label: "Fair", color: "bg-orange-500" };
+  if (score === 3) return { label: "Good", color: "bg-blue-500" };
+  return { label: "Strong", color: "bg-emerald-500" };
+};
 
 export default function SecurityPage() {
+  const router = useRouter();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [currentPassword, setCurrentPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [twoFactor, setTwoFactor] = useState(false);
+  const [savingPassword, setSavingPassword] = useState(false);
+  const [loggingOut, setLoggingOut] = useState(false);
+
+  const strength = strengthLabel(newPassword);
+
+  const handlePasswordSave = async (event) => {
+    event.preventDefault();
+    if (!currentPassword || !newPassword) {
+      toast.error("Please fill out both password fields.");
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      toast.error("New password and confirmation do not match.");
+      return;
+    }
+    if (newPassword.length < 8) {
+      toast.error("New password must be at least 8 characters.");
+      return;
+    }
+    setSavingPassword(true);
+    try {
+      await resetPortalFirstLoginPassword({
+        currentPassword,
+        newPassword,
+      });
+      toast.success("Password updated. Please sign in again with your new password.");
+      setCurrentPassword("");
+      setNewPassword("");
+      setConfirmPassword("");
+    } catch (error) {
+      toast.error(error?.message || "Unable to update password.");
+    } finally {
+      setSavingPassword(false);
+    }
+  };
+
+  const handleLogoutDevice = async () => {
+    setLoggingOut(true);
+    try {
+      const session = readPortalSession();
+      try {
+        await logoutPortalUser({ refreshToken: session?.refreshToken });
+      } catch (error) {
+        // Even if the API call fails, clear local state so the user is signed out.
+      }
+      clearPortalSession();
+      toast.success("Signed out. Redirecting to login...");
+      router.push("/");
+    } finally {
+      setLoggingOut(false);
+    }
+  };
+
+  const handleTwoFactorToggle = () => {
+    const next = !twoFactor;
+    setTwoFactor(next);
+    if (next) {
+      toast.info(
+        "Two-factor setup will be available shortly. Contact support@notarix.live to enable 2FA on your account today."
+      );
+    }
+  };
 
   return (
     <div className="p-8">
-      <div className="border border-indigo-100 rounded-[24px] p-8 space-y-8">
+      <form className="border border-indigo-100 rounded-[24px] p-8 space-y-8" onSubmit={handlePasswordSave}>
         <h2 className="text-xl font-bold text-zinc-900">Security &amp; Authentication</h2>
+
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-          {[
-            ["Current Password", "********", showCurrentPassword, setShowCurrentPassword],
-            ["New Password", "Enter new password", showNewPassword, setShowNewPassword],
-          ].map(([label, value, visible, setVisible]) => (
-            <div key={label} className="space-y-2">
-              <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
-              <div className="flex items-center gap-3 w-full px-4 py-4 rounded-2xl border border-zinc-300 focus-within:border-[#2c49df]">
-                <input
-                  type={visible ? "text" : "password"}
-                  defaultValue={value}
-                  className="w-full text-gray-700 placeholder:text-gray-700 outline-none"
-                />
-                <button
-                  type="button"
-                  onClick={() => setVisible((current) => !current)}
-                  aria-label={visible ? "Hide password" : "Show password"}
-                  className="text-gray-700 transition hover:text-[#2c49df]"
-                >
-                  {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                </button>
-              </div>
-            </div>
-          ))}
+          <PasswordField
+            label="Current Password"
+            value={currentPassword}
+            onChange={setCurrentPassword}
+            visible={showCurrentPassword}
+            onToggle={() => setShowCurrentPassword((current) => !current)}
+          />
+          <PasswordField
+            label="New Password"
+            value={newPassword}
+            onChange={setNewPassword}
+            visible={showNewPassword}
+            onToggle={() => setShowNewPassword((current) => !current)}
+          />
         </div>
+
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          <PasswordField
+            label="Confirm New Password"
+            value={confirmPassword}
+            onChange={setConfirmPassword}
+            visible={showConfirmPassword}
+            onToggle={() => setShowConfirmPassword((current) => !current)}
+          />
+          <div className="space-y-2">
+            <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Password Strength</label>
+            <div className="flex items-center gap-3">
+              <div className="flex-1 h-2 rounded-full bg-zinc-200 overflow-hidden">
+                <div className={`h-full ${strength.color}`} style={{ width: `${newPassword ? Math.min(100, newPassword.length * 6) : 0}%` }}></div>
+              </div>
+              <span className="text-sm font-bold text-zinc-700 w-16 text-right">{strength.label}</span>
+            </div>
+            <p className="text-xs text-gray-700 mt-2">
+              Use 8+ characters with a mix of letters, numbers, and symbols.
+            </p>
+          </div>
+        </div>
+
+        <div className="flex justify-end">
+          <button
+            type="submit"
+            disabled={savingPassword}
+            className="px-8 py-4 rounded-2xl bg-[#2c49df] text-white font-bold shadow-lg shadow-blue-100 disabled:opacity-60"
+          >
+            {savingPassword ? (
+              <span className="inline-flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" /> Updating...
+              </span>
+            ) : (
+              "Update Password"
+            )}
+          </button>
+        </div>
+
         <div className="pt-8 border-t border-zinc-100 flex items-center justify-between gap-4">
           <div>
             <p className="text-lg font-bold text-zinc-900">Two-Factor Authentication</p>
             <p className="text-sm font-medium text-gray-700 mt-1">Add an extra layer of security to your account.</p>
           </div>
-          <div className="w-12 h-7 rounded-full bg-[#2c49df] relative">
-            <div className="absolute right-1 top-1 w-5 h-5 rounded-full bg-white"></div>
-          </div>
+          <button
+            type="button"
+            onClick={handleTwoFactorToggle}
+            aria-pressed={twoFactor}
+            aria-label="Toggle two-factor authentication"
+            className={`w-12 h-7 rounded-full relative transition-colors ${twoFactor ? "bg-[#2c49df]" : "bg-zinc-300"}`}
+          >
+            <div className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all ${twoFactor ? "right-1" : "left-1"}`}></div>
+          </button>
         </div>
+
         <div className="border border-zinc-200 rounded-[24px] p-5 flex items-center justify-between gap-4">
           <div>
             <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Login Activity</p>
-            <p className="text-base font-bold text-zinc-900 mt-3">Chrome on MacOS</p>
-            <p className="text-sm font-medium text-gray-700 mt-1">New York, USA • Active now</p>
+            <p className="text-base font-bold text-zinc-900 mt-3">Current browser session</p>
+            <p className="text-sm font-medium text-gray-700 mt-1">
+              Sign out of this device if you notice any unfamiliar activity.
+            </p>
           </div>
-          <button className="text-[#2c49df] font-bold">Log out device</button>
+          <button
+            type="button"
+            onClick={handleLogoutDevice}
+            disabled={loggingOut}
+            className="text-[#2c49df] font-bold disabled:opacity-60 inline-flex items-center gap-2"
+          >
+            {loggingOut ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Signing out...
+              </>
+            ) : (
+              "Log out device"
+            )}
+          </button>
         </div>
+      </form>
+    </div>
+  );
+}
+
+function PasswordField({ label, value, onChange, visible, onToggle }) {
+  return (
+    <div className="space-y-2">
+      <label className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">{label}</label>
+      <div className="flex items-center gap-3 w-full px-4 py-4 rounded-2xl border border-zinc-300 focus-within:border-[#2c49df]">
+        <input
+          type={visible ? "text" : "password"}
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          autoComplete="off"
+          className="w-full text-gray-700 placeholder:text-gray-700 outline-none bg-transparent"
+        />
+        <button
+          type="button"
+          onClick={onToggle}
+          aria-label={visible ? "Hide password" : "Show password"}
+          className="text-gray-700 transition hover:text-[#2c49df]"
+        >
+          {visible ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+        </button>
       </div>
     </div>
   );

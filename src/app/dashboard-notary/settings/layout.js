@@ -1,8 +1,11 @@
 "use client";
 
+import { useEffect } from "react";
 import { Bell, CreditCard, ShieldCheck, User, UserRoundCog, BadgeCheck } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useAppDispatch } from "@/store/hooks";
+import { fetchNotaryProfileDetails } from "@/store/sitePortalSlice";
 
 const settingsNav = [
   { icon: User, label: "Profile", href: "/dashboard-notary/settings" },
@@ -15,6 +18,11 @@ const settingsNav = [
 
 export default function NotarySettingsLayout({ children }) {
   const pathname = usePathname();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchNotaryProfileDetails());
+  }, [dispatch]);
 
   return (
     <div className="flex flex-col xl:flex-row gap-8 items-start">

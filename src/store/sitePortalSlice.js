@@ -7,21 +7,29 @@ import {
   getClientOrder,
   getClientOrders,
   getClientOverview,
-  getPortalConversations,
-  getPortalConversationByOrder,
-  getPortalMessages,
   getNotaryAssignment,
   getNotaryAssignments,
   getNotaryBankInfo,
+  getNotaryNotificationPreferences as getNotaryNotificationPreferencesApi,
   getNotaryOverview,
+  getNotaryProfileDetails as getNotaryProfileDetailsApi,
+  getPortalConversations,
+  getPortalConversationByOrder,
+  getPortalMessages,
   markPortalMessageRead as markPortalMessageReadApi,
   rejectNotaryAssignment as rejectNotaryAssignmentApi,
   saveClientBankInfo as saveClientBankInfoApi,
   saveNotaryBankInfo as saveNotaryBankInfoApi,
+  saveNotaryNotificationPreferences as saveNotaryNotificationPreferencesApi,
+  saveNotaryProfile as saveNotaryProfileApi,
+  saveNotaryProfileDetails as saveNotaryProfileDetailsApi,
   sendPortalMessage as sendPortalMessageApi,
   startNotaryAssignment as startNotaryAssignmentApi,
   submitAccessRequest as submitAccessRequestApi,
+  submitNotaryVerification as submitNotaryVerificationApi,
   uploadNotaryCompletedDocuments as uploadNotaryCompletedDocumentsApi,
+  uploadNotaryProfilePhoto as uploadNotaryProfilePhotoApi,
+  uploadNotaryTrackedDocument as uploadNotaryTrackedDocumentApi,
   uploadPortalAttachments as uploadPortalAttachmentsApi,
 } from "@/lib/siteApi";
 
@@ -270,6 +278,94 @@ export const saveNotaryBankInfo = createAsyncThunk(
   }
 );
 
+export const fetchNotaryProfileDetails = createAsyncThunk(
+  "sitePortal/fetchNotaryProfileDetails",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getNotaryProfileDetailsApi();
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load profile details.");
+    }
+  }
+);
+
+export const updateNotaryProfile = createAsyncThunk(
+  "sitePortal/updateNotaryProfile",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await saveNotaryProfileApi(body);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to update profile.");
+    }
+  }
+);
+
+export const updateNotaryProfileDetails = createAsyncThunk(
+  "sitePortal/updateNotaryProfileDetails",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await saveNotaryProfileDetailsApi(body);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to update profile details.");
+    }
+  }
+);
+
+export const uploadNotaryAvatar = createAsyncThunk(
+  "sitePortal/uploadNotaryAvatar",
+  async (file, { rejectWithValue }) => {
+    try {
+      return await uploadNotaryProfilePhotoApi(file);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to upload profile photo.");
+    }
+  }
+);
+
+export const uploadNotaryVerificationDocument = createAsyncThunk(
+  "sitePortal/uploadNotaryVerificationDocument",
+  async ({ documentKey, file }, { rejectWithValue }) => {
+    try {
+      return await uploadNotaryTrackedDocumentApi(documentKey, file);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to upload verification document.");
+    }
+  }
+);
+
+export const submitNotaryVerificationForReview = createAsyncThunk(
+  "sitePortal/submitNotaryVerification",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await submitNotaryVerificationApi();
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to submit verification for review.");
+    }
+  }
+);
+
+export const fetchNotaryNotificationPreferences = createAsyncThunk(
+  "sitePortal/fetchNotaryNotificationPreferences",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getNotaryNotificationPreferencesApi();
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load notification preferences.");
+    }
+  }
+);
+
+export const saveNotaryNotificationPrefs = createAsyncThunk(
+  "sitePortal/saveNotaryNotificationPreferences",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await saveNotaryNotificationPreferencesApi(body);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to save notification preferences.");
+    }
+  }
+);
+
 const sitePortalSlice = createSlice({
   name: "sitePortal",
   initialState: {
@@ -309,6 +405,22 @@ const sitePortalSlice = createSlice({
     notaryBankInfoStatus: "idle",
     accessRequestStatus: "idle",
     accessRequestError: null,
+    notaryProfileDetails: null,
+    notaryProfileDetailsStatus: "idle",
+    notaryProfileDetailsError: null,
+    notaryProfileSaveStatus: "idle",
+    notaryProfileSaveError: null,
+    notaryAvatarUploadStatus: "idle",
+    notaryAvatarUploadError: null,
+    notaryVerificationUploadStatus: "idle",
+    notaryVerificationUploadError: null,
+    notaryVerificationSubmitStatus: "idle",
+    notaryVerificationSubmitError: null,
+    notaryNotificationPreferences: null,
+    notaryNotificationPreferencesStatus: "idle",
+    notaryNotificationPreferencesError: null,
+    notaryNotificationSaveStatus: "idle",
+    notaryNotificationSaveError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -548,6 +660,104 @@ const sitePortalSlice = createSlice({
       .addCase(submitAccessRequest.rejected, (state, action) => {
         state.accessRequestStatus = "error";
         state.accessRequestError = action.payload || "Unable to submit access request.";
+      })
+      .addCase(fetchNotaryProfileDetails.pending, (state) => {
+        state.notaryProfileDetailsStatus = "loading";
+        state.notaryProfileDetailsError = null;
+      })
+      .addCase(fetchNotaryProfileDetails.fulfilled, (state, action) => {
+        state.notaryProfileDetails = action.payload || null;
+        state.notaryProfileDetailsStatus = "ready";
+        state.notaryProfileDetailsError = null;
+      })
+      .addCase(fetchNotaryProfileDetails.rejected, (state, action) => {
+        state.notaryProfileDetails = null;
+        state.notaryProfileDetailsStatus = "error";
+        state.notaryProfileDetailsError = action.payload || "Unable to load profile details.";
+      })
+      .addCase(updateNotaryProfile.pending, (state) => {
+        state.notaryProfileSaveStatus = "loading";
+        state.notaryProfileSaveError = null;
+      })
+      .addCase(updateNotaryProfile.fulfilled, (state) => {
+        state.notaryProfileSaveStatus = "ready";
+      })
+      .addCase(updateNotaryProfile.rejected, (state, action) => {
+        state.notaryProfileSaveStatus = "error";
+        state.notaryProfileSaveError = action.payload || "Unable to update profile.";
+      })
+      .addCase(updateNotaryProfileDetails.pending, (state) => {
+        state.notaryProfileSaveStatus = "loading";
+        state.notaryProfileSaveError = null;
+      })
+      .addCase(updateNotaryProfileDetails.fulfilled, (state, action) => {
+        state.notaryProfileSaveStatus = "ready";
+        state.notaryProfileDetails = action.payload || state.notaryProfileDetails;
+      })
+      .addCase(updateNotaryProfileDetails.rejected, (state, action) => {
+        state.notaryProfileSaveStatus = "error";
+        state.notaryProfileSaveError = action.payload || "Unable to update profile details.";
+      })
+      .addCase(uploadNotaryAvatar.pending, (state) => {
+        state.notaryAvatarUploadStatus = "loading";
+        state.notaryAvatarUploadError = null;
+      })
+      .addCase(uploadNotaryAvatar.fulfilled, (state) => {
+        state.notaryAvatarUploadStatus = "ready";
+      })
+      .addCase(uploadNotaryAvatar.rejected, (state, action) => {
+        state.notaryAvatarUploadStatus = "error";
+        state.notaryAvatarUploadError = action.payload || "Unable to upload profile photo.";
+      })
+      .addCase(uploadNotaryVerificationDocument.pending, (state) => {
+        state.notaryVerificationUploadStatus = "loading";
+        state.notaryVerificationUploadError = null;
+      })
+      .addCase(uploadNotaryVerificationDocument.fulfilled, (state, action) => {
+        state.notaryVerificationUploadStatus = "ready";
+        state.notaryProfileDetails = action.payload || state.notaryProfileDetails;
+      })
+      .addCase(uploadNotaryVerificationDocument.rejected, (state, action) => {
+        state.notaryVerificationUploadStatus = "error";
+        state.notaryVerificationUploadError = action.payload || "Unable to upload verification document.";
+      })
+      .addCase(submitNotaryVerificationForReview.pending, (state) => {
+        state.notaryVerificationSubmitStatus = "loading";
+        state.notaryVerificationSubmitError = null;
+      })
+      .addCase(submitNotaryVerificationForReview.fulfilled, (state, action) => {
+        state.notaryVerificationSubmitStatus = "ready";
+        state.notaryProfileDetails = action.payload || state.notaryProfileDetails;
+      })
+      .addCase(submitNotaryVerificationForReview.rejected, (state, action) => {
+        state.notaryVerificationSubmitStatus = "error";
+        state.notaryVerificationSubmitError = action.payload || "Unable to submit verification for review.";
+      })
+      .addCase(fetchNotaryNotificationPreferences.pending, (state) => {
+        state.notaryNotificationPreferencesStatus = "loading";
+        state.notaryNotificationPreferencesError = null;
+      })
+      .addCase(fetchNotaryNotificationPreferences.fulfilled, (state, action) => {
+        state.notaryNotificationPreferences = action.payload || null;
+        state.notaryNotificationPreferencesStatus = "ready";
+        state.notaryNotificationPreferencesError = null;
+      })
+      .addCase(fetchNotaryNotificationPreferences.rejected, (state, action) => {
+        state.notaryNotificationPreferences = null;
+        state.notaryNotificationPreferencesStatus = "error";
+        state.notaryNotificationPreferencesError = action.payload || "Unable to load notification preferences.";
+      })
+      .addCase(saveNotaryNotificationPrefs.pending, (state) => {
+        state.notaryNotificationSaveStatus = "loading";
+        state.notaryNotificationSaveError = null;
+      })
+      .addCase(saveNotaryNotificationPrefs.fulfilled, (state, action) => {
+        state.notaryNotificationSaveStatus = "ready";
+        state.notaryNotificationPreferences = action.payload || state.notaryNotificationPreferences;
+      })
+      .addCase(saveNotaryNotificationPrefs.rejected, (state, action) => {
+        state.notaryNotificationSaveStatus = "error";
+        state.notaryNotificationSaveError = action.payload || "Unable to save notification preferences.";
       });
   },
 });

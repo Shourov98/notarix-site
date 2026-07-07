@@ -309,3 +309,94 @@ export const logoutPortalUser = async ({ refreshToken } = {}) =>
     authMode: "portal",
   });
 
+export const getNotaryProfileDetails = async () =>
+  requestJson("/site/notary/profile-details", {
+    authMode: "portal",
+  });
+
+export const saveNotaryProfile = async (body) =>
+  requestJson("/site/notary/profile", {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+
+export const saveNotaryProfileDetails = async (body) =>
+  requestJson("/site/notary/profile-details", {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+
+export const uploadNotaryProfilePhoto = async (file) => {
+  const formData = new FormData();
+  formData.append("profilePhoto", file);
+
+  const session = typeof window !== "undefined" ? readPortalSession() : null;
+  const headers = session?.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
+
+  const response = await fetch(`${buildBaseUrl()}/site/notary/profile-photo`, {
+    method: "POST",
+    headers,
+    body: formData,
+    cache: "no-store",
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message || payload?.message || "Profile photo upload failed."
+    );
+  }
+
+  return payload?.data || payload;
+};
+
+export const uploadNotaryTrackedDocument = async (documentKey, file) => {
+  const formData = new FormData();
+  formData.append("document", file);
+
+  const session = typeof window !== "undefined" ? readPortalSession() : null;
+  const headers = session?.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
+
+  const response = await fetch(`${buildBaseUrl()}/site/notary/profile-documents/${documentKey}`, {
+    method: "POST",
+    headers,
+    body: formData,
+    cache: "no-store",
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message || payload?.message || "Document upload failed."
+    );
+  }
+
+  return payload?.data || payload;
+};
+
+export const submitNotaryVerification = async () =>
+  requestJson("/site/notary/verification/submit", {
+    method: "POST",
+    authMode: "portal",
+  });
+
+export const getNotaryNotificationPreferences = async () =>
+  requestJson("/site/notary/notification-preferences", {
+    authMode: "portal",
+  });
+
+export const saveNotaryNotificationPreferences = async (body) =>
+  requestJson("/site/notary/notification-preferences", {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+

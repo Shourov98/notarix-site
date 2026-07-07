@@ -19,6 +19,39 @@ export default function NotaryPaymentsPage() {
   const [data, setData] = useState({ summary: null, records: [] });
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [exporting, setExporting] = useState(false);
+
+  const handleExport = async () => {
+    setExporting(true);
+    try {
+      const session = typeof window !== "undefined" ? JSON.parse(localStorage.getItem("notarix-portal-session") || "null") : null;
+      const token = session?.accessToken || session?.access_token;
+      if (!token) {
+        toast.error("Please sign in again to export.");
+        return;
+      }
+      const apiOrigin = (process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:5191").replace(/\/+$/, "");
+      const prefix = process.env.NEXT_PUBLIC_API_PREFIX || "/api/v1";
+      const response = await fetch(`${apiOrigin}${prefix}/admin/reports/payments?format=csv`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `notary-payouts-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+      toast.success("Payout CSV downloaded.");
+    } catch (error) {
+      toast.error(error?.message || "Unable to export payouts.");
+    } finally {
+      setExporting(false);
+    }
+  };
 
   useEffect(() => {
     const load = async () => {
@@ -60,9 +93,14 @@ export default function NotaryPaymentsPage() {
             Track your payout schedule and completed transfers from assigned orders.
           </p>
         </div>
-        <button className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white px-6 py-4 font-bold text-zinc-800 shadow-sm">
+        <button
+          type="button"
+          onClick={handleExport}
+          disabled={exporting}
+          className="flex items-center gap-3 rounded-2xl border border-zinc-200 bg-white px-6 py-4 font-bold text-zinc-800 shadow-sm disabled:opacity-60"
+        >
           <Download className="h-4 w-4" />
-          Export CSV
+          {exporting ? "Preparing…" : "Export CSV"}
         </button>
       </div>
 

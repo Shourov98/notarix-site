@@ -7,11 +7,14 @@ export default function TrustCTA() {
             Ready to Experience Secure Notarization?
           </h2>
           <p className="text-blue-50 text-lg md:text-xl mb-12 max-w-3xl mx-auto opacity-90">
-            Join thousands of businesses and individuals who trust NotaryTrust for their most important legal documents.
+            Join the businesses and individuals who trust Notarix for their most important legal documents.
           </p>
-          <button className="bg-white text-[#1a4fdb] px-8 md:px-10 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-colors shadow-lg">
+          <a
+            href="/request-access"
+            className="inline-block bg-white text-[#1a4fdb] px-8 md:px-10 py-4 rounded-xl font-bold text-lg hover:bg-blue-50 transition-colors shadow-lg"
+          >
             Start Secure Notary Process Today
-          </button>
+          </a>
         </div>
       </div>
     </section>
