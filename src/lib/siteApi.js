@@ -18,7 +18,22 @@ export const buildAssetUrl = (path) => {
     return path;
   }
 
-  return `${buildApiOrigin()}${path.startsWith("/") ? path : `/${path}`}`;
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  // Backend proxy routes (e.g. /api/v1/files/...) are loaded by the browser via
+  // <img>/<iframe>, which means the Authorization header isn't attached. Pass
+  // the access token via the `token` query string so the proxy can authorize.
+  const isFileProxy = normalizedPath.startsWith("/api/v1/files/");
+  if (isFileProxy && typeof window !== "undefined") {
+    const session = readPortalSession();
+    if (session?.accessToken) {
+      const separator = normalizedPath.includes("?") ? "&" : "?";
+      return `${buildApiOrigin()}${normalizedPath}${separator}token=${encodeURIComponent(
+        session.accessToken
+      )}`;
+    }
+  }
+
+  return `${buildApiOrigin()}${normalizedPath}`;
 };
 
 const requestJson = async (path, options = {}) => {
@@ -208,6 +223,36 @@ export const uploadClientOrderDocuments = async (orderId, files) => {
   if (!response.ok) {
     throw new Error(
       payload?.error?.message || payload?.message || "Upload failed."
+    );
+  }
+
+  return payload?.data || payload;
+};
+
+export const replaceOrderDocument = async (orderId, documentId, file) => {
+  const formData = new FormData();
+  formData.append("document", file);
+
+  const session = typeof window !== "undefined" ? readPortalSession() : null;
+  const headers = session?.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
+
+  const response = await fetch(
+    `${buildBaseUrl()}/site/orders/${orderId}/documents/${documentId}`,
+    {
+      method: "PUT",
+      headers,
+      body: formData,
+      cache: "no-store",
+    }
+  );
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message || payload?.message || "Replace failed."
     );
   }
 

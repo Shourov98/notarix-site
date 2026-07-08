@@ -1,18 +1,21 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
+  AlertTriangle,
   Building2,
   CalendarDays,
   FileText,
   FolderOpen,
   MapPin,
+  RefreshCw,
   ShieldCheck,
   UserRound,
 } from "lucide-react";
-import { buildAssetUrl } from "@/lib/siteApi";
+import { toast } from "sonner";
+import { buildAssetUrl, replaceOrderDocument } from "@/lib/siteApi";
 import { fetchClientOrder, selectSitePortal } from "@/store/sitePortalSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 
@@ -48,12 +51,53 @@ export default function ClientOrderDetailsPage() {
     activeClientOrderStatus,
     activeClientOrderError,
   } = useAppSelector(selectSitePortal);
+  const fileInputRef = useRef(null);
+  const [replacingDocumentId, setReplacingDocumentId] = useState("");
+  const [replacementStatus, setReplacementStatus] = useState({});
 
   useEffect(() => {
     if (id) {
       dispatch(fetchClientOrder(id));
     }
   }, [dispatch, id]);
+
+  const triggerReplace = (documentId) => {
+    setReplacingDocumentId(documentId);
+    setReplacementStatus((current) => ({ ...current, [documentId]: { state: "picking" } }));
+    fileInputRef.current?.click();
+  };
+
+  const handleReplacementFile = async (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file || !replacingDocumentId) {
+      setReplacingDocumentId("");
+      return;
+    }
+
+    const documentId = replacingDocumentId;
+    setReplacingDocumentId("");
+    setReplacementStatus((current) => ({ ...current, [documentId]: { state: "uploading" } }));
+    try {
+      await replaceOrderDocument(id, documentId, file);
+      setReplacementStatus((current) => ({
+        ...current,
+        [documentId]: { state: "done" },
+      }));
+      toast.success(`${file.name} uploaded successfully.`);
+      await dispatch(fetchClientOrder(id));
+    } catch (error) {
+      const message =
+        typeof error === "string"
+          ? error
+          : error?.message || "Unable to replace the document.";
+      setReplacementStatus((current) => ({
+        ...current,
+        [documentId]: { state: "error", message },
+      }));
+      toast.error(message);
+    }
+  };
 
   if (activeClientOrderStatus === "loading" && !activeClientOrder) {
     return <div className="mx-auto max-w-5xl py-12 text-sm text-zinc-600">Loading order details...</div>;
@@ -68,6 +112,13 @@ export default function ClientOrderDetailsPage() {
   }
 
   return (
+    <>
+      <input
+        ref={fileInputRef}
+        type="file"
+        className="hidden"
+        onChange={handleReplacementFile}
+      />
     <div className="mx-auto max-w-5xl space-y-6 pb-24">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
         <div>
@@ -149,30 +200,66 @@ export default function ClientOrderDetailsPage() {
               {(activeClientOrder.documents || []).length === 0 ? (
                 <p className="text-sm text-zinc-600">No documents uploaded for this order yet.</p>
               ) : (
-                activeClientOrder.documents.map((document) => (
-                  <div
-                    key={document.id}
-                    className="flex items-center justify-between rounded-2xl border border-zinc-100 bg-zinc-50 p-4"
-                  >
-                    <div className="flex items-center gap-3">
-                      <FileText className="h-5 w-5 text-[#1a4fdb]" />
-                      <div>
-                        <p className="font-semibold text-zinc-900">{document.name}</p>
-                        <p className="text-xs text-gray-700">{document.mimeType || "Uploaded file"}</p>
+                activeClientOrder.documents.map((document) => {
+                  const status = replacementStatus[document.id];
+                  const isUploading = status?.state === "uploading";
+                  const isDone = status?.state === "done";
+                  const isError = status?.state === "error";
+                  const openUrl = buildAssetUrl(document.url);
+                  const canPreview = !!openUrl;
+                  return (
+                    <div
+                      key={document.id}
+                      className="rounded-2xl border border-zinc-100 bg-zinc-50 p-4"
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="flex items-center gap-3">
+                          <FileText className="h-5 w-5 text-[#1a4fdb]" />
+                          <div>
+                            <p className="font-semibold text-zinc-900">{document.name}</p>
+                            <p className="text-xs text-gray-700">{document.mimeType || "Uploaded file"}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {canPreview ? (
+                            <a
+                              href={openUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="rounded-lg border border-zinc-200 bg-white px-3 py-2 text-xs font-semibold text-zinc-700 transition hover:border-zinc-300 hover:text-zinc-900"
+                            >
+                              Open
+                            </a>
+                          ) : null}
+                          <button
+                            type="button"
+                            onClick={() => triggerReplace(document.id)}
+                            disabled={isUploading}
+                            className="inline-flex items-center gap-1 rounded-lg bg-[#1a4fdb] px-3 py-2 text-xs font-semibold text-white transition hover:bg-[#1642b8] disabled:cursor-not-allowed disabled:opacity-60"
+                          >
+                            <RefreshCw className={`h-3.5 w-3.5 ${isUploading ? "animate-spin" : ""}`} />
+                            {isUploading ? "Replacing..." : "Replace"}
+                          </button>
+                        </div>
                       </div>
+                      {isDone ? (
+                        <p className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-emerald-700">
+                          <ShieldCheck className="h-3.5 w-3.5" /> New version uploaded successfully.
+                        </p>
+                      ) : null}
+                      {isError ? (
+                        <p className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-red-600">
+                          <AlertTriangle className="h-3.5 w-3.5" /> {status?.message || "Replace failed."}
+                        </p>
+                      ) : null}
+                      {!canPreview ? (
+                        <p className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-amber-700">
+                          <AlertTriangle className="h-3.5 w-3.5" /> Original file is unavailable. Please re-upload to continue.
+                        </p>
+                      ) : null}
                     </div>
-                    {document.url ? (
-                      <a
-                        href={buildAssetUrl(document.url)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-sm font-semibold text-[#1a4fdb]"
-                      >
-                        Open
-                      </a>
-                    ) : null}
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
           </section>
@@ -225,5 +312,6 @@ export default function ClientOrderDetailsPage() {
         </aside>
       </div>
     </div>
+    </>
   );
 }
