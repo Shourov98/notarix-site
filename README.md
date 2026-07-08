@@ -2,6 +2,17 @@
 
 Frontend application for the `notarix-site` project, built with Next.js App Router.
 
+## Deployment target
+
+The final production target is **AWS** (ECS Fargate behind ALB + CloudFront, or AWS Amplify). The site is currently hosted on **Vercel** as a temporary stand-in while AWS infrastructure is being provisioned. `vercel.json` configures the install (`pnpm install --no-frozen-lockfile`) and build (`next build`) commands.
+
+When migrating from Vercel to AWS:
+
+- Use Node.js 20 runtime, port 3000.
+- The app is fully self-contained — no external runtime services other than the Notarix backend.
+- Point `NEXT_PUBLIC_API_BASE_URL` and `NEXT_PUBLIC_API_PREFIX` at the AWS-hosted backend origin.
+- WebSocket traffic flows over the same HTTPS origin (Socket.IO falls back to long polling if WS isn't available).
+
 ## Getting Started
 
 Run the development server:
