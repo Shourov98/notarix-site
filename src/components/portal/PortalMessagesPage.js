@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Paperclip, Search, Send } from "lucide-react";
+import { FileText, Image as ImageIcon, Paperclip, Search, Send, X } from "lucide-react";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
 import { buildAssetUrl, buildApiOrigin } from "@/lib/siteApi";
@@ -27,6 +27,16 @@ const formatMessageTime = (value) =>
         minute: "2-digit",
       })
     : "";
+
+const formatFileSize = (bytes) => {
+  if (!bytes || bytes <= 0) return "";
+  const units = ["B", "KB", "MB", "GB"];
+  const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
+  const value = bytes / Math.pow(1024, exponent);
+  return `${value.toFixed(value >= 10 || exponent === 0 ? 0 : 1)} ${units[exponent]}`;
+};
+
+const isImageMime = (mimeType) => Boolean(mimeType && mimeType.startsWith("image/"));
 
 export default function PortalMessagesPage({ roleLabel = "Portal" }) {
   const dispatch = useAppDispatch();
@@ -141,7 +151,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
         await dispatch(
           uploadPortalAttachments({
             conversationId: currentConversationId,
-            files: attachments,
+            files: attachments.map((item) => item.file),
             body: draft.trim(),
           })
         ).unwrap();
@@ -156,12 +166,50 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
 
       await dispatch(fetchPortalMessages(currentConversationId));
       await dispatch(fetchPortalConversations());
+      attachments.forEach((item) => {
+        if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+      });
       setDraft("");
       setAttachments([]);
     } catch (error) {
-      toast.error(error || "Unable to send message.");
+      const message =
+        typeof error === "string"
+          ? error
+          : error?.message || error?.payload?.message || "Unable to send message.";
+      toast.error(message);
     }
   };
+
+  const handleFileChange = (event) => {
+    const files = Array.from(event.target.files || []);
+    const next = files.map((file) => ({
+      id: `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      file,
+      name: file.name,
+      size: file.size,
+      mimeType: file.type,
+      previewUrl: isImageMime(file.type) ? URL.createObjectURL(file) : null,
+    }));
+    setAttachments(next);
+    event.target.value = "";
+  };
+
+  const handleRemoveAttachment = (id) => {
+    setAttachments((current) => {
+      const target = current.find((item) => item.id === id);
+      if (target?.previewUrl) URL.revokeObjectURL(target.previewUrl);
+      return current.filter((item) => item.id !== id);
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      attachments.forEach((item) => {
+        if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+      });
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex h-[calc(100vh-13rem)] overflow-hidden rounded-[32px] border border-zinc-100 bg-white shadow-sm">
@@ -261,22 +309,64 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
               >
                 {message.body ? <p className="text-sm leading-relaxed">{message.body}</p> : null}
                 {message.attachments?.length ? (
-                  <div className={`${message.body ? "mt-3" : ""} space-y-2`}>
-                    {message.attachments.map((attachment) => (
-                      <a
-                        key={attachment.id}
-                        href={buildAssetUrl(attachment.url)}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={`block rounded-xl border px-3 py-2 text-sm ${
-                          message.isOwnMessage
-                            ? "border-white/25 bg-white/10 text-white"
-                            : "border-zinc-200 bg-white text-zinc-700"
-                        }`}
-                      >
-                        {attachment.name}
-                      </a>
-                    ))}
+                  <div className={`${message.body ? "mt-3" : ""} grid grid-cols-1 gap-2 sm:grid-cols-2`}>
+                    {message.attachments.map((attachment) => {
+                      const imageLike = isImageMime(attachment.mimeType);
+                      const href = attachment.url ? buildAssetUrl(attachment.url) : null;
+                      const containerClass = `flex items-center gap-3 rounded-xl border p-3 ${
+                        message.isOwnMessage
+                          ? "border-white/25 bg-white/10 text-white"
+                          : "border-zinc-200 bg-white text-zinc-700"
+                      }`;
+                      const inner = (
+                        <>
+                          {imageLike && attachment.url ? (
+                            <img
+                              src={buildAssetUrl(attachment.url)}
+                              alt={attachment.name}
+                              className="h-12 w-12 shrink-0 rounded-md object-cover"
+                            />
+                          ) : (
+                            <div
+                              className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-md ${
+                                message.isOwnMessage ? "bg-white/15" : "bg-zinc-100"
+                              }`}
+                            >
+                              {imageLike ? (
+                                <ImageIcon className="h-6 w-6" />
+                              ) : (
+                                <FileText className="h-6 w-6" />
+                              )}
+                            </div>
+                          )}
+                          <div className="min-w-0 flex-1">
+                            <p className="truncate text-sm font-semibold">{attachment.name}</p>
+                            <p
+                              className={`mt-0.5 text-xs ${
+                                message.isOwnMessage ? "text-white/70" : "text-zinc-500"
+                              }`}
+                            >
+                              {attachment.size ? formatFileSize(attachment.size) : "Attachment"}
+                            </p>
+                          </div>
+                        </>
+                      );
+                      return href ? (
+                        <a
+                          key={attachment.id}
+                          href={href}
+                          target="_blank"
+                          rel="noreferrer"
+                          className={containerClass}
+                        >
+                          {inner}
+                        </a>
+                      ) : (
+                        <div key={attachment.id} className={containerClass}>
+                          {inner}
+                        </div>
+                      );
+                    })}
                   </div>
                 ) : null}
               </div>
@@ -298,7 +388,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
                 type="file"
                 multiple
                 className="hidden"
-                onChange={(event) => setAttachments(Array.from(event.target.files || []))}
+                onChange={handleFileChange}
               />
             </label>
             <input
@@ -319,9 +409,42 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
             </button>
           </div>
           {attachments.length > 0 ? (
-            <p className="mt-3 text-xs text-gray-700">
-              {attachments.length} attachment{attachments.length === 1 ? "" : "s"} selected
-            </p>
+            <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              {attachments.map((item) => (
+                <div
+                  key={item.id}
+                  className="relative flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-3"
+                >
+                  {item.previewUrl ? (
+                    <img
+                      src={item.previewUrl}
+                      alt={item.name}
+                      className="h-12 w-12 shrink-0 rounded-md object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-md bg-zinc-100 text-zinc-600">
+                      {isImageMime(item.mimeType) ? (
+                        <ImageIcon className="h-6 w-6" />
+                      ) : (
+                        <FileText className="h-6 w-6" />
+                      )}
+                    </div>
+                  )}
+                  <div className="min-w-0 flex-1 pr-6">
+                    <p className="truncate text-sm font-semibold text-zinc-800">{item.name}</p>
+                    <p className="mt-0.5 text-xs text-zinc-500">{formatFileSize(item.size)}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveAttachment(item.id)}
+                    aria-label={`Remove ${item.name}`}
+                    className="absolute right-2 top-2 inline-flex h-6 w-6 items-center justify-center rounded-full bg-zinc-100 text-zinc-600 transition-colors hover:bg-red-100 hover:text-red-600"
+                  >
+                    <X className="h-4 w-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
           ) : null}
         </div>
       </section>
