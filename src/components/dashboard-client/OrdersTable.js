@@ -1,93 +1,15 @@
-import { 
-  Search, 
-  Filter, 
-  ChevronLeft, 
-  ChevronRight, 
-  Eye, 
-  MessageSquare, 
+import {
+  Search,
+  Filter,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  MessageSquare,
   MoreVertical,
   Download,
   RotateCcw
 } from "lucide-react";
 import Link from "next/link";
-
-const fallbackOrders = [
-  {
-    id: "#RON-260427",
-    signerName: "Jonathan Miller",
-    serviceType: "Remote Notarization",
-    location: "Remote Online",
-    date: "Oct 28, 2024",
-    status: "Ready",
-    statusColor: "bg-emerald-50 text-emerald-600",
-    notary: {
-      name: "Robert Vance",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Robert"
-    }
-  },
-  {
-    id: "#26NC5000",
-    signerName: "Sarah Harrison",
-    serviceType: "Real Estate Closing",
-    location: "Austin, TX 78799",
-    date: "Apr 24, 2026",
-    status: "Completed",
-    statusColor: "bg-emerald-50 text-emerald-600",
-    notary: {
-      name: "Michael Scott",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael"
-    }
-  },
-  {
-    id: "#26NC5001",
-    signerName: "David Miller",
-    serviceType: "Power of Attorney",
-    location: "Dallas, TX 75299",
-    date: "Apr 25, 2026",
-    status: "In Progress",
-    statusColor: "bg-orange-50 text-orange-600",
-    notary: {
-      name: "Pam Beesly",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Pam"
-    }
-  },
-  {
-    id: "#26NC5002",
-    signerName: "Elena Rodriguez",
-    serviceType: "Loan Signing",
-    location: "Houston, TX 77099",
-    date: "Apr 26, 2026",
-    status: "Assigned",
-    statusColor: "bg-blue-50 text-blue-600",
-    notary: {
-      name: "Jim Halpert",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Jim"
-    }
-  },
-  {
-    id: "#26NC5003",
-    signerName: "Robert Wilson",
-    serviceType: "Health Directive",
-    location: "San Antonio, TX 78299",
-    date: "Apr 27, 2026",
-    status: "Pending",
-    statusColor: "bg-amber-50 text-amber-600",
-    notary: null
-  },
-  {
-    id: "#26NC5004",
-    signerName: "Alice Cooper",
-    serviceType: "Identity Verification",
-    location: "Austin, TX 73799",
-    date: "Apr 28, 2026",
-    status: "Cancelled",
-    statusColor: "bg-rose-50 text-rose-600",
-    notary: {
-      name: "Dwight Schrute",
-      avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Dwight"
-    }
-  }
-];
 
 const getStatusStyles = (status) => {
   switch (status) {
@@ -100,7 +22,7 @@ const getStatusStyles = (status) => {
   }
 };
 
-export default function OrdersTable({ orders = fallbackOrders }) {
+export default function OrdersTable({ orders }) {
   const getOrderKey = (order, index) =>
     [
       order?.id,
@@ -146,7 +68,7 @@ export default function OrdersTable({ orders = fallbackOrders }) {
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-700 font-medium">Showing {orders.length} orders</span>
+          <span className="text-sm text-gray-700 font-medium">Showing {(orders?.length || 0)} orders</span>
           <div className="flex items-center gap-1">
             <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
               <ChevronLeft className="w-4 h-4 text-gray-700" />
@@ -160,6 +82,11 @@ export default function OrdersTable({ orders = fallbackOrders }) {
 
       {/* Table */}
       <div className="overflow-x-auto">
+        {(!orders || orders.length === 0) ? (
+          <div className="px-6 py-12 text-center text-sm text-gray-700">
+            No orders yet. Create your first order to get started.
+          </div>
+        ) : (
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-zinc-100">
@@ -248,6 +175,7 @@ export default function OrdersTable({ orders = fallbackOrders }) {
             ))}
           </tbody>
         </table>
+        )}
       </div>
 
       {/* Pagination Footer */}

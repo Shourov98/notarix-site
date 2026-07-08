@@ -40,7 +40,7 @@ export default function OrdersPage() {
       </div>
 
       {/* Stats Overview */}
-      <StatsOverview />
+      <StatsOverview orders={clientOrders} />
 
       {/* Orders Table */}
       {clientOrdersStatus === "loading" ? (
