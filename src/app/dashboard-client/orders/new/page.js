@@ -130,11 +130,18 @@ export default function NewOrderPage() {
       return;
     }
 
+    const feeAmount = Number(formState.feeAmount);
+    if (!Number.isFinite(feeAmount) || feeAmount < 0) {
+      toast.error("Fee Amount must be a non-negative number.");
+      setMissingFields(["Fee Amount"]);
+      return;
+    }
+
     try {
       const result = await dispatch(
         createClientOrder({
           ...formState,
-          feeAmount: Number(formState.feeAmount),
+          feeAmount,
         })
       ).unwrap();
 
@@ -147,7 +154,11 @@ export default function NewOrderPage() {
       toast.success("Order created successfully.");
       router.push("/dashboard-client/orders");
     } catch (error) {
-      toast.error(error || "Unable to create order.");
+      const message =
+        typeof error === "string"
+          ? error
+          : error?.message || error?.payload?.message || "Unable to create order.";
+      toast.error(message);
     }
   };
 
@@ -301,7 +312,7 @@ export default function NewOrderPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="space-y-2">
               <label className={labelClass}>Fee Amount ($) *</label>
-              <input className={inputClass} placeholder="150" value={formState.feeAmount} onChange={(event) => updateField("feeAmount", event.target.value)} />
+              <input type="number" min="0" step="0.01" className={inputClass} placeholder="150" value={formState.feeAmount} onChange={(event) => updateField("feeAmount", event.target.value)} />
             </div>
             <div className="space-y-2">
               <label className={labelClass}>Payment Status</label>
