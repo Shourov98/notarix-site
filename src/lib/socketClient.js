@@ -3,8 +3,15 @@
 import { io } from "socket.io-client";
 import { readPortalSession } from "@/lib/portalSession";
 
-const DEFAULT_SOCKET_URL =
-  process.env.NEXT_PUBLIC_SOCKET_URL?.trim() || "http://localhost:5191";
+const resolveSocketUrl = () => {
+  const explicit = process.env.NEXT_PUBLIC_SOCKET_URL?.trim();
+  if (explicit) return explicit;
+  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL?.trim();
+  if (apiBase) return apiBase;
+  return "http://localhost:5191";
+};
+
+const DEFAULT_SOCKET_URL = resolveSocketUrl();
 
 let socket = null;
 const subscribers = new Map();
