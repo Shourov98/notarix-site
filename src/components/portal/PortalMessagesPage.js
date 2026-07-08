@@ -3,7 +3,15 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { FileText, Image as ImageIcon, Paperclip, Search, Send, X } from "lucide-react";
+import {
+  Download,
+  FileText,
+  Image as ImageIcon,
+  Paperclip,
+  Search,
+  Send,
+  X,
+} from "lucide-react";
 import { io } from "socket.io-client";
 import { toast } from "sonner";
 import { buildAssetUrl, buildApiOrigin } from "@/lib/siteApi";
@@ -37,6 +45,45 @@ const formatFileSize = (bytes) => {
 };
 
 const isImageMime = (mimeType) => Boolean(mimeType && mimeType.startsWith("image/"));
+
+const resolveAttachmentUrl = (attachment) => {
+  const raw = attachment?.url;
+  if (!raw) return null;
+  return buildAssetUrl(raw);
+};
+
+const resolveDownloadUrl = (attachment) => {
+  if (attachment?.downloadUrl) {
+    return buildAssetUrl(attachment.downloadUrl);
+  }
+  const viewUrl = resolveAttachmentUrl(attachment);
+  if (!viewUrl) return null;
+  if (/^https?:\/\//i.test(viewUrl)) {
+    return viewUrl.includes("/upload/")
+      ? viewUrl.replace("/upload/", "/upload/fl_attachment/")
+      : viewUrl;
+  }
+  return viewUrl;
+};
+
+const triggerAttachmentDownload = (attachment) => {
+  const downloadHref = resolveDownloadUrl(attachment);
+  if (!downloadHref) return;
+  try {
+    const link = document.createElement("a");
+    link.href = downloadHref;
+    if (attachment?.name) {
+      link.download = attachment.name;
+    }
+    link.rel = "noreferrer";
+    link.target = "_blank";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    toast.error("Unable to start download.");
+  }
+};
 
 export default function PortalMessagesPage({ roleLabel = "Portal" }) {
   const dispatch = useAppDispatch();
@@ -291,87 +338,108 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
           ) : null}
         </div>
 
-        <div className="flex-1 space-y-5 overflow-y-auto bg-zinc-50/20 p-6">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={message.isOwnMessage ? "ml-auto max-w-[80%]" : "max-w-[80%]"}
-            >
-              <p className={`mb-2 text-[10px] font-bold uppercase tracking-widest ${message.isOwnMessage ? "text-right text-[#1a4fdb]" : "text-gray-700"}`}>
-                {message.senderName} • {formatMessageTime(message.createdAt)}
-              </p>
-              <div
-                className={`rounded-2xl p-4 ${
-                  message.isOwnMessage
-                    ? "rounded-tr-sm bg-[#1a4fdb] text-white"
-                    : "rounded-tl-sm border border-zinc-200 bg-zinc-100 text-zinc-700"
-                }`}
-              >
-                {message.body ? <p className="text-sm leading-relaxed">{message.body}</p> : null}
-                {message.attachments?.length ? (
-                  <div className={`${message.body ? "mt-3" : ""} grid grid-cols-1 gap-2 sm:grid-cols-2`}>
-                    {message.attachments.map((attachment) => {
-                      const imageLike = isImageMime(attachment.mimeType);
-                      const href = attachment.url ? buildAssetUrl(attachment.url) : null;
-                      const containerClass = `flex items-center gap-3 rounded-xl border p-3 ${
-                        message.isOwnMessage
-                          ? "border-white/25 bg-white/10 text-white"
-                          : "border-zinc-200 bg-white text-zinc-700"
-                      }`;
-                      const inner = (
-                        <>
-                          {imageLike && attachment.url ? (
-                            <img
-                              src={buildAssetUrl(attachment.url)}
-                              alt={attachment.name}
-                              className="h-12 w-12 shrink-0 rounded-md object-cover"
-                            />
-                          ) : (
+        <div className="flex-1 space-y-5 overflow-y-auto bg-zinc-50/30 p-6">
+          {messages.map((message) => {
+            const isOwn = Boolean(message.isOwnMessage);
+            const wrapperClass = isOwn ? "flex justify-end" : "flex justify-start";
+            const bubbleClass = isOwn
+              ? "rounded-2xl rounded-tr-sm bg-[#1a4fdb] text-white shadow-sm"
+              : "rounded-2xl rounded-tl-sm border border-zinc-200 bg-white text-zinc-800 shadow-sm";
+            const metaTextClass = isOwn ? "text-[#1a4fdb]" : "text-zinc-500";
+
+            return (
+              <div key={message.id} className={`${wrapperClass} mb-5`}>
+                <div className="flex max-w-[80%] flex-col gap-1.5">
+                  <p
+                    className={`px-2 text-[10px] font-bold uppercase tracking-widest ${metaTextClass} ${isOwn ? "text-right" : "text-left"}`}
+                  >
+                    {message.senderName}
+                    <span className="ml-2 font-medium tracking-normal text-zinc-400">
+                      {formatMessageTime(message.createdAt)}
+                    </span>
+                  </p>
+                  <div className={`${bubbleClass} p-4`}>
+                    {message.body ? (
+                      <p className="whitespace-pre-wrap break-words text-[15px] leading-relaxed">
+                        {message.body}
+                      </p>
+                    ) : null}
+                    {message.attachments?.length ? (
+                      <div className={`${message.body ? "mt-3" : ""} flex flex-col gap-2`}>
+                        {message.attachments.map((attachment) => {
+                          const imageLike = isImageMime(attachment.mimeType);
+                          const viewHref = resolveAttachmentUrl(attachment);
+                          const tileClass = isOwn
+                            ? "border-white/25 bg-white/10 text-white"
+                            : "border-zinc-200 bg-zinc-50 text-zinc-700";
+
+                          return (
                             <div
-                              className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-md ${
-                                message.isOwnMessage ? "bg-white/15" : "bg-zinc-100"
-                              }`}
+                              key={attachment.id}
+                              className={`flex items-center gap-3 rounded-xl border p-3 ${tileClass}`}
                             >
-                              {imageLike ? (
-                                <ImageIcon className="h-6 w-6" />
+                              {imageLike && viewHref ? (
+                                <a
+                                  href={viewHref}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="h-14 w-14 shrink-0 overflow-hidden rounded-lg border border-white/20"
+                                >
+                                  <img
+                                    src={viewHref}
+                                    alt={attachment.name}
+                                    className="h-full w-full object-cover"
+                                  />
+                                </a>
                               ) : (
-                                <FileText className="h-6 w-6" />
+                                <div
+                                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-lg ${
+                                    isOwn ? "bg-white/15" : "bg-white text-zinc-500"
+                                  }`}
+                                >
+                                  {imageLike ? (
+                                    <ImageIcon className="h-7 w-7" />
+                                  ) : (
+                                    <FileText className="h-7 w-7" />
+                                  )}
+                                </div>
                               )}
+                              <div className="min-w-0 flex-1">
+                                <p className="truncate text-sm font-semibold">
+                                  {attachment.name}
+                                </p>
+                                <p
+                                  className={`mt-0.5 text-xs ${
+                                    isOwn ? "text-white/70" : "text-zinc-500"
+                                  }`}
+                                >
+                                  {attachment.size
+                                    ? formatFileSize(attachment.size)
+                                    : "Attachment"}
+                                </p>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => triggerAttachmentDownload(attachment)}
+                                aria-label={`Download ${attachment.name}`}
+                                className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-lg transition-colors ${
+                                  isOwn
+                                    ? "bg-white/15 text-white hover:bg-white/25"
+                                    : "bg-white text-zinc-600 hover:bg-[#1a4fdb] hover:text-white"
+                                }`}
+                              >
+                                <Download className="h-4 w-4" />
+                              </button>
                             </div>
-                          )}
-                          <div className="min-w-0 flex-1">
-                            <p className="truncate text-sm font-semibold">{attachment.name}</p>
-                            <p
-                              className={`mt-0.5 text-xs ${
-                                message.isOwnMessage ? "text-white/70" : "text-zinc-500"
-                              }`}
-                            >
-                              {attachment.size ? formatFileSize(attachment.size) : "Attachment"}
-                            </p>
-                          </div>
-                        </>
-                      );
-                      return href ? (
-                        <a
-                          key={attachment.id}
-                          href={href}
-                          target="_blank"
-                          rel="noreferrer"
-                          className={containerClass}
-                        >
-                          {inner}
-                        </a>
-                      ) : (
-                        <div key={attachment.id} className={containerClass}>
-                          {inner}
-                        </div>
-                      );
-                    })}
+                          );
+                        })}
+                      </div>
+                    ) : null}
                   </div>
-                ) : null}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
 
           {messages.length === 0 ? (
             <p className="text-sm text-gray-700">
