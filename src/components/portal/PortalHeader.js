@@ -108,12 +108,14 @@ const PortalHeader = () => {
   }, []);
 
   const toggleNotifications = () => {
-    setOpen((current) => {
-      if (!current) {
-        dispatch(fetchPortalNotifications());
-      }
-      return !current;
-    });
+    // Capture the next open state first so we can decide whether to refresh.
+    // Doing the dispatch inside the setState updater would schedule a Redux
+    // action during render, which trips React's "Cannot update a component
+    // while rendering" warning.
+    setOpen((current) => !current);
+    if (!open) {
+      dispatch(fetchPortalNotifications());
+    }
   };
 
   const handleMarkAsRead = useCallback(
