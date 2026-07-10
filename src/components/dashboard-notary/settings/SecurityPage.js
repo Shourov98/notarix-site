@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { readPortalSession, clearPortalSession } from "@/lib/portalSession";
-import { logoutPortalUser, resetPortalFirstLoginPassword } from "@/lib/siteApi";
+import { resetPortalFirstLoginPassword } from "@/lib/siteApi";
 
 const strengthLabel = (password) => {
   if (!password) return { label: "", color: "bg-zinc-200" };
@@ -21,16 +19,13 @@ const strengthLabel = (password) => {
 };
 
 export default function SecurityPage() {
-  const router = useRouter();
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [twoFactor, setTwoFactor] = useState(false);
   const [savingPassword, setSavingPassword] = useState(false);
-  const [loggingOut, setLoggingOut] = useState(false);
 
   const strength = strengthLabel(newPassword);
 
@@ -65,37 +60,10 @@ export default function SecurityPage() {
     }
   };
 
-  const handleLogoutDevice = async () => {
-    setLoggingOut(true);
-    try {
-      const session = readPortalSession();
-      try {
-        await logoutPortalUser({ refreshToken: session?.refreshToken });
-      } catch (error) {
-        // Even if the API call fails, clear local state so the user is signed out.
-      }
-      clearPortalSession();
-      toast.success("Signed out. Redirecting to login...");
-      router.push("/");
-    } finally {
-      setLoggingOut(false);
-    }
-  };
-
-  const handleTwoFactorToggle = () => {
-    const next = !twoFactor;
-    setTwoFactor(next);
-    if (next) {
-      toast.info(
-        "Two-factor setup will be available shortly. Contact support@notarix.live to enable 2FA on your account today."
-      );
-    }
-  };
-
   return (
     <div className="p-8">
       <form className="border border-indigo-100 rounded-[24px] p-8 space-y-8" onSubmit={handlePasswordSave}>
-        <h2 className="text-xl font-bold text-zinc-900">Security &amp; Authentication</h2>
+        <h2 className="text-xl font-bold text-zinc-900">Password &amp; Authentication</h2>
 
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <PasswordField
@@ -148,47 +116,6 @@ export default function SecurityPage() {
               </span>
             ) : (
               "Update Password"
-            )}
-          </button>
-        </div>
-
-        <div className="pt-8 border-t border-zinc-100 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-lg font-bold text-zinc-900">Two-Factor Authentication</p>
-            <p className="text-sm font-medium text-gray-700 mt-1">Add an extra layer of security to your account.</p>
-          </div>
-          <button
-            type="button"
-            onClick={handleTwoFactorToggle}
-            aria-pressed={twoFactor}
-            aria-label="Toggle two-factor authentication"
-            className={`w-12 h-7 rounded-full relative transition-colors ${twoFactor ? "bg-[#2c49df]" : "bg-zinc-300"}`}
-          >
-            <div className={`absolute top-1 w-5 h-5 rounded-full bg-white transition-all ${twoFactor ? "right-1" : "left-1"}`}></div>
-          </button>
-        </div>
-
-        <div className="border border-zinc-200 rounded-[24px] p-5 flex items-center justify-between gap-4">
-          <div>
-            <p className="text-xs uppercase tracking-[0.18em] font-bold text-gray-700">Login Activity</p>
-            <p className="text-base font-bold text-zinc-900 mt-3">Current browser session</p>
-            <p className="text-sm font-medium text-gray-700 mt-1">
-              Sign out of this device if you notice any unfamiliar activity.
-            </p>
-          </div>
-          <button
-            type="button"
-            onClick={handleLogoutDevice}
-            disabled={loggingOut}
-            className="text-[#2c49df] font-bold disabled:opacity-60 inline-flex items-center gap-2"
-          >
-            {loggingOut ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Signing out...
-              </>
-            ) : (
-              "Log out device"
             )}
           </button>
         </div>

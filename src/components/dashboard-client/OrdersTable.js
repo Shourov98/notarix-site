@@ -1,13 +1,14 @@
+"use client";
+
+import { useMemo, useState } from "react";
 import {
   Search,
-  Filter,
   ChevronLeft,
   ChevronRight,
   Eye,
   MessageSquare,
-  MoreVertical,
   Download,
-  RotateCcw
+  RotateCcw,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -18,11 +19,100 @@ const getStatusStyles = (status) => {
     case "Assigned": return "bg-blue-50 text-blue-600";
     case "Pending": return "bg-amber-50 text-amber-600";
     case "Cancelled": return "bg-rose-50 text-rose-600";
+    case "Rejected": return "bg-rose-50 text-rose-600";
     default: return "bg-zinc-50 text-zinc-600";
   }
 };
 
+const STATUS_OPTIONS = [
+  { value: "all", label: "All Statuses" },
+  { value: "Pending", label: "Pending" },
+  { value: "Assigned", label: "Assigned" },
+  { value: "In Progress", label: "In Progress" },
+  { value: "Completed", label: "Completed" },
+  { value: "Cancelled", label: "Cancelled" },
+  { value: "Rejected", label: "Rejected" },
+];
+
+const DATE_RANGE_OPTIONS = [
+  { value: "all", label: "All Time" },
+  { value: "30", label: "Last 30 Days", days: 30 },
+  { value: "90", label: "Last 3 Months", days: 90 },
+  { value: "365", label: "Last Year", days: 365 },
+];
+
+const SERVICE_OPTIONS = [
+  { value: "all", label: "All Services" },
+  { value: "Loan Signing", label: "Loan Signing" },
+  { value: "Real Estate Closing", label: "Real Estate Closing" },
+  { value: "Power of Attorney", label: "Power of Attorney" },
+  { value: "Apostille", label: "Apostille" },
+];
+
+const matchesDateRange = (order, range) => {
+  if (range === "all") return true;
+  const days = Number(range);
+  if (!Number.isFinite(days) || days <= 0) return true;
+  // Use the order's signingDate if available, otherwise fall back to createdAt
+  const raw = order?.signingDate || order?.createdAt || order?.date;
+  if (!raw) return true; // include rows with unknown dates
+  const orderDate = new Date(raw);
+  if (Number.isNaN(orderDate.getTime())) return true;
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - days);
+  cutoff.setHours(0, 0, 0, 0);
+  return orderDate >= cutoff;
+};
+
 export default function OrdersTable({ orders }) {
+  const [statusFilter, setStatusFilter] = useState("all");
+  const [dateRange, setDateRange] = useState("30");
+  const [serviceFilter, setServiceFilter] = useState("all");
+
+  // Build a service list dynamically from the actual orders, in case the
+  // backend has services we don't statically list. Merge with the common ones.
+  const availableServices = useMemo(() => {
+    const fromOrders = new Set(
+      (orders || [])
+        .map((o) => o?.serviceType)
+        .filter(Boolean)
+    );
+    SERVICE_OPTIONS.forEach((opt) => {
+      if (opt.value !== "all") fromOrders.add(opt.value);
+    });
+    return [
+      { value: "all", label: "All Services" },
+      ...Array.from(fromOrders).map((value) => ({
+        value,
+        label: value,
+      })),
+    ];
+  }, [orders]);
+
+  const filteredOrders = useMemo(() => {
+    return (orders || []).filter((order) => {
+      if (statusFilter !== "all") {
+        if ((order?.status || "").toLowerCase() !== statusFilter.toLowerCase()) {
+          return false;
+        }
+      }
+      if (serviceFilter !== "all") {
+        if ((order?.serviceType || "") !== serviceFilter) return false;
+      }
+      if (!matchesDateRange(order, dateRange)) return false;
+      return true;
+    });
+  }, [orders, statusFilter, dateRange, serviceFilter]);
+
+  const hasActiveFilters =
+    statusFilter !== "all" || dateRange !== "all" || serviceFilter !== "all";
+
+  const handleResetFilters = () => {
+    setStatusFilter("all");
+    setDateRange("all");
+    setServiceFilter("all");
+  };
+
   const getOrderKey = (order, index) =>
     [
       order?.id,
@@ -42,33 +132,61 @@ export default function OrdersTable({ orders }) {
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Status:</span>
-            <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer">
-              <option>All Statuses</option>
-              <option>Completed</option>
-              <option>In Progress</option>
-              <option>Pending</option>
+            <select
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+              className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer"
+            >
+              {STATUS_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Date Range:</span>
-            <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer">
-              <option>Last 30 Days</option>
-              <option>Last 3 Months</option>
-              <option>Last Year</option>
+            <select
+              value={dateRange}
+              onChange={(event) => setDateRange(event.target.value)}
+              className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer"
+            >
+              {DATE_RANGE_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[10px] font-bold text-gray-700 uppercase tracking-widest">Service:</span>
-            <select className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer">
-              <option>All Services</option>
-              <option>Real Estate Closing</option>
-              <option>Power of Attorney</option>
+            <select
+              value={serviceFilter}
+              onChange={(event) => setServiceFilter(event.target.value)}
+              className="text-sm font-medium bg-white border border-zinc-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 transition-all cursor-pointer"
+            >
+              {availableServices.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
+          {hasActiveFilters ? (
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="text-xs font-bold text-[#1a4fdb] hover:text-[#1541b8] underline-offset-2 hover:underline transition-colors"
+            >
+              Reset
+            </button>
+          ) : null}
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-700 font-medium">Showing {(orders?.length || 0)} orders</span>
+          <span className="text-sm text-gray-700 font-medium">
+            Showing {filteredOrders.length} of {orders?.length || 0} orders
+          </span>
           <div className="flex items-center gap-1">
             <button className="p-1.5 border border-zinc-200 rounded-lg hover:bg-zinc-50 transition-colors">
               <ChevronLeft className="w-4 h-4 text-gray-700" />
@@ -86,6 +204,19 @@ export default function OrdersTable({ orders }) {
           <div className="px-6 py-12 text-center text-sm text-gray-700">
             No orders yet. Create your first order to get started.
           </div>
+        ) : filteredOrders.length === 0 ? (
+          <div className="px-6 py-12 text-center text-sm text-gray-700">
+            <p className="font-medium text-zinc-700">
+              No orders match the current filters.
+            </p>
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="mt-3 text-xs font-bold text-[#1a4fdb] hover:text-[#1541b8] underline-offset-2 hover:underline"
+            >
+              Clear filters
+            </button>
+          </div>
         ) : (
         <table className="w-full text-left border-collapse">
           <thead>
@@ -101,7 +232,7 @@ export default function OrdersTable({ orders }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-50">
-            {orders.map((order, i) => (
+            {filteredOrders.map((order, i) => (
               <tr key={getOrderKey(order, i)} className="hover:bg-zinc-50/50 transition-colors group">
                 {(() => {
                   const normalizedOrderId = String(order.id || "").replace(/^#/, "");
@@ -182,11 +313,11 @@ export default function OrdersTable({ orders }) {
       <div className="p-6 border-t border-zinc-100 flex items-center justify-between bg-zinc-50/30">
         <div className="flex items-center gap-2">
           {[1].map((page, i) => (
-            <button 
+            <button
               key={i}
               className={`w-8 h-8 flex items-center justify-center rounded-lg text-xs font-bold transition-all ${
-                page === 1 
-                  ? "bg-white border border-zinc-200 text-[#1a4fdb] shadow-sm" 
+                page === 1
+                  ? "bg-white border border-zinc-200 text-[#1a4fdb] shadow-sm"
                   : "text-gray-700 hover:text-zinc-600 hover:bg-zinc-100"
               }`}
             >

@@ -22,7 +22,7 @@ export default function DocumentsPage() {
       </div>
 
       {/* Documents Table */}
-      <DocumentsTable documents={clientOverview?.documents} />
+      <DocumentsTable documents={clientOverview?.documents} currentActorRole="CLIENT" />
     </div>
   );
 }
