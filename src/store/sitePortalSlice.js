@@ -16,7 +16,10 @@ import {
   getPortalConversations,
   getPortalConversationByOrder,
   getPortalMessages,
+  getPortalNotifications,
+  markAllPortalNotificationsRead as markAllPortalNotificationsReadApi,
   markPortalMessageRead as markPortalMessageReadApi,
+  markPortalNotificationRead as markPortalNotificationReadApi,
   rejectNotaryAssignment as rejectNotaryAssignmentApi,
   saveClientBankInfo as saveClientBankInfoApi,
   saveNotaryBankInfo as saveNotaryBankInfoApi,
@@ -366,6 +369,42 @@ export const saveNotaryNotificationPrefs = createAsyncThunk(
   }
 );
 
+export const fetchPortalNotifications = createAsyncThunk(
+  "sitePortal/fetchPortalNotifications",
+  async (query = {}, { rejectWithValue }) => {
+    try {
+      const data = await getPortalNotifications(query);
+      return Array.isArray(data) ? data : [];
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load notifications.");
+    }
+  }
+);
+
+export const markPortalNotificationRead = createAsyncThunk(
+  "sitePortal/markPortalNotificationRead",
+  async (id, { rejectWithValue }) => {
+    try {
+      return await markPortalNotificationReadApi(id);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to mark notification as read.");
+    }
+  }
+);
+
+export const markAllPortalNotificationsRead = createAsyncThunk(
+  "sitePortal/markAllPortalNotificationsRead",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await markAllPortalNotificationsReadApi();
+    } catch (error) {
+      return rejectWithValue(
+        error.message || "Unable to mark all notifications as read."
+      );
+    }
+  }
+);
+
 const sitePortalSlice = createSlice({
   name: "sitePortal",
   initialState: {
@@ -421,6 +460,12 @@ const sitePortalSlice = createSlice({
     notaryNotificationPreferencesError: null,
     notaryNotificationSaveStatus: "idle",
     notaryNotificationSaveError: null,
+    notifications: [],
+    notificationsStatus: "idle",
+    notificationsError: null,
+    notificationsUnreadCount: 0,
+    notificationActionStatus: "idle",
+    notificationActionError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -758,6 +803,60 @@ const sitePortalSlice = createSlice({
       .addCase(saveNotaryNotificationPrefs.rejected, (state, action) => {
         state.notaryNotificationSaveStatus = "error";
         state.notaryNotificationSaveError = action.payload || "Unable to save notification preferences.";
+      })
+      .addCase(fetchPortalNotifications.pending, (state) => {
+        state.notificationsStatus = "loading";
+        state.notificationsError = null;
+      })
+      .addCase(fetchPortalNotifications.fulfilled, (state, action) => {
+        const list = Array.isArray(action.payload) ? action.payload : [];
+        state.notifications = list;
+        state.notificationsUnreadCount = list.filter((item) => !item.read).length;
+        state.notificationsStatus = "ready";
+        state.notificationsError = null;
+      })
+      .addCase(fetchPortalNotifications.rejected, (state, action) => {
+        state.notifications = [];
+        state.notificationsStatus = "error";
+        state.notificationsError = action.payload || "Unable to load notifications.";
+      })
+      .addCase(markPortalNotificationRead.pending, (state) => {
+        state.notificationActionStatus = "loading";
+        state.notificationActionError = null;
+      })
+      .addCase(markPortalNotificationRead.fulfilled, (state, action) => {
+        const updated = action.payload;
+        if (updated && updated.id) {
+          state.notifications = state.notifications.map((item) =>
+            item.id === updated.id ? { ...item, ...updated } : item
+          );
+          state.notificationsUnreadCount = state.notifications.filter(
+            (item) => !item.read
+          ).length;
+        }
+        state.notificationActionStatus = "ready";
+      })
+      .addCase(markPortalNotificationRead.rejected, (state, action) => {
+        state.notificationActionStatus = "error";
+        state.notificationActionError =
+          action.payload || "Unable to mark notification as read.";
+      })
+      .addCase(markAllPortalNotificationsRead.pending, (state) => {
+        state.notificationActionStatus = "loading";
+        state.notificationActionError = null;
+      })
+      .addCase(markAllPortalNotificationsRead.fulfilled, (state) => {
+        state.notifications = state.notifications.map((item) => ({
+          ...item,
+          read: true,
+        }));
+        state.notificationsUnreadCount = 0;
+        state.notificationActionStatus = "ready";
+      })
+      .addCase(markAllPortalNotificationsRead.rejected, (state, action) => {
+        state.notificationActionStatus = "error";
+        state.notificationActionError =
+          action.payload || "Unable to mark all notifications as read.";
       });
   },
 });

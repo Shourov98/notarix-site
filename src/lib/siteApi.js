@@ -445,3 +445,27 @@ export const saveNotaryNotificationPreferences = async (body) =>
     authMode: "portal",
   });
 
+export const getPortalNotifications = async (query = {}) =>
+  requestJson(
+    `/notifications${
+      Object.keys(query).length
+        ? `?${new URLSearchParams(query).toString()}`
+        : ""
+    }`,
+    {
+      authMode: "portal",
+    }
+  );
+
+export const markPortalNotificationRead = async (id) =>
+  requestJson(`/notifications/${encodeURIComponent(id)}/read`, {
+    method: "PATCH",
+    authMode: "portal",
+  });
+
+export const markAllPortalNotificationsRead = async () =>
+  requestJson("/notifications/read-all", {
+    method: "PATCH",
+    authMode: "portal",
+  });
+
