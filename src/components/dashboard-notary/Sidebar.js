@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   BriefcaseBusiness,
   CircleHelp,
@@ -16,7 +16,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { clearPortalSession } from "@/lib/portalSession";
+import { toast } from "sonner";
+import { clearPortalSession, readPortalSession } from "@/lib/portalSession";
+import { logoutPortalUser } from "@/lib/siteApi";
 import { useSidebar } from "./NotaryShell";
 
 const navItems = [
@@ -30,9 +32,21 @@ const navItems = [
 ];
 
 const SidebarBody = ({ pathname, router }) => {
-  const handleSignOut = () => {
-    clearPortalSession();
-    router.replace("/login");
+  const [signingOut, setSigningOut] = useState(false);
+  const handleSignOut = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
+    const session = readPortalSession();
+    try {
+      await logoutPortalUser({ refreshToken: session?.refreshToken });
+    } catch (error) {
+      console.warn("Portal logout failed; clearing local session anyway.", error);
+    } finally {
+      clearPortalSession();
+      toast.success("Signed out.");
+      router.replace("/login");
+      setSigningOut(false);
+    }
   };
 
   return (
@@ -91,9 +105,9 @@ const SidebarBody = ({ pathname, router }) => {
           <CircleHelp className="w-5 h-5" />
           <span className="text-sm font-medium">Help Center</span>
         </Link>
-        <button onClick={handleSignOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 transition-colors">
+        <button onClick={handleSignOut} disabled={signingOut} className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-red-500 hover:bg-red-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors">
           <LogOut className="w-5 h-5" />
-          <span className="text-sm font-medium">Sign Out</span>
+          <span className="text-sm font-medium">{signingOut ? "Signing out…" : "Sign Out"}</span>
         </button>
       </div>
     </>

@@ -1,10 +1,10 @@
 "use client";
 
 import { 
-  Video, 
-  MapPin, 
-  User, 
-  CheckCircle2, 
+  Video,
+  MapPin,
+  User,
+  CheckCircle2,
   CreditCard,
   Info,
   FileText,
@@ -13,7 +13,8 @@ import {
   Camera,
   Wifi,
   ShieldCheck,
-  CreditCard as PaymentIcon
+  CreditCard as PaymentIcon,
+  ExternalLink,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -50,13 +51,25 @@ export default function RONOrderView({ id }) {
               </p>
             </div>
             
-            <div className="relative z-10 shrink-0">
+            <div className="relative z-10 shrink-0 flex flex-col gap-3 w-full md:w-auto">
               <Link href={`/session/${id || 'RON-260427'}`}>
                 <button className="w-full md:w-auto bg-white text-[#1a4fdb] px-8 py-4 rounded-[20px] font-bold text-sm flex items-center justify-center gap-3 hover:bg-zinc-50 transition-all active:scale-95 shadow-xl shadow-[#1a4fdb]/20">
                   <Video className="w-5 h-5" />
                   Join Video Session
                 </button>
               </Link>
+              <a
+                href="https://app.bluenotary.us/login"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full md:w-auto bg-transparent border border-white/40 text-white px-8 py-4 rounded-[20px] font-bold text-sm flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95"
+              >
+                <ExternalLink className="w-5 h-5" />
+                Continue on BlueNotary
+              </a>
+              <p className="text-[10px] font-medium text-blue-100 max-w-xs text-center md:text-right">
+                RON sessions are now hosted on BlueNotary. Open the link to start your secure video session there.
+              </p>
             </div>
           </div>
 
@@ -127,7 +140,7 @@ export default function RONOrderView({ id }) {
                 </div>
                 <div>
                   <p className="text-xs font-bold text-zinc-900">Step 1: Upload ID</p>
-                  <p className="text-[10px] font-medium text-gray-700 mt-0.5">Driver's License Approved</p>
+                  <p className="text-[10px] font-medium text-gray-700 mt-0.5">Driver&apos;s License Approved</p>
                 </div>
               </div>
               <div className="bg-zinc-50/50 border border-zinc-100 rounded-2xl p-4 flex items-center gap-4">

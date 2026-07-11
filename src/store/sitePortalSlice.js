@@ -1,12 +1,16 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   acceptNotaryAssignment as acceptNotaryAssignmentApi,
+  changePortalPassword as changePortalPasswordApi,
   completeNotaryAssignment as completeNotaryAssignmentApi,
   createClientOrder as createClientOrderApi,
   getClientBankInfo,
+  getClientDocuments as getClientDocumentsApi,
+  getClientNotificationPreferences as getClientNotificationPreferencesApi,
   getClientOrder,
   getClientOrders,
   getClientOverview,
+  getClientProfileDetails as getClientProfileDetailsApi,
   getNotaryAssignment,
   getNotaryAssignments,
   getNotaryBankInfo,
@@ -22,6 +26,9 @@ import {
   markPortalNotificationRead as markPortalNotificationReadApi,
   rejectNotaryAssignment as rejectNotaryAssignmentApi,
   saveClientBankInfo as saveClientBankInfoApi,
+  saveClientNotificationPreferences as saveClientNotificationPreferencesApi,
+  saveClientProfile as saveClientProfileApi,
+  saveClientProfileDetails as saveClientProfileDetailsApi,
   saveNotaryBankInfo as saveNotaryBankInfoApi,
   saveNotaryNotificationPreferences as saveNotaryNotificationPreferencesApi,
   saveNotaryProfile as saveNotaryProfileApi,
@@ -30,6 +37,8 @@ import {
   startNotaryAssignment as startNotaryAssignmentApi,
   submitAccessRequest as submitAccessRequestApi,
   submitNotaryVerification as submitNotaryVerificationApi,
+  uploadClientProfileDocument as uploadClientProfileDocumentApi,
+  uploadClientProfilePhoto as uploadClientProfilePhotoApi,
   uploadNotaryCompletedDocuments as uploadNotaryCompletedDocumentsApi,
   uploadNotaryProfilePhoto as uploadNotaryProfilePhotoApi,
   uploadNotaryTrackedDocument as uploadNotaryTrackedDocumentApi,
@@ -43,6 +52,107 @@ export const fetchClientOverview = createAsyncThunk(
       return await getClientOverview();
     } catch (error) {
       return rejectWithValue(error.message || "Unable to load client overview.");
+    }
+  }
+);
+
+export const fetchClientDocuments = createAsyncThunk(
+  "sitePortal/fetchClientDocuments",
+  async (_, { rejectWithValue }) => {
+    try {
+      const data = await getClientDocumentsApi();
+      return Array.isArray(data) ? data : data?.documents || [];
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load client documents.");
+    }
+  }
+);
+
+export const fetchClientProfileDetails = createAsyncThunk(
+  "sitePortal/fetchClientProfileDetails",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getClientProfileDetailsApi();
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load profile details.");
+    }
+  }
+);
+
+export const saveClientProfileThunk = createAsyncThunk(
+  "sitePortal/saveClientProfile",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await saveClientProfileApi(body);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to save profile.");
+    }
+  }
+);
+
+export const saveClientProfileDetailsThunk = createAsyncThunk(
+  "sitePortal/saveClientProfileDetails",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await saveClientProfileDetailsApi(body);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to save profile details.");
+    }
+  }
+);
+
+export const uploadClientProfileDocumentThunk = createAsyncThunk(
+  "sitePortal/uploadClientProfileDocument",
+  async ({ documentKey, file }, { rejectWithValue }) => {
+    try {
+      return await uploadClientProfileDocumentApi(documentKey, file);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to upload profile document.");
+    }
+  }
+);
+
+export const uploadClientProfilePhotoThunk = createAsyncThunk(
+  "sitePortal/uploadClientProfilePhoto",
+  async (file, { rejectWithValue }) => {
+    try {
+      return await uploadClientProfilePhotoApi(file);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to upload profile photo.");
+    }
+  }
+);
+
+export const changePortalPasswordThunk = createAsyncThunk(
+  "sitePortal/changePortalPassword",
+  async ({ current_password, new_password }, { rejectWithValue }) => {
+    try {
+      await changePortalPasswordApi({ current_password, new_password });
+      return { ok: true };
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to change password.");
+    }
+  }
+);
+
+export const fetchClientNotificationPreferences = createAsyncThunk(
+  "sitePortal/fetchClientNotificationPreferences",
+  async (_, { rejectWithValue }) => {
+    try {
+      return await getClientNotificationPreferencesApi();
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to load notification preferences.");
+    }
+  }
+);
+
+export const saveClientNotificationPrefs = createAsyncThunk(
+  "sitePortal/saveClientNotificationPreferences",
+  async (body, { rejectWithValue }) => {
+    try {
+      return await saveClientNotificationPreferencesApi(body);
+    } catch (error) {
+      return rejectWithValue(error.message || "Unable to save notification preferences.");
     }
   }
 );
@@ -466,6 +576,27 @@ const sitePortalSlice = createSlice({
     notificationsUnreadCount: 0,
     notificationActionStatus: "idle",
     notificationActionError: null,
+    clientDocuments: [],
+    clientDocumentsStatus: "idle",
+    clientDocumentsError: null,
+    clientProfileDetails: null,
+    clientProfileDetailsStatus: "idle",
+    clientProfileDetailsError: null,
+    clientProfileDetailsSaveStatus: "idle",
+    clientProfileDetailsSaveError: null,
+    clientProfileSaveStatus: "idle",
+    clientProfileSaveError: null,
+    clientProfileDocumentUploadStatus: "idle",
+    clientProfileDocumentUploadError: null,
+    clientProfilePhotoUploadStatus: "idle",
+    clientProfilePhotoUploadError: null,
+    clientNotificationPreferences: null,
+    clientNotificationPreferencesStatus: "idle",
+    clientNotificationPreferencesError: null,
+    clientNotificationSaveStatus: "idle",
+    clientNotificationSaveError: null,
+    changePasswordStatus: "idle",
+    changePasswordError: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -857,6 +988,128 @@ const sitePortalSlice = createSlice({
         state.notificationActionStatus = "error";
         state.notificationActionError =
           action.payload || "Unable to mark all notifications as read.";
+      })
+      .addCase(fetchClientDocuments.pending, (state) => {
+        state.clientDocumentsStatus = "loading";
+        state.clientDocumentsError = null;
+      })
+      .addCase(fetchClientDocuments.fulfilled, (state, action) => {
+        state.clientDocuments = Array.isArray(action.payload) ? action.payload : [];
+        state.clientDocumentsStatus = "ready";
+        state.clientDocumentsError = null;
+      })
+      .addCase(fetchClientDocuments.rejected, (state, action) => {
+        state.clientDocuments = [];
+        state.clientDocumentsStatus = "error";
+        state.clientDocumentsError = action.payload || "Unable to load client documents.";
+      })
+      .addCase(fetchClientProfileDetails.pending, (state) => {
+        state.clientProfileDetailsStatus = "loading";
+        state.clientProfileDetailsError = null;
+      })
+      .addCase(fetchClientProfileDetails.fulfilled, (state, action) => {
+        state.clientProfileDetails = action.payload;
+        state.clientProfileDetailsStatus = "ready";
+        state.clientProfileDetailsError = null;
+      })
+      .addCase(fetchClientProfileDetails.rejected, (state, action) => {
+        state.clientProfileDetailsStatus = "error";
+        state.clientProfileDetailsError = action.payload || "Unable to load profile details.";
+      })
+      .addCase(saveClientProfileDetailsThunk.pending, (state) => {
+        state.clientProfileDetailsSaveStatus = "loading";
+        state.clientProfileDetailsSaveError = null;
+      })
+      .addCase(saveClientProfileDetailsThunk.fulfilled, (state, action) => {
+        state.clientProfileDetailsSaveStatus = "ready";
+        if (action.payload) {
+          state.clientProfileDetails = {
+            ...(state.clientProfileDetails || {}),
+            ...action.payload,
+          };
+        }
+      })
+      .addCase(saveClientProfileDetailsThunk.rejected, (state, action) => {
+        state.clientProfileDetailsSaveStatus = "error";
+        state.clientProfileDetailsSaveError = action.payload || "Unable to save profile details.";
+      })
+      .addCase(saveClientProfileThunk.pending, (state) => {
+        state.clientProfileSaveStatus = "loading";
+        state.clientProfileSaveError = null;
+      })
+      .addCase(saveClientProfileThunk.fulfilled, (state, action) => {
+        state.clientProfileSaveStatus = "ready";
+        if (action.payload) {
+          state.clientOverview = {
+            ...(state.clientOverview || {}),
+            profile: {
+              ...(state.clientOverview?.profile || {}),
+              ...action.payload,
+            },
+          };
+        }
+      })
+      .addCase(saveClientProfileThunk.rejected, (state, action) => {
+        state.clientProfileSaveStatus = "error";
+        state.clientProfileSaveError = action.payload || "Unable to save profile.";
+      })
+      .addCase(uploadClientProfileDocumentThunk.pending, (state) => {
+        state.clientProfileDocumentUploadStatus = "loading";
+        state.clientProfileDocumentUploadError = null;
+      })
+      .addCase(uploadClientProfileDocumentThunk.fulfilled, (state) => {
+        state.clientProfileDocumentUploadStatus = "ready";
+      })
+      .addCase(uploadClientProfileDocumentThunk.rejected, (state, action) => {
+        state.clientProfileDocumentUploadStatus = "error";
+        state.clientProfileDocumentUploadError = action.payload || "Unable to upload profile document.";
+      })
+      .addCase(uploadClientProfilePhotoThunk.pending, (state) => {
+        state.clientProfilePhotoUploadStatus = "loading";
+        state.clientProfilePhotoUploadError = null;
+      })
+      .addCase(uploadClientProfilePhotoThunk.fulfilled, (state) => {
+        state.clientProfilePhotoUploadStatus = "ready";
+      })
+      .addCase(uploadClientProfilePhotoThunk.rejected, (state, action) => {
+        state.clientProfilePhotoUploadStatus = "error";
+        state.clientProfilePhotoUploadError = action.payload || "Unable to upload profile photo.";
+      })
+      .addCase(fetchClientNotificationPreferences.pending, (state) => {
+        state.clientNotificationPreferencesStatus = "loading";
+        state.clientNotificationPreferencesError = null;
+      })
+      .addCase(fetchClientNotificationPreferences.fulfilled, (state, action) => {
+        state.clientNotificationPreferences = action.payload;
+        state.clientNotificationPreferencesStatus = "ready";
+        state.clientNotificationPreferencesError = null;
+      })
+      .addCase(fetchClientNotificationPreferences.rejected, (state, action) => {
+        state.clientNotificationPreferencesStatus = "error";
+        state.clientNotificationPreferencesError = action.payload || "Unable to load notification preferences.";
+      })
+      .addCase(saveClientNotificationPrefs.pending, (state) => {
+        state.clientNotificationSaveStatus = "loading";
+        state.clientNotificationSaveError = null;
+      })
+      .addCase(saveClientNotificationPrefs.fulfilled, (state, action) => {
+        state.clientNotificationSaveStatus = "ready";
+        state.clientNotificationPreferences = action.payload || state.clientNotificationPreferences;
+      })
+      .addCase(saveClientNotificationPrefs.rejected, (state, action) => {
+        state.clientNotificationSaveStatus = "error";
+        state.clientNotificationSaveError = action.payload || "Unable to save notification preferences.";
+      })
+      .addCase(changePortalPasswordThunk.pending, (state) => {
+        state.changePasswordStatus = "loading";
+        state.changePasswordError = null;
+      })
+      .addCase(changePortalPasswordThunk.fulfilled, (state) => {
+        state.changePasswordStatus = "ready";
+      })
+      .addCase(changePortalPasswordThunk.rejected, (state, action) => {
+        state.changePasswordStatus = "error";
+        state.changePasswordError = action.payload || "Unable to change password.";
       });
   },
 });

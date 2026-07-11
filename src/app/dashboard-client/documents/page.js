@@ -3,14 +3,15 @@
 import { useEffect } from "react";
 import DocumentsTable from "@/components/dashboard-client/DocumentsTable";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { fetchClientOverview, selectSitePortal } from "@/store/sitePortalSlice";
+import { fetchClientDocuments, selectSitePortal } from "@/store/sitePortalSlice";
 
 export default function DocumentsPage() {
   const dispatch = useAppDispatch();
-  const { clientOverview } = useAppSelector(selectSitePortal);
+  const { clientDocuments, clientDocumentsStatus, clientDocumentsError } =
+    useAppSelector(selectSitePortal);
 
   useEffect(() => {
-    dispatch(fetchClientOverview());
+    dispatch(fetchClientDocuments());
   }, [dispatch]);
 
   return (
@@ -22,7 +23,12 @@ export default function DocumentsPage() {
       </div>
 
       {/* Documents Table */}
-      <DocumentsTable documents={clientOverview?.documents} currentActorRole="CLIENT" />
+      <DocumentsTable
+        documents={clientDocuments}
+        status={clientDocumentsStatus}
+        error={clientDocumentsError}
+        currentActorRole="CLIENT"
+      />
     </div>
   );
 }

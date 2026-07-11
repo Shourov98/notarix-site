@@ -15,6 +15,7 @@ import {
   Send,
   Upload,
   Video,
+  ExternalLink,
 } from "lucide-react";
 import { toast } from "sonner";
 import { buildAssetUrl } from "@/lib/siteApi";
@@ -25,6 +26,7 @@ import {
   fetchNotaryAssignments,
   fetchPortalConversationByOrder,
   fetchPortalMessages,
+  rejectNotaryAssignment,
   selectSitePortal,
   sendPortalMessage,
   startNotaryAssignment,
@@ -83,6 +85,9 @@ export default function AssignmentOrderDetailPage() {
   const fileInputRef = useRef(null);
   const [completionFiles, setCompletionFiles] = useState([]);
   const [draft, setDraft] = useState("");
+  const [rejectModalOpen, setRejectModalOpen] = useState(false);
+  const [rejectReason, setRejectReason] = useState("");
+  const [rejectError, setRejectError] = useState("");
   const {
     activeNotaryAssignment,
     activeNotaryAssignmentStatus,
@@ -125,6 +130,35 @@ export default function AssignmentOrderDetailPage() {
       refresh();
     } catch (error) {
       toast.error(error || "Unable to accept assignment.");
+    }
+  };
+
+  const openRejectModal = () => {
+    setRejectReason("");
+    setRejectError("");
+    setRejectModalOpen(true);
+  };
+
+  const closeRejectModal = () => {
+    if (notaryAssignmentActionStatus === "loading") return;
+    setRejectModalOpen(false);
+  };
+
+  const submitReject = async () => {
+    const trimmed = rejectReason.trim();
+    if (trimmed.length < 2) {
+      setRejectError("Please share a short reason (at least 2 characters).");
+      return;
+    }
+    try {
+      await dispatch(
+        rejectNotaryAssignment({ orderId: id, reason: trimmed })
+      ).unwrap();
+      toast.success("Assignment rejected.");
+      setRejectModalOpen(false);
+      refresh();
+    } catch (error) {
+      setRejectError(error || "Unable to reject assignment.");
     }
   };
 
@@ -183,6 +217,7 @@ export default function AssignmentOrderDetailPage() {
   const allDocuments = [...(order?.documents || []), ...(order?.completedDocuments || [])];
   const paymentLabel = order?.payment?.paymentStatus || "Pending";
   const canAccept = Boolean(order?.actionState?.canAccept);
+  const canReject = Boolean(order?.actionState?.canReject);
   const canStart = Boolean(order?.actionState?.canStart) || order?.workflowStatus === "In Progress";
   const canComplete = Boolean(order?.actionState?.canComplete) || order?.workflowStatus === "In Progress";
 
@@ -550,6 +585,16 @@ export default function AssignmentOrderDetailPage() {
                   Accept Assignment
                 </button>
               ) : null}
+              {canReject ? (
+                <button
+                  type="button"
+                  onClick={openRejectModal}
+                  disabled={notaryAssignmentActionStatus === "loading"}
+                  className="w-full rounded-[20px] border border-rose-300/40 bg-rose-500/10 py-4 text-sm font-bold text-rose-200 transition-all hover:bg-rose-500/20 disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  Decline Assignment
+                </button>
+              ) : null}
               {canStart ? (
                 <button
                   type="button"
@@ -561,6 +606,18 @@ export default function AssignmentOrderDetailPage() {
                   Start Video Session
                 </button>
               ) : null}
+              <a
+                href="https://app.bluenotary.us/login"
+                target="_blank"
+                rel="noreferrer"
+                className="flex w-full items-center justify-center gap-3 rounded-[20px] border border-white/15 bg-transparent py-4 text-sm font-bold text-white/80 transition-all hover:bg-white/10"
+              >
+                <ExternalLink className="h-5 w-5" />
+                Continue on BlueNotary
+              </a>
+              <p className="text-center text-[10px] font-medium text-white/40">
+                RON sessions are now hosted on BlueNotary. Use the link to open the secure video room.
+              </p>
               <button
                 type="button"
                 onClick={() => fileInputRef.current?.click()}
@@ -622,6 +679,56 @@ export default function AssignmentOrderDetailPage() {
           </div>
         </div>
       </div>
+
+      {rejectModalOpen ? (
+        <div
+          className="fixed inset-0 z-50 grid place-items-center bg-slate-950/60 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Decline assignment"
+          onClick={(event) => {
+            if (event.target === event.currentTarget) closeRejectModal();
+          }}
+        >
+          <div className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+            <h2 className="text-lg font-bold text-zinc-900">Decline Assignment</h2>
+            <p className="mt-1 text-sm font-medium text-gray-700">
+              Tell us why you can&apos;t take this assignment. The admin will use this to reassign it.
+            </p>
+            <textarea
+              value={rejectReason}
+              onChange={(event) => {
+                setRejectReason(event.target.value);
+                setRejectError("");
+              }}
+              rows={4}
+              placeholder="e.g. Schedule conflict, outside coverage area…"
+              className="mt-4 w-full rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 text-sm text-zinc-900 placeholder:text-gray-700 focus:outline-none focus:ring-2 focus:ring-rose-200 focus:border-rose-300"
+            />
+            {rejectError ? (
+              <p className="mt-2 text-xs font-bold text-rose-600">{rejectError}</p>
+            ) : null}
+            <div className="mt-6 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={closeRejectModal}
+                disabled={notaryAssignmentActionStatus === "loading"}
+                className="rounded-xl border border-zinc-200 px-4 py-2 text-sm font-bold text-gray-700 hover:bg-zinc-50 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={submitReject}
+                disabled={notaryAssignmentActionStatus === "loading"}
+                className="rounded-xl bg-rose-500 px-4 py-2 text-sm font-bold text-white shadow hover:bg-rose-600 active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {notaryAssignmentActionStatus === "loading" ? "Submitting…" : "Decline"}
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }

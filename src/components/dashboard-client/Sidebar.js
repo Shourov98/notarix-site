@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { clearPortalSession } from "@/lib/portalSession";
+import { toast } from "sonner";
+import { clearPortalSession, readPortalSession } from "@/lib/portalSession";
+import { logoutPortalUser } from "@/lib/siteApi";
 import { useSidebar } from "./ClientShell";
 
 const menuItems = [
@@ -30,9 +32,21 @@ const menuItems = [
 ];
 
 const SidebarBody = ({ isCollapsed, pathname, router }) => {
-  const handleSignOut = () => {
-    clearPortalSession();
-    router.replace("/login");
+  const [signingOut, setSigningOut] = useState(false);
+  const handleSignOut = async () => {
+    if (signingOut) return;
+    setSigningOut(true);
+    const session = readPortalSession();
+    try {
+      await logoutPortalUser({ refreshToken: session?.refreshToken });
+    } catch (error) {
+      console.warn("Portal logout failed; clearing local session anyway.", error);
+    } finally {
+      clearPortalSession();
+      toast.success("Signed out.");
+      router.replace("/login");
+      setSigningOut(false);
+    }
   };
 
   return (
@@ -103,9 +117,9 @@ const SidebarBody = ({ isCollapsed, pathname, router }) => {
             </div>
           )}
         </Link>
-        <button onClick={handleSignOut} className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 transition-colors group relative">
+        <button onClick={handleSignOut} disabled={signingOut} className="w-full flex items-center gap-4 px-3 py-3 rounded-xl text-red-500 hover:bg-red-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors group relative">
           <LogOut className="w-5 h-5 flex-shrink-0" />
-          {!isCollapsed && <span className="font-medium text-sm">Sign Out</span>}
+          {!isCollapsed && <span className="font-medium text-sm">{signingOut ? "Signing out…" : "Sign Out"}</span>}
           {isCollapsed && (
             <div className="absolute left-full ml-2 px-2 py-1 bg-red-600 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">
               Sign Out

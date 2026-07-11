@@ -13,10 +13,11 @@ import {
   Send, 
   Video, 
   Upload, 
-  CheckCircle2, 
+  CheckCircle2,
   Info,
   ShieldCheck,
-  MoreHorizontal
+  MoreHorizontal,
+  ExternalLink
 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -232,7 +233,7 @@ export default function NotaryOrderDetailsPage() {
                   </div>
                   <div className="bg-white border border-zinc-100 p-4 rounded-2xl rounded-tl-none shadow-sm inline-block max-w-[80%]">
                     <p className="text-sm font-medium text-zinc-600 leading-relaxed">
-                      Hi Team, I've just uploaded the finalized Disclosure. Sarah is ready for the session at 2:30.
+                      Hi Team, I&apos;ve just uploaded the finalized Disclosure. Sarah is ready for the session at 2:30.
                     </p>
                   </div>
                 </div>
@@ -248,7 +249,7 @@ export default function NotaryOrderDetailsPage() {
                   </div>
                   <div className="bg-blue-50/50 border border-blue-100 p-4 rounded-2xl rounded-tl-none shadow-sm inline-block max-w-[80%]">
                     <p className="text-sm font-medium text-zinc-600 leading-relaxed">
-                      Confirmed, Robert. Sarah's KBA and ID verification have been successfully validated.
+                      Confirmed, Robert. Sarah&apos;s KBA and ID verification have been successfully validated.
                     </p>
                   </div>
                 </div>
@@ -290,6 +291,18 @@ export default function NotaryOrderDetailsPage() {
                   Start Video Session
                 </button>
               </Link>
+              <a
+                href="https://app.bluenotary.us/login"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full bg-transparent border border-white/40 text-white py-4 rounded-[20px] font-bold text-sm flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95"
+              >
+                <ExternalLink className="w-5 h-5" />
+                Continue on BlueNotary
+              </a>
+              <p className="text-[10px] font-medium text-white/40 text-center px-2">
+                RON sessions are now hosted on BlueNotary. Use the link to open the secure video room.
+              </p>
               <button className="w-full bg-white/5 border border-white/10 text-white/80 py-4 rounded-[20px] font-bold text-sm flex items-center justify-center gap-3 hover:bg-white/10 transition-all active:scale-95">
                 <Upload className="w-5 h-5" />
                 Upload Documents

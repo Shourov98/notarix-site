@@ -222,7 +222,12 @@ export default function DocumentsTable({
       icon: isImage ? "image" : "file",
       iconColor: isImage ? "text-blue-500" : "text-rose-500",
       iconBg: isImage ? "bg-blue-50" : "bg-rose-50",
-      downloadUrl: doc?.url ? buildAssetUrl(doc.url) : "",
+      downloadUrl: doc?.downloadUrl
+        ? buildAssetUrl(doc.downloadUrl)
+        : doc?.url
+          ? buildAssetUrl(doc.url)
+          : "",
+      viewUrl: doc?.viewUrl ? buildAssetUrl(doc.viewUrl) : "",
     };
   };
 

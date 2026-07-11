@@ -469,3 +469,100 @@ export const markAllPortalNotificationsRead = async () =>
     authMode: "portal",
   });
 
+export const getClientDocuments = async () =>
+  requestJson("/site/client/documents", {
+    authMode: "portal",
+  });
+
+export const saveClientProfile = async (body) =>
+  requestJson("/site/client/profile", {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+
+export const getClientProfileDetails = async () =>
+  requestJson("/site/client/profile-details", {
+    authMode: "portal",
+  });
+
+export const saveClientProfileDetails = async (body) =>
+  requestJson("/site/client/profile-details", {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+
+export const changePortalPassword = async ({ current_password, new_password }) =>
+  requestJson("/site/change-password", {
+    method: "PATCH",
+    body: JSON.stringify({ current_password, new_password }),
+    authMode: "portal",
+  });
+
+export const getClientNotificationPreferences = async () =>
+  requestJson("/site/client/notification-preferences", {
+    authMode: "portal",
+  });
+
+export const saveClientNotificationPreferences = async (body) =>
+  requestJson("/site/client/notification-preferences", {
+    method: "PATCH",
+    body: JSON.stringify(body),
+    authMode: "portal",
+  });
+
+export const uploadClientProfileDocument = async (documentKey, file) => {
+  const formData = new FormData();
+  formData.append("document", file);
+
+  const session = typeof window !== "undefined" ? readPortalSession() : null;
+  const headers = session?.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
+
+  const response = await fetch(`${buildBaseUrl()}/site/client/profile-documents/${documentKey}`, {
+    method: "POST",
+    headers,
+    body: formData,
+    cache: "no-store",
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message || payload?.message || "Profile document upload failed."
+    );
+  }
+
+  return payload?.data || payload;
+};
+
+export const uploadClientProfilePhoto = async (file) => {
+  const formData = new FormData();
+  formData.append("profilePhoto", file);
+
+  const session = typeof window !== "undefined" ? readPortalSession() : null;
+  const headers = session?.accessToken
+    ? { Authorization: `Bearer ${session.accessToken}` }
+    : {};
+
+  const response = await fetch(`${buildBaseUrl()}/site/client/profile-photo`, {
+    method: "POST",
+    headers,
+    body: formData,
+    cache: "no-store",
+  });
+
+  const payload = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    throw new Error(
+      payload?.error?.message || payload?.message || "Profile photo upload failed."
+    );
+  }
+
+  return payload?.data || payload;
+};
+

@@ -106,7 +106,7 @@ const statusStepsDefault = [
   { key: "created", label: "Created", reached: false },
   { key: "submitted", label: "Submitted", reached: false },
   { key: "admin_review", label: "Admin Review", reached: false },
-  { key: "negotiation", label: "Get rid of negotiation", reached: false },
+  { key: "negotiation", label: "Under Review", reached: false },
   { key: "assigned", label: "Assigned", reached: false },
   { key: "in_progress", label: "In Progress", reached: false },
   { key: "completed", label: "Completed", reached: false },
