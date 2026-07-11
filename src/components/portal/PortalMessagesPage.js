@@ -85,6 +85,33 @@ const triggerAttachmentDownload = (attachment) => {
   }
 };
 
+const initialsOf = (name) =>
+  String(name || "?")
+    .split(/\s+/)
+    .map((part) => part[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase() || "?";
+
+const ROLE_TONE_CLASSES = {
+  Notary: { avatar: "bg-orange-100 text-orange-700", pill: "bg-orange-100 text-orange-700" },
+  Client: { avatar: "bg-blue-100 text-blue-700", pill: "bg-blue-100 text-blue-700" },
+  Admin: { avatar: "bg-violet-100 text-violet-700", pill: "bg-violet-100 text-violet-700" },
+  "Super Admin": { avatar: "bg-violet-100 text-violet-700", pill: "bg-violet-100 text-violet-700" },
+};
+
+const defaultTone = { avatar: "bg-zinc-200 text-zinc-700", pill: "bg-zinc-100 text-zinc-600" };
+
+const ROLE_FILTER_TABS = [
+  { id: "all", label: "All" },
+  { id: "notaries", label: "Notaries" },
+  { id: "clients", label: "Clients" },
+  { id: "unread", label: "Unread" },
+];
+
+const resolveRoleTone = (role) => ROLE_TONE_CLASSES[role] || defaultTone;
+
 export default function PortalMessagesPage({ roleLabel = "Portal" }) {
   const dispatch = useAppDispatch();
   const {
@@ -101,6 +128,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
   const [draft, setDraft] = useState("");
   const [attachments, setAttachments] = useState([]);
   const [search, setSearch] = useState("");
+  const [activeFilter, setActiveFilter] = useState("all");
   const currentConversationId = activeConversationId || conversations[0]?.id || "";
   const socketRef = useRef(null);
   const socketUrl = buildApiOrigin();
@@ -178,13 +206,29 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
 
   const filteredConversations = useMemo(() => {
     const query = search.trim().toLowerCase();
-    if (!query) return conversations;
-    return conversations.filter((conversation) =>
-      [conversation.title, conversation.orderId, conversation.counterpart?.name]
+    const matchesQuery = (conversation) => {
+      if (!query) return true;
+      return [conversation.title, conversation.orderId, conversation.counterpart?.name]
         .filter(Boolean)
-        .some((value) => String(value).toLowerCase().includes(query))
+        .some((value) => String(value).toLowerCase().includes(query));
+    };
+    const matchesFilter = (conversation) => {
+      const role = conversation.counterpart?.role;
+      if (activeFilter === "notaries") return role === "Notary";
+      if (activeFilter === "clients") {
+        // For clients/notaries we treat anything that is NOT a notary as a
+        // "client" bucket (covers Admin / Super Admin counterparts too).
+        return role !== "Notary";
+      }
+      if (activeFilter === "unread") {
+        return Boolean(conversation.unreadCount && conversation.unreadCount > 0);
+      }
+      return true;
+    };
+    return conversations.filter(
+      (conversation) => matchesQuery(conversation) && matchesFilter(conversation)
     );
-  }, [conversations, search]);
+  }, [conversations, search, activeFilter]);
 
   const handleSend = async () => {
     if (!currentConversationId) return;
@@ -260,8 +304,8 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
 
   return (
     <div className="flex h-[calc(100vh-13rem)] overflow-hidden rounded-[32px] border border-zinc-100 bg-white shadow-sm">
-      <aside className="w-80 shrink-0 border-r border-zinc-100 bg-zinc-50/40">
-        <div className="space-y-6 p-6">
+      <aside className="flex w-80 shrink-0 flex-col border-r border-zinc-100 bg-zinc-50/40">
+        <div className="space-y-5 p-6">
           <h2 className="text-2xl font-bold text-zinc-900">Messages</h2>
           <div className="relative">
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-700" />
@@ -273,42 +317,107 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
               className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb]"
             />
           </div>
+          <div className="flex flex-wrap items-center gap-2">
+            {ROLE_FILTER_TABS.map((tab) => {
+              const isActive = activeFilter === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveFilter(tab.id)}
+                  className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
+                    isActive
+                      ? "bg-[#1a4fdb] text-white shadow-sm"
+                      : "bg-white text-zinc-600 hover:bg-zinc-100"
+                  }`}
+                >
+                  {tab.label}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        <div className="overflow-y-auto">
-          {filteredConversations.map((conversation) => (
-            <button
-              key={conversation.id}
-              type="button"
-              onClick={() => setActiveConversationId(conversation.id)}
-              className={`w-full border-l-4 px-6 py-4 text-left transition ${
-                currentConversationId === conversation.id
-                  ? "border-l-[#1a4fdb] bg-white"
-                  : "border-l-transparent hover:bg-white/70"
-              }`}
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-bold text-zinc-900">
-                    {conversation.counterpart?.name || conversation.title}
-                  </p>
-                  <p className="mt-1 text-[10px] font-bold uppercase tracking-widest text-[#1a4fdb]">
-                    #{conversation.orderId}
-                  </p>
-                  <p className="mt-2 truncate text-xs text-gray-700">
+        <div className="flex-1 space-y-1 overflow-y-auto px-3 pb-3">
+          {filteredConversations.map((conversation) => {
+            const role = conversation.counterpart?.role;
+            const tone = resolveRoleTone(role);
+            const name = conversation.counterpart?.name || conversation.title;
+            const unread = conversation.unreadCount || 0;
+            const isActive = currentConversationId === conversation.id;
+            return (
+              <button
+                key={conversation.id}
+                type="button"
+                onClick={() => setActiveConversationId(conversation.id)}
+                className={`flex w-full items-start gap-3 rounded-xl border-l-4 px-4 py-3 text-left transition ${
+                  isActive
+                    ? "border-l-[#1a4fdb] bg-white shadow-sm"
+                    : "border-l-transparent hover:bg-white/80"
+                }`}
+              >
+                <div className="relative shrink-0">
+                  <span
+                    className={`grid h-11 w-11 place-items-center rounded-full text-sm font-bold ${tone.avatar}`}
+                    aria-hidden="true"
+                  >
+                    {initialsOf(name)}
+                  </span>
+                  {unread > 0 ? (
+                    <span
+                      className="absolute -bottom-1 -right-1 grid h-5 min-w-[20px] place-items-center rounded-full border-2 border-white bg-[#1a4fdb] px-1.5 text-[10px] font-bold leading-none text-white shadow"
+                      aria-label={`${unread} unread message${unread === 1 ? "" : "s"}`}
+                    >
+                      {unread > 99 ? "99+" : unread}
+                    </span>
+                  ) : null}
+                </div>
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-2">
+                    <p
+                      className={`truncate text-sm ${
+                        unread > 0 ? "font-extrabold text-zinc-900" : "font-bold text-zinc-800"
+                      }`}
+                    >
+                      {name}
+                    </p>
+                    <span className="shrink-0 text-[10px] font-medium text-zinc-400">
+                      {formatMessageTime(conversation.lastMessageAt)}
+                    </span>
+                  </div>
+                  <div className="mt-1 flex items-center gap-2">
+                    {role ? (
+                      <span
+                        className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${tone.pill}`}
+                      >
+                        {role}
+                      </span>
+                    ) : null}
+                    {conversation.orderId ? (
+                      <span className="truncate text-[10px] font-bold uppercase tracking-widest text-[#1a4fdb]">
+                        #{conversation.orderId}
+                      </span>
+                    ) : null}
+                  </div>
+                  <p
+                    className={`mt-1.5 truncate text-xs ${
+                      unread > 0 ? "font-semibold text-zinc-700" : "text-zinc-500"
+                    }`}
+                  >
                     {conversation.lastMessagePreview || "No messages yet"}
                   </p>
                 </div>
-                <span className="text-[10px] font-medium text-gray-700">
-                  {formatMessageTime(conversation.lastMessageAt)}
-                </span>
-              </div>
-            </button>
-          ))}
+              </button>
+            );
+          })}
 
           {filteredConversations.length === 0 ? (
-            <p className="px-6 py-8 text-sm text-gray-700">
-              {conversationsStatus === "loading" ? "Loading conversations..." : "No conversations available yet."}
+            <p className="px-3 py-8 text-sm text-zinc-500">
+              {conversationsStatus === "loading"
+                ? "Loading conversations..."
+                : activeFilter === "all" && !search
+                ? "No conversations available yet."
+                : `No conversations match the ${activeFilter} filter.`}
             </p>
           ) : null}
         </div>
