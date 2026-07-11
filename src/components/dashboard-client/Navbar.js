@@ -1,8 +1,23 @@
-import { Search } from "lucide-react";
+"use client";
+
+import { Menu, Search } from "lucide-react";
+import { useSidebar } from "./ClientShell";
 
 export default function Navbar() {
+  const { toggle } = useSidebar();
+
   return (
-    <header className="h-20 bg-white border-b border-zinc-100 flex items-center justify-between px-8 sticky top-0 z-40">
+    <header className="h-20 bg-white border-b border-zinc-100 flex items-center justify-between gap-3 px-4 sm:px-8 sticky top-0 z-30">
+      {/* Mobile hamburger */}
+      <button
+        type="button"
+        onClick={toggle}
+        aria-label="Open navigation"
+        className="grid h-10 w-10 place-items-center rounded-xl border border-zinc-200 text-zinc-700 hover:bg-zinc-50 md:hidden"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
       {/* Search Bar Placeholder */}
       <div className="flex-1 max-w-xl">
         <div className="relative group">
@@ -16,7 +31,7 @@ export default function Navbar() {
       </div>
 
       {/* Right Actions (notifications now live in PortalHeader.js, just below this) */}
-      <div className="flex items-center gap-6">
+      <div className="flex items-center gap-3 sm:gap-6 shrink-0">
         <div className="flex items-center gap-3 pl-2">
           <div className="text-right hidden sm:block">
             <p className="text-sm font-bold text-zinc-900 leading-none mb-1">

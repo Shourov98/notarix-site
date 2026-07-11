@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect } from "react";
 import {
   BriefcaseBusiness,
   CircleHelp,
@@ -11,10 +12,12 @@ import {
   MessageSquare,
   Settings,
   ClipboardList,
+  X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { clearPortalSession } from "@/lib/portalSession";
+import { useSidebar } from "./NotaryShell";
 
 const navItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/dashboard-notary" },
@@ -26,17 +29,14 @@ const navItems = [
   { icon: Settings, label: "Settings", href: "/dashboard-notary/settings" },
 ];
 
-export default function Sidebar() {
-  const pathname = usePathname();
-  const router = useRouter();
-
+const SidebarBody = ({ pathname, router }) => {
   const handleSignOut = () => {
     clearPortalSession();
     router.replace("/login");
   };
 
   return (
-    <aside className="w-64 bg-white border-r border-zinc-200 flex flex-col sticky top-0 h-screen shrink-0 z-50">
+    <>
       <div className="px-5 py-5 h-20 border-b border-zinc-100 flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#eef4ff] shadow-sm ring-1 ring-[#dbe6ff] shrink-0">
           <Image
@@ -63,7 +63,7 @@ export default function Sidebar() {
         </div>
       </div>
 
-      <nav className="flex-1 px-4 py-6 space-y-2">
+      <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
         {navItems.map((item) => {
           const isActive =
             pathname === item.href ||
@@ -96,6 +96,66 @@ export default function Sidebar() {
           <span className="text-sm font-medium">Sign Out</span>
         </button>
       </div>
-    </aside>
+    </>
+  );
+};
+
+export default function Sidebar() {
+  const { open, setOpen } = useSidebar();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  // Close drawer on route change.
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname, setOpen]);
+
+  // Lock body scroll while drawer is open.
+  useEffect(() => {
+    if (!open) return undefined;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, [open]);
+
+  return (
+    <>
+      {/* Mobile backdrop */}
+      <div
+        onClick={() => setOpen(false)}
+        aria-hidden="true"
+        className={`fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm transition-opacity md:hidden ${
+          open ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
+
+      {/* Mobile drawer */}
+      <aside
+        aria-label="Notary navigation"
+        className={`fixed inset-y-0 left-0 z-50 flex w-72 flex-col bg-white shadow-xl transition-transform duration-300 ease-out md:hidden ${
+          open ? "translate-x-0" : "-translate-x-full"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={() => setOpen(false)}
+          aria-label="Close navigation"
+          className="absolute right-3 top-4 grid h-9 w-9 place-items-center rounded-full text-zinc-500 hover:bg-zinc-100"
+        >
+          <X className="h-5 w-5" />
+        </button>
+        <SidebarBody pathname={pathname} router={router} />
+      </aside>
+
+      {/* Desktop sidebar */}
+      <aside
+        aria-label="Notary navigation"
+        className="hidden md:flex w-64 bg-white border-r border-zinc-200 flex-col sticky top-0 h-screen shrink-0 z-30"
+      >
+        <SidebarBody pathname={pathname} router={router} />
+      </aside>
+    </>
   );
 }

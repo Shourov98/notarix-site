@@ -7,6 +7,7 @@ import {
   Download,
   FileText,
   Image as ImageIcon,
+  Menu,
   Paperclip,
   Search,
   Send,
@@ -129,6 +130,7 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
   const [attachments, setAttachments] = useState([]);
   const [search, setSearch] = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
+  const [conversationsOpen, setConversationsOpen] = useState(false);
   const currentConversationId = activeConversationId || conversations[0]?.id || "";
   const socketRef = useRef(null);
   const socketUrl = buildApiOrigin();
@@ -230,7 +232,12 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
     );
   }, [conversations, search, activeFilter]);
 
-  const handleSend = async () => {
+  const handleSelectConversation = (conversationId) => {
+    setActiveConversationId(conversationId);
+    setConversationsOpen(false);
+  };
+
+const handleSend = async () => {
     if (!currentConversationId) return;
     if (!draft.trim() && attachments.length === 0) {
       toast.error("Write a message or add an attachment first.");
@@ -302,9 +309,9 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div className="flex h-[calc(100vh-13rem)] overflow-hidden rounded-[32px] border border-zinc-100 bg-white shadow-sm">
-      <aside className="flex w-80 shrink-0 flex-col border-r border-zinc-100 bg-zinc-50/40">
+  const renderConversationList = ({ onSelect }) => (
+    <>
+      <div className="hidden md:block">
         <div className="space-y-5 p-6">
           <h2 className="text-2xl font-bold text-zinc-900">Messages</h2>
           <div className="relative">
@@ -337,101 +344,177 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
             })}
           </div>
         </div>
+      </div>
 
-        <div className="flex-1 space-y-1 overflow-y-auto px-3 pb-3">
-          {filteredConversations.map((conversation) => {
-            const role = conversation.counterpart?.role;
-            const tone = resolveRoleTone(role);
-            const name = conversation.counterpart?.name || conversation.title;
-            const unread = conversation.unreadCount || 0;
-            const isActive = currentConversationId === conversation.id;
+      <div className="block px-5 pt-4 md:hidden">
+        <div className="relative">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-700" />
+          <input
+            type="text"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Search conversations..."
+            className="w-full rounded-xl border border-zinc-200 bg-white py-2.5 pl-9 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb]"
+          />
+        </div>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          {ROLE_FILTER_TABS.map((tab) => {
+            const isActive = activeFilter === tab.id;
             return (
               <button
-                key={conversation.id}
+                key={tab.id}
                 type="button"
-                onClick={() => setActiveConversationId(conversation.id)}
-                className={`flex w-full items-start gap-3 rounded-xl border-l-4 px-4 py-3 text-left transition ${
+                onClick={() => setActiveFilter(tab.id)}
+                className={`rounded-full px-4 py-1.5 text-xs font-semibold transition ${
                   isActive
-                    ? "border-l-[#1a4fdb] bg-white shadow-sm"
-                    : "border-l-transparent hover:bg-white/80"
+                    ? "bg-[#1a4fdb] text-white shadow-sm"
+                    : "bg-white text-zinc-600 hover:bg-zinc-100"
                 }`}
               >
-                <div className="relative shrink-0">
-                  <span
-                    className={`grid h-11 w-11 place-items-center rounded-full text-sm font-bold ${tone.avatar}`}
-                    aria-hidden="true"
-                  >
-                    {initialsOf(name)}
-                  </span>
-                  {unread > 0 ? (
-                    <span
-                      className="absolute -bottom-1 -right-1 grid h-5 min-w-[20px] place-items-center rounded-full border-2 border-white bg-[#1a4fdb] px-1.5 text-[10px] font-bold leading-none text-white shadow"
-                      aria-label={`${unread} unread message${unread === 1 ? "" : "s"}`}
-                    >
-                      {unread > 99 ? "99+" : unread}
-                    </span>
-                  ) : null}
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center justify-between gap-2">
-                    <p
-                      className={`truncate text-sm ${
-                        unread > 0 ? "font-extrabold text-zinc-900" : "font-bold text-zinc-800"
-                      }`}
-                    >
-                      {name}
-                    </p>
-                    <span className="shrink-0 text-[10px] font-medium text-zinc-400">
-                      {formatMessageTime(conversation.lastMessageAt)}
-                    </span>
-                  </div>
-                  <div className="mt-1 flex items-center gap-2">
-                    {role ? (
-                      <span
-                        className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${tone.pill}`}
-                      >
-                        {role}
-                      </span>
-                    ) : null}
-                    {conversation.orderId ? (
-                      <span className="truncate text-[10px] font-bold uppercase tracking-widest text-[#1a4fdb]">
-                        #{conversation.orderId}
-                      </span>
-                    ) : null}
-                  </div>
-                  <p
-                    className={`mt-1.5 truncate text-xs ${
-                      unread > 0 ? "font-semibold text-zinc-700" : "text-zinc-500"
-                    }`}
-                  >
-                    {conversation.lastMessagePreview || "No messages yet"}
-                  </p>
-                </div>
+                {tab.label}
               </button>
             );
           })}
-
-          {filteredConversations.length === 0 ? (
-            <p className="px-3 py-8 text-sm text-zinc-500">
-              {conversationsStatus === "loading"
-                ? "Loading conversations..."
-                : activeFilter === "all" && !search
-                ? "No conversations available yet."
-                : `No conversations match the ${activeFilter} filter.`}
-            </p>
-          ) : null}
         </div>
+      </div>
+
+      <div className="flex-1 space-y-1 overflow-y-auto px-3 py-3">
+        {filteredConversations.map((conversation) => {
+          const role = conversation.counterpart?.role;
+          const tone = resolveRoleTone(role);
+          const name = conversation.counterpart?.name || conversation.title;
+          const unread = conversation.unreadCount || 0;
+          const isActive = currentConversationId === conversation.id;
+          return (
+            <button
+              key={conversation.id}
+              type="button"
+              onClick={() => onSelect ? onSelect(conversation.id) : setActiveConversationId(conversation.id)}
+              className={`flex w-full items-start gap-3 rounded-xl border-l-4 px-4 py-3 text-left transition ${
+                isActive
+                  ? "border-l-[#1a4fdb] bg-white shadow-sm"
+                  : "border-l-transparent hover:bg-white/80"
+              }`}
+            >
+              <div className="relative shrink-0">
+                <span
+                  className={`grid h-11 w-11 place-items-center rounded-full text-sm font-bold ${tone.avatar}`}
+                  aria-hidden="true"
+                >
+                  {initialsOf(name)}
+                </span>
+                {unread > 0 ? (
+                  <span
+                    className="absolute -bottom-1 -right-1 grid h-5 min-w-[20px] place-items-center rounded-full border-2 border-white bg-[#1a4fdb] px-1.5 text-[10px] font-bold leading-none text-white shadow"
+                    aria-label={`${unread} unread message${unread === 1 ? "" : "s"}`}
+                  >
+                    {unread > 99 ? "99+" : unread}
+                  </span>
+                ) : null}
+              </div>
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center justify-between gap-2">
+                  <p
+                    className={`truncate text-sm ${
+                      unread > 0 ? "font-extrabold text-zinc-900" : "font-bold text-zinc-800"
+                    }`}
+                  >
+                    {name}
+                  </p>
+                  <span className="shrink-0 text-[10px] font-medium text-zinc-400">
+                    {formatMessageTime(conversation.lastMessageAt)}
+                  </span>
+                </div>
+                <div className="mt-1 flex items-center gap-2">
+                  {role ? (
+                    <span
+                      className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest ${tone.pill}`}
+                    >
+                      {role}
+                    </span>
+                  ) : null}
+                  {conversation.orderId ? (
+                    <span className="truncate text-[10px] font-bold uppercase tracking-widest text-[#1a4fdb]">
+                      #{conversation.orderId}
+                    </span>
+                  ) : null}
+                </div>
+                <p
+                  className={`mt-1.5 truncate text-xs ${
+                    unread > 0 ? "font-semibold text-zinc-700" : "text-zinc-500"
+                  }`}
+                >
+                  {conversation.lastMessagePreview || "No messages yet"}
+                </p>
+              </div>
+            </button>
+          );
+        })}
+
+        {filteredConversations.length === 0 ? (
+          <p className="px-3 py-8 text-sm text-zinc-500">
+            {conversationsStatus === "loading"
+              ? "Loading conversations..."
+              : activeFilter === "all" && !search
+              ? "No conversations available yet."
+              : `No conversations match the ${activeFilter} filter.`}
+          </p>
+        ) : null}
+      </div>
+    </>
+  );
+
+  return (
+    <div className="relative flex h-[calc(100vh-13rem)] overflow-hidden rounded-[32px] border border-zinc-100 bg-white shadow-sm">
+      {/* Mobile backdrop for the right-side conversation drawer */}
+      <div
+        onClick={() => setConversationsOpen(false)}
+        aria-hidden="true"
+        className={`fixed inset-0 z-40 bg-slate-900/50 backdrop-blur-sm transition-opacity md:hidden ${
+          conversationsOpen ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+      />
+
+      {/* Conversation list — desktop sidebar + mobile right drawer */}
+      <aside
+        aria-label="Conversations"
+        className={`fixed inset-y-0 right-0 z-50 flex w-80 max-w-[85vw] flex-col border-l border-zinc-100 bg-zinc-50/40 shadow-xl transition-transform duration-300 ease-out md:static md:inset-auto md:left-auto md:right-auto md:z-auto md:w-80 md:max-w-none md:translate-x-0 md:border-l-0 md:border-r md:bg-zinc-50/40 md:shadow-none ${
+          conversationsOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"
+        }`}
+      >
+        <div className="flex items-center justify-between border-b border-zinc-100 px-5 py-4 md:hidden">
+          <h2 className="text-lg font-bold text-zinc-900">Conversations</h2>
+          <button
+            type="button"
+            onClick={() => setConversationsOpen(false)}
+            aria-label="Close conversations"
+            className="grid h-9 w-9 place-items-center rounded-full text-zinc-500 hover:bg-zinc-100"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+        {renderConversationList({ onSelect: handleSelectConversation })}
       </aside>
 
       <section className="flex min-w-0 flex-1 flex-col">
-        <div className="flex items-center justify-between border-b border-zinc-100 px-6 py-5">
-          <div>
-            <p className="text-lg font-bold text-zinc-900">
-              {activeConversation?.counterpart?.name || "Select a conversation"}
-            </p>
-            <p className="mt-1 text-xs font-medium text-gray-700">
-              {activeConversation?.counterpart?.role || roleLabel}
-            </p>
+        <div className="flex items-center justify-between gap-3 border-b border-zinc-100 px-4 py-4 sm:px-6 sm:py-5">
+          <div className="flex min-w-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={() => setConversationsOpen(true)}
+              aria-label="Open conversations"
+              className="grid h-10 w-10 shrink-0 place-items-center rounded-xl border border-zinc-200 text-zinc-700 hover:bg-zinc-50 md:hidden"
+            >
+              <Menu className="h-5 w-5" />
+            </button>
+            <div className="min-w-0">
+              <p className="truncate text-base font-bold text-zinc-900 sm:text-lg">
+                {activeConversation?.counterpart?.name || "Select a conversation"}
+              </p>
+              <p className="mt-0.5 truncate text-xs font-medium text-gray-700">
+                {activeConversation?.counterpart?.role || roleLabel}
+              </p>
+            </div>
           </div>
           {activeConversation?.orderId ? (
             <Link
@@ -440,14 +523,14 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
                   ? `/dashboard-notary/assignments-orders/${activeConversation.orderId}`
                   : `/dashboard-client/orders/${activeConversation.orderId}`
               }
-              className="rounded-xl border border-zinc-200 px-4 py-2 text-sm font-bold text-zinc-700"
+              className="shrink-0 rounded-xl border border-zinc-200 px-3 py-2 text-xs font-bold text-zinc-700 sm:px-4 sm:text-sm"
             >
               View Order
             </Link>
           ) : null}
         </div>
 
-        <div className="flex-1 space-y-5 overflow-y-auto bg-zinc-50/30 p-6">
+        <div className="flex-1 space-y-5 overflow-y-auto bg-zinc-50/30 p-3 sm:p-6">
           {messages.map((message) => {
             const isOwn = Boolean(message.isOwnMessage);
             const wrapperClass = isOwn ? "flex justify-end" : "flex justify-start";
@@ -557,9 +640,9 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
           ) : null}
         </div>
 
-        <div className="border-t border-zinc-100 p-4">
-          <div className="flex items-center gap-3">
-            <label className="rounded-xl border border-zinc-200 p-3 text-gray-700 hover:bg-zinc-50">
+        <div className="border-t border-zinc-100 p-3 sm:p-4">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <label className="shrink-0 rounded-xl border border-zinc-200 p-3 text-gray-700 hover:bg-zinc-50">
               <Paperclip className="h-5 w-5" />
               <input
                 type="file"
@@ -573,13 +656,13 @@ export default function PortalMessagesPage({ roleLabel = "Portal" }) {
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               placeholder="Type your message..."
-              className="flex-1 rounded-xl border border-zinc-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb]"
+              className="min-w-0 flex-1 rounded-xl border border-zinc-200 px-3 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-[#1a4fdb]/10 focus:border-[#1a4fdb] sm:px-4"
             />
             <button
               type="button"
               onClick={handleSend}
               disabled={messageActionStatus === "loading"}
-              className="inline-flex items-center gap-2 rounded-xl bg-[#1a4fdb] px-5 py-3 text-sm font-bold text-white"
+              className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-[#1a4fdb] px-4 py-3 text-sm font-bold text-white sm:px-5"
             >
               Send
               <Send className="h-4 w-4" />
